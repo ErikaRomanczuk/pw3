@@ -1,0 +1,19 @@
+﻿@model TaskManager.Models.Tarea
+@{
+    ViewBag.Title = "Modificar";
+}
+
+
+@using (Html.BeginForm("Modificar", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>Complete los datos para crear la tarea</h4>
+    <hr />
+
+    @Html.Partial("_Detalle", Model);
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Modificar" class="btn btn-primary" />
+        </div>
+    </div>
+
+}

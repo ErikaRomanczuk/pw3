@@ -1,0 +1,19 @@
+﻿@model TaskManager.Models.Carpeta
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Modificar Carpeta</h2>
+
+@using (Html.BeginForm("Crear", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+
+    @Html.Partial("_Detalle", Model);
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Modificar" class="btn btn-primary" />
+        </div>
+    </div>
+
+}

@@ -1,0 +1,64 @@
+﻿@model TaskManager.Models.Tarea
+
+@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+@Html.HiddenFor(m => m.FechaCreacion)
+@Html.HiddenFor(m => m.IdTarea)
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Prioridad, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.Prioridad, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.Prioridad, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaFin, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.FechaFin, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.FechaFin, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.EstimadoHoras, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.EstimadoHoras, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.EstimadoHoras, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Completada, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.TextBoxFor(m => m.Completada, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.Completada, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Carpeta, new { @class = "col-md-2 control-label" })
+    <div class="col-md-12">
+        @Html.PasswordFor(m => m.Carpeta, new { @class = "form-control", @required = "required" })
+        @Html.ValidationMessageFor(m => m.Carpeta, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+

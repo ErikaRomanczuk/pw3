@@ -1,0 +1,22 @@
+﻿@model TaskManager.Models.Carpeta
+@{
+    ViewBag.Title = "Crear";
+}
+
+<h2>Crear Carpeta</h2>
+
+@using (Html.BeginForm("Crear", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <h4>Complete los datos para crear la carpeta</h4>
+    <hr />
+
+
+    @Html.Partial("_Detalle", Model);
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Guardar" class="btn btn-primary" />
+        </div>
+    </div>
+
+}
