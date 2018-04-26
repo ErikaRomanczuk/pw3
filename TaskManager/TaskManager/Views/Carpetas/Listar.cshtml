@@ -1,0 +1,28 @@
+﻿@using TaskManager.Controllers
+@Model List<Carpeta>
+
+    @{
+        ViewBag.Title = "Listar";
+    }
+
+    <h2>Listar</h2>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var carpeta in Model)
+            {
+                <tr>
+                    <td>@carpeta.IdCarpeta</td>
+                    <td>@carpeta.Nombre</td>
+                    <td>@carpeta.Descripcion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
