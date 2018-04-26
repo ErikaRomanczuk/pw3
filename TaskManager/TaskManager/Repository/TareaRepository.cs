@@ -6,7 +6,7 @@ using TaskManager.Models;
 
 namespace TaskManager.Repository
 {
-    public class TareasRepository
+    public class TareaRepository
     {
 
         private static List<Tarea> Tareas = new List<Tarea>();
@@ -14,6 +14,7 @@ namespace TaskManager.Repository
         public List<Tarea> listarTodos()
         {
             Tarea tarea1 = new Tarea();
+            tarea1.IdTarea = 1;
             tarea1.Nombre = "Tarea1";
             tarea1.Descripcion = "Descripcion tarea 1";
             tarea1.EstimadoHoras = 10;
@@ -21,6 +22,7 @@ namespace TaskManager.Repository
             tarea1.Prioridad = 1;
 
             Tarea tarea2 = new Tarea();
+            tarea2.IdTarea = 2;
             tarea2.Nombre = "Tarea2";
             tarea2.Descripcion = "Descripcion tarea 2";
             tarea2.EstimadoHoras = 15;
@@ -28,6 +30,7 @@ namespace TaskManager.Repository
             tarea2.Prioridad = 2;
 
             Tarea tarea3 = new Tarea();
+            tarea3.IdTarea = 3;
             tarea3.Nombre = "Tarea3";
             tarea3.Descripcion = "Descripcion tarea 3";
             tarea3.EstimadoHoras = 20;
@@ -35,6 +38,7 @@ namespace TaskManager.Repository
             tarea3.Prioridad = 3;
 
             Tarea tarea4 = new Tarea();
+            tarea4.IdTarea = 4;
             tarea4.Nombre = "Tarea4";
             tarea4.Descripcion = "Descripcion tarea 4";
             tarea4.EstimadoHoras = 25;
@@ -47,6 +51,11 @@ namespace TaskManager.Repository
             Tareas.Add(tarea4);
 
             return Tareas;
+        }
+
+        public Tarea buscarPorIdTarea(int id)
+        {
+            return Tareas.Find(x => x.IdTarea == id);
         }
     }
 }

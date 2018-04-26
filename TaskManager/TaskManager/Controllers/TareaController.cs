@@ -13,10 +13,20 @@ namespace TaskManager.Controllers
         // GET: Tarea
         public ActionResult Listar()
         {
-            TareasRepository tareaResitory = new TareasRepository();
+            TareaRepository tareaResitory = new TareaRepository();
             return View(tareaResitory.listarTodos());
         }
 
+        public ActionResult detalle(int id)
+        {
+            try { 
+            TareaRepository tareaRepository = new TareaRepository();
+                return View( tareaRepository.buscarPorIdTarea(id) );
+            }catch(Exception e)
+            {
+                return View("error");
+            }
+        }
         public ActionResult Delete()
         {
             return View();
