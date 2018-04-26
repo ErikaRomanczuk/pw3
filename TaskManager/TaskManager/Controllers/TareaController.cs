@@ -4,22 +4,23 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
+using TaskManager.Repository;
 
 namespace TaskManager.Controllers
 {
-    public class TareasController : Controller
+    public class TareaController : Controller
     {
         // GET: Tarea
-        public ActionResult Index()
+        public ActionResult Listar()
+        {
+            TareasRepository tareaResitory = new TareasRepository();
+            return View(tareaResitory.listarTodos());
+        }
+
+        public ActionResult Delete()
         {
             return View();
         }
-
-        public ActionResult Login()
-        {
-            return View();
-        }
-
 
         [HttpPost]
         public ActionResult Crear(Tarea tarea)
@@ -39,6 +40,7 @@ namespace TaskManager.Controllers
         {
             return View();
         }
+
         public ActionResult Modificar()
         {
             return View();
