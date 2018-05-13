@@ -35,7 +35,16 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(Tarea tarea)
         {
-            return View();
+            try
+            {
+                TareaRepository tareaRepository = new TareaRepository();
+                tareaRepository.crear(tarea);
+                return Redirect("Listar");
+            }
+            catch (Exception e)
+            {
+                return View("error");
+            }
         }
 
         public ActionResult Crear()
@@ -44,7 +53,7 @@ namespace TaskManager.Controllers
             return View(tarea);
         }
 
-
+        /** NOT WOWRKING 
         [HttpPost]
         public ActionResult Modificar(Tarea usuario)
         {
@@ -55,8 +64,7 @@ namespace TaskManager.Controllers
         {
             return View();
         }
-
-
+        **/
 
     }
 }
