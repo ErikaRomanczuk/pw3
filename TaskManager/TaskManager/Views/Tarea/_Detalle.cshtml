@@ -13,7 +13,7 @@
     </div>
 </div>
 
-<div class="form-group">
+<div cla    ss="form-group">
     @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
         @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @required = "required" })
@@ -56,7 +56,7 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Carpeta, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.PasswordFor(m => m.Carpeta, new { @class = "form-control", @required = "required" })
+        @Html.TextBoxFor(m => m.Carpeta, new { @class = "form-control", @required = "required" })
         @Html.ValidationMessageFor(m => m.Carpeta, "", new { @class = "text-danger" })
     </div>
 </div>
