@@ -4,15 +4,17 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
+using TaskManager.Repository;
 
 namespace TaskManager.Controllers
 {
     public class CarpetasController : Controller
     {
         // GET: Carpeta
-        public ActionResult Index()
+        public ActionResult Listar()
         {
-            return View();
+            CarpetasRepository CarpetasRepository = new CarpetasRepository();
+            return View(CarpetasRepository.listarCarpetas());
         }
 
 
