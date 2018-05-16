@@ -42,6 +42,7 @@ namespace TaskManager.Repository
 
         public void CrearCarpeta(Carpeta carpeta)
         {
+            carpetas = listarCarpetas();
             Carpeta nuevaCarpeta = new Carpeta();
             nuevaCarpeta.Nombre = carpeta.Nombre;
             nuevaCarpeta.Descripcion = carpeta.Descripcion;
