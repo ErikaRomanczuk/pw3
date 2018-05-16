@@ -39,5 +39,42 @@ namespace TaskManager.Repository
 
             return (carpetas);
         }
+
+        public void CrearCarpeta(Carpeta carpeta)
+        {
+            carpetas = listarCarpetas();
+            Carpeta nuevaCarpeta = new Carpeta();
+            nuevaCarpeta.Nombre = carpeta.Nombre;
+            nuevaCarpeta.Descripcion = carpeta.Descripcion;
+
+            carpetas.Add(nuevaCarpeta);
+        }
+
+        public Carpeta BuscarCarpetaPorId(int Id)
+        {
+            carpetas = listarCarpetas();
+            Carpeta carpeta = new Carpeta();
+            carpeta = carpetas.Where(x => x.IdCarpeta == Id).FirstOrDefault();
+            if (carpeta == null)
+            {
+                throw new ArgumentException("Carpeta con id: " + carpeta.IdCarpeta + " es inexistente");
+            }
+            return carpeta;
+            //return carpeta;
+        }
+
+        public void ModificarCarpeta(Carpeta carpeta)
+        {
+            Carpeta CarpetaActual = BuscarCarpetaPorId(carpeta.IdCarpeta);
+            if (CarpetaActual == null)
+            {
+                throw new ArgumentException("Carpeta con id: " + carpeta.IdCarpeta + " es inexistente");
+            }
+
+            CarpetaActual.Nombre = carpeta.Nombre;
+            CarpetaActual.Descripcion = carpeta.Descripcion;
+
+            carpetas.Add(CarpetaActual);
+        }
     }
 }

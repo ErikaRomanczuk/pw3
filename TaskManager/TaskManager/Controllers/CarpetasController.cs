@@ -19,9 +19,11 @@ namespace TaskManager.Controllers
 
 
         [HttpPost]
-        public ActionResult Crear(Carpeta tarea)
+        public ActionResult Crear(Carpeta carpeta)
         {
-            return View();
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            carpetasRepository.CrearCarpeta(carpeta);
+            return RedirectToAction("Listar");
         }
 
         public ActionResult Crear()
@@ -30,15 +32,26 @@ namespace TaskManager.Controllers
             return View(carpeta);
         }
 
+        public ActionResult Modificar(int idCarpeta)
+        {
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            return View(carpetasRepository.BuscarCarpetaPorId(idCarpeta));
+        }
 
         [HttpPost]
-        public ActionResult Modificar(Carpeta usuario)
+        public ActionResult Modificar(Carpeta carpeta)
         {
-            return View();
-        }
-        public ActionResult Modificar()
-        {
-            return View();
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            try
+            {
+                carpetasRepository.ModificarCarpeta(carpeta);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al intentar guardar";
+                return View("Listar", ViewBag);
+            }
+            return RedirectToAction("Listar");
         }
     }
 }

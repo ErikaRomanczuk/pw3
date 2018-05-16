@@ -1,28 +1,35 @@
 ﻿@using TaskManager.Controllers
-@Model List<Carpeta>
+@using TaskManager.Models
+@model List<Carpeta>
 
-    @{
-        ViewBag.Title = "Listar";
-    }
+@{
+    ViewBag.Title = "Listar";
+}
 
-    <h2>Listar</h2>
+<h2>Listar</h2>
 
-    <table class="table table-striped">
-        <thead>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carpeta in Model)
+        {
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Descripción</th>
+                <td>@carpeta.IdCarpeta</td>
+                <td>@carpeta.Nombre</td>
+                <td>@carpeta.Descripcion</td>
+                <td>@Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })</td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var carpeta in Model)
-            {
-                <tr>
-                    <td>@carpeta.IdCarpeta</td>
-                    <td>@carpeta.Nombre</td>
-                    <td>@carpeta.Descripcion</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+
+
+</table>
+
+<a href="Crear" class="btn btn-success"> Crear Carpeta </a>

@@ -1,14 +1,30 @@
 ﻿@model TaskManager.Models.Carpeta
 @{
-    ViewBag.Title = "Crear";
+    ViewBag.Title = "Modificar";
 }
 
 <h2>Modificar Carpeta</h2>
 
-@using (Html.BeginForm("Crear", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Modificar", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
+    @Html.HiddenFor(x => x.IdCarpeta)
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-    @Html.Partial("_Detalle", Model);
+    <div class="form-group">
+        @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+        <div class="col-md-12">
+            @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
+        <div class="col-md-12">
+            @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+        </div>
+    </div>
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
