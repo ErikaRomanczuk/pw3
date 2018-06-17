@@ -14,43 +14,50 @@ namespace TaskManager.Controllers
         public ActionResult Listar()
         {
             CarpetasRepository CarpetasRepository = new CarpetasRepository();
-            return View(CarpetasRepository.listarCarpetas());
-        }
-
-
-        [HttpPost]
-        public ActionResult Crear(Carpeta carpeta)
-        {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
-            carpetasRepository.CrearCarpeta(carpeta);
-            return RedirectToAction("Listar");
+            return View(CarpetasRepository.listarCarpetasM());
         }
 
         public ActionResult Crear()
         {
-            Carpeta carpeta = new Carpeta();
-            return View(carpeta);
+            CarpetaM carpetaM = new CarpetaM();
+            return View(carpetaM);
+        }
+
+        [HttpPost]
+        public ActionResult Crear(CarpetaM carpetaM)
+        {
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            carpetasRepository.CrearCarpeta(carpetaM);
+            return RedirectToAction("Listar");
         }
 
         public ActionResult Modificar(int idCarpeta)
         {
             CarpetasRepository carpetasRepository = new CarpetasRepository();
-            return View(carpetasRepository.BuscarCarpetaPorId(idCarpeta));
+            Carpeta carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(carpeta);
+            return View(carpetaM);
         }
-
         [HttpPost]
-        public ActionResult Modificar(Carpeta carpeta)
+        public ActionResult Modificar(CarpetaM carpetaM)
         {
             CarpetasRepository carpetasRepository = new CarpetasRepository();
             try
             {
-                carpetasRepository.ModificarCarpeta(carpeta);
+                carpetasRepository.ModificarCarpeta(carpetaM);
             }
             catch (Exception ex)
             {
                 ViewBag.Mensaje = "Error al intentar guardar";
                 return View("Listar", ViewBag);
             }
+            return RedirectToAction("Listar");
+        }
+
+        public ActionResult Eliminar (int idCarpeta)
+        {
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            carpetasRepository.EliminarCarpeta(idCarpeta);
             return RedirectToAction("Listar");
         }
     }

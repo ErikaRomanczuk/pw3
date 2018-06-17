@@ -11,13 +11,13 @@ namespace TaskManager.Repository
     {
         private static string mailTest = "Admin.admin@admin.com";
         private static string passTest = "1234";
-
+       
         public bool VerificarLogin(Usuario usuario)
         {
             //Deberia verificar si el mail-contraseña que se intenta loguear coincide con alguno de la tabla
             foreach (Usuario userInBase in GetUsers())
             {
-                if (usuario.Email.Equals(userInBase.Email) && usuario.Contraseña.Equals(userInBase.Contraseña))
+                if (usuario.Email.Equals(userInBase.Email) && usuario.Contrasenia.Equals(userInBase.Contrasenia))
                 {
                     /*Si encontramos coincidencia retornamos TRUE para que acceda al sistema y ya lo guardamos en la sesion 
                     para mas adelante poder cargar la lista de carpetas de ESE usuario*/
@@ -27,16 +27,16 @@ namespace TaskManager.Repository
             }
             return false;
         }
-
+       
         public List<Usuario> GetUsers()
         {
             //Provisorio, aca deberia traer lista de usuarios de la base de datos 
             List<Usuario> usuarios = new List<Usuario>();
-
-            usuarios.Add(new Usuario { Email = mailTest, Contraseña = passTest });
+       
+            usuarios.Add(new Usuario { Email = mailTest, Contrasenia = passTest });
             return usuarios;
         }
-
+       /*
         public bool RegistrarNewUser(Usuario user)
         {
             foreach (Usuario userInBase in GetUsers())
@@ -58,23 +58,23 @@ namespace TaskManager.Repository
             }
             ActivarUsuario(user);
             //Agregar nuevo usuario a la tabla "Usuario" de la base -- Añadir en el insert del DAO la fecha de registro
-
+       
             return true;
         }
-
+       
         public void ActivarUsuario(Usuario user)
         {
             DateTime LocalDate = DateTime.Now;
             string Nombre = "General";
             string Descripcion = "Carpeta por Defecto";
-
+       
             user.Activo = 1;
         
             if(user.Carpetas != null)
             {
                 if(user.Carpetas.Count != 0)
                 {
-                    foreach (Carpeta carpeta in user.Carpetas)
+                    foreach (CarpetaM carpeta in user.Carpetas)
                     {
                         if (carpeta.Nombre.Equals(Nombre))
                         {
@@ -84,8 +84,8 @@ namespace TaskManager.Repository
                 }
             }
            
-            user.Carpetas.Add(new Carpeta {Nombre = Nombre, Descripcion = Descripcion, FechaCreacion = LocalDate });
-        }
+            user.Carpetas.Add(new CarpetaM {Nombre = Nombre, Descripcion = Descripcion, FechaCreacion = LocalDate });
+        }*/
 
     }
 }

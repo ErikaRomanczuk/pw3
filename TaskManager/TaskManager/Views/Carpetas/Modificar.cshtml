@@ -1,4 +1,5 @@
-﻿@model TaskManager.Models.Carpeta
+﻿@using TaskManager.Models
+@model CarpetaM
 @{
     ViewBag.Title = "Modificar";
 }
@@ -7,8 +8,10 @@
 
 @using (Html.BeginForm("Modificar", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
-    @Html.HiddenFor(x => x.IdCarpeta)
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+    @Html.HiddenFor(m => m.IdCarpeta)
+    @Html.HiddenFor(m => m.FechaCreacion)
+    @Html.HiddenFor(m => m.Usuario)
 
     <div class="form-group">
         @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
