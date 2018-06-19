@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using TaskManager.Models;
+using System.Web.SessionState;
 
 namespace TaskManager.Repository
 {
@@ -93,8 +94,8 @@ namespace TaskManager.Repository
 
             carpeta.Nombre = carpetaM.Nombre;
             carpeta.Descripcion = carpetaM.Descripcion;
-        //    carpeta.FechaCreacion = carpetaM.FechaCreacion;
-        //  carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
+            carpeta.FechaCreacion = DateTime.Now;
+            carpeta.IdUsuario = Session["userLogged"];
             ctx.SaveChanges();
         }
     }
