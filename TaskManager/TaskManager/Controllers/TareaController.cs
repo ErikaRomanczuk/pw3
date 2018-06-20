@@ -10,34 +10,29 @@ namespace TaskManager.Controllers
 {
     public class TareaController : Controller
     {
+        TareaRepository tareaRepository = new TareaRepository();
+
         // GET: Tarea
         public ActionResult Listar()
         {
-            TareaRepository tareaResitory = new TareaRepository();
-            return View(tareaResitory.listarTodos());
+            return View(tareaRepository.listarTodos());
         }
 
         public ActionResult detalle(int id)
         {
-            try { 
-            TareaRepository tareaRepository = new TareaRepository();
-                return View( tareaRepository.buscarPorIdTarea(id) );
-            }catch(Exception e)
-            {
-                return View("error");
-            }
+            return View(tareaRepository.buscarPorIdTarea(id));
         }
+
         public ActionResult Delete()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Crear(Tarea tarea)
+        public ActionResult Crear(TareaM tarea)
         {
             try
             {
-                TareaRepository tareaRepository = new TareaRepository();
                 tareaRepository.crear(tarea);
                 return Redirect("Listar");
             }
@@ -49,7 +44,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Crear()
         {
-            Tarea tarea = new Tarea();
+            TareaM tarea = new TareaM();
             return View(tarea);
         }
 
