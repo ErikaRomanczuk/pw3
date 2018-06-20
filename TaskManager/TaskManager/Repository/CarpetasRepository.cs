@@ -95,7 +95,7 @@ namespace TaskManager.Repository
             carpeta.Nombre = carpetaM.Nombre;
             carpeta.Descripcion = carpetaM.Descripcion;
             carpeta.FechaCreacion = DateTime.Now;
-            carpeta.IdUsuario = Session["userLogged"];
+            //carpeta.IdUsuario = Session["userLogged"];
             ctx.SaveChanges();
         }
     }
