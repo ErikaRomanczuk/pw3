@@ -8,76 +8,87 @@ namespace TaskManager.Repository
 {
     public class TareaRepository
     {
-
-        private static List<Tarea> Tareas = new List<Tarea>();
-        private static int idTarea = 0;
-        public List<Tarea> listarTodos()
+        Context ctx = new Context();
+        public List<TareaM> listarTodos()
         {
-            Tarea tarea1 = new Tarea();
-            tarea1.IdTarea = ++idTarea;
-            tarea1.Nombre = "Tarea1";
-            tarea1.Descripcion = "Descripcion tarea 1";
-            tarea1.EstimadoHoras = 10;
-            tarea1.FechaFin = DateTime.Now;
-            tarea1.Prioridad = 1;
+            List<Tarea> tareas = new List<Tarea>();
+            tareas = ctx.Tarea.ToList();
+            List<TareaM> tareasM = new List<TareaM>();
 
-            Tarea tarea2 = new Tarea();
-            tarea2.IdTarea = ++idTarea;
-            tarea2.Nombre = "Tarea2";
-            tarea2.Descripcion = "Descripcion tarea 2";
-            tarea2.EstimadoHoras = 15;
-            tarea2.FechaFin = DateTime.Now;
-            tarea2.Prioridad = 2;
+            foreach(var tareaEF in tareas)
+            {
+                TareaM tarea = new TareaM();
+                tarea.IdTarea = tareaEF.IdTarea;
+                tarea.Nombre = tareaEF.Nombre;
+                tarea.Descripcion = tareaEF.Descripcion;
+                tarea.FechaFin= tareaEF.FechaFin;
+                tarea.FechaCreacion = tareaEF.FechaCreacion;
+                tarea.Prioridad = tareaEF.Prioridad;
+                // carpeta??
+                tarea.Completada = tareaEF.Completada;
+                tarea.EstimadoHoras = tareaEF.EstimadoHoras;
+                tarea.Usuario = tareaEF.Usuario;
+                tareasM.Add(tarea);
+            }
 
-            Tarea tarea3 = new Tarea();
-            tarea3.IdTarea = ++idTarea;
-            tarea3.Nombre = "Tarea3";
-            tarea3.Descripcion = "Descripcion tarea 3";
-            tarea3.EstimadoHoras = 20;
-            tarea3.FechaFin = DateTime.Now;
-            tarea3.Prioridad = 3;
-
-            Tarea tarea4 = new Tarea();
-            tarea4.IdTarea = ++idTarea;
-            tarea4.Nombre = "Tarea4";
-            tarea4.Descripcion = "Descripcion tarea 4";
-            tarea4.EstimadoHoras = 25;
-            tarea4.FechaFin = DateTime.Now;
-            tarea4.Prioridad = 4;
-
-            Tareas.Add(tarea1);
-            Tareas.Add(tarea2);
-            Tareas.Add(tarea3);
-            Tareas.Add(tarea4);
-
-            return Tareas;
+            return tareasM;
         }
 
         public Tarea buscarPorIdTarea(int id)
         {
-            return Tareas.Find(x => x.IdTarea == id);
-        }
-
-        public void crear(Tarea tarea)
-        {
-            tarea.IdTarea = ++idTarea;
-            Tareas.Add(tarea);
-        }
-
-        public Boolean borrar(int id)
-        {
-            try
+            List<Tarea> tareas = ctx.Tarea.ToList();
+            Tarea tarea = tareas.Where(x => x.IdTarea == id).FirstOrDefault();
+            if( tarea == null)
             {
-                Tareas.RemoveAt(id);
-                return true;
+                throw new Exception("Id de carpeta inexistente");
             }
-            catch (Exception e)
-            {
-                return false;
-            }
-            
+            return tarea;
+        }
+
+        public void crear(TareaM tareaM)
+        {
+            Tarea tarea = new Tarea();
+            tarea.Nombre = tareaM.Nombre;
+            tarea.Descripcion = tareaM.Descripcion;
+            tarea.FechaFin = tareaM.FechaFin;
+            tarea.FechaCreacion = tareaM.FechaCreacion;
+            tarea.Prioridad = tareaM.Prioridad;
+            // carpeta??
+            tarea.Completada = tareaM.Completada;
+            tarea.EstimadoHoras = tareaM.EstimadoHoras;
+            tarea.Nombre = tareaM.Nombre;
+            ctx.Tarea.Add(tarea);
+            ctx.SaveChanges();
         }
 
 
+        public void Borrar(int id)
+        {
+            Tarea tarea = buscarPorIdTarea(id);
+            ctx.Tarea.Remove(tarea);
+            ctx.SaveChanges();
+        }
+
+        public Tarea Modificar(TareaM tareaM)
+        {
+            Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
+            if ( tarea == null )
+            {
+                throw new ArgumentException("Carpeta con id: " + tarea.IdTarea + " es inexistente");
+            }
+            tarea.Nombre = tareaM.Nombre;
+            tarea.Descripcion = tareaM.Descripcion;
+            tarea.FechaFin = tareaM.FechaFin;
+            tarea.FechaCreacion = tareaM.FechaCreacion;
+            tarea.Prioridad = tareaM.Prioridad;
+            // carpeta??
+            tarea.Completada = tareaM.Completada;
+            tarea.EstimadoHoras = tareaM.EstimadoHoras;
+            tarea.Nombre = tareaM.Nombre;
+
+            ctx.Tarea.Add(tarea);
+            ctx.SaveChanges();
+            return tarea;
+        }
     }
 }
