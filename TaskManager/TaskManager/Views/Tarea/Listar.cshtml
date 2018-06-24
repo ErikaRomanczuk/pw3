@@ -1,8 +1,8 @@
-﻿@using TaskManager.Controllers
-@Model List<Tarea>
+﻿@using TaskManager.Models
+@model List<TareaM>
 
     @{
-        ViewBag.Title = "Listar";
+        ViewBag.Title = "Listar Tareas";
     }
 
     <h2>Listar</h2>
@@ -21,14 +21,14 @@
     <tbody>
         @foreach( var tarea in Model )
         {
-        <tr>
-            <td>@tarea.IdTarea</td>
-            <td>@tarea.Nombre</td>
-            <td>@tarea.Descripcion</td>
-            <td>@tarea.EstimadoHoras</td>
-            <td>@tarea.FechaFin</td>
-            <td>@tarea.Prioridad</td>
-        </tr>
+            <tr>
+                <td>@tarea.IdTarea</td>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.Descripcion</td>
+                <td>@tarea.EstimadoHoras</td>
+                <td>@tarea.FechaFin</td>
+                <td>@tarea.Prioridad</td>
+            </tr>
         }
     </tbody>
 </table>
