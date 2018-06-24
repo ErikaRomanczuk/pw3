@@ -41,8 +41,10 @@
             public decimal? EstimadoHoras { get; set; }
 
             public int IdTarea { get; set; }
-            //    IdCarpeta
-            //    IdUsuario
 
-        }
+            public UsuarioM UsuarioM{ get; set; }
+
+        //    IdCarpeta
+
+    }
     }

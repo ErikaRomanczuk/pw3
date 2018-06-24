@@ -18,6 +18,7 @@ namespace TaskManager.Repository
             foreach(var tareaEF in tareas)
             {
                 TareaM tarea = new TareaM();
+                tarea.IdTarea = tareaEF.IdTarea;
                 tarea.Nombre = tareaEF.Nombre;
                 tarea.Descripcion = tareaEF.Descripcion;
                 tarea.FechaFin= tareaEF.FechaFin;
@@ -26,7 +27,8 @@ namespace TaskManager.Repository
                 // carpeta??
                 tarea.Completada = tareaEF.Completada;
                 tarea.EstimadoHoras = tareaEF.EstimadoHoras;
-
+                tarea.Usuario = tareaEF.Usuario;
+                tareasM.Add(tarea);
             }
 
             return tareasM;
