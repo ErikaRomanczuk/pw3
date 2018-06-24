@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Repository;
+using Recaptcha;
 
 namespace TaskManager.Controllers
 {
@@ -13,14 +14,15 @@ namespace TaskManager.Controllers
         // GET: Login
         public ActionResult Login()
         {
+            UsuarioM user = new UsuarioM();
             return View();
         }
-        
+
         [HttpPost]
-        public ActionResult ValidarLogin(Usuario user)
+        public ActionResult ValidarLogin(UsuarioM user)
         {
             bool validacion = new LoginRepository().VerificarLogin(user);
-        
+ 
             if (validacion)
             {
                 return RedirectToAction("Index", "Home", null);
@@ -29,25 +31,38 @@ namespace TaskManager.Controllers
             {
                 return RedirectToAction("Login");
             }
+
         }
-        
+
         public ActionResult Registracion()
         {
             return View();
         }
-        
-      //  [HttpPost]
-      //  public ActionResult Registracion(Usuario user)
-      //  {
-      //      if(new LoginRepository().RegistrarNewUser(user))
-      //      {
-      //        return RedirectToAction("ValidarLogin", user);
-      //      }
-      //      else
-      //      {
-      //          // Aca iria el return de la vista "amigable" de que ya existe un usuario activo con ese mail
-      //      }
-      //      return RedirectToAction("Login");
-      //  }
+
+        [HttpPost]
+        public ActionResult Registracion(UsuarioM user)
+        {
+             RegistracionRepository registracionRepository = new RegistracionRepository();
+
+            string EncodedResponse = Request.Form["g-Recaptcha-Response"];
+            bool recaptcha = (registracionRepository.IsReCaptchValid(Request.Form["g-Recaptcha-Response"]));
+
+            if (recaptcha)
+            {
+                if(registracionRepository.verificarCampoVacio(user))
+                {
+                    if (registracionRepository.RegistrarNewUser(user))
+                    {
+                        return RedirectToAction("ValidarLogin", user);
+                    }
+                    else
+                    {
+                        ViewBag.errorMailEnUso = "El E-Mail ya se encuentra en uso";
+                    }
+                }
+            }
+            ViewBag.errorCaptcha = "Captcha Incorrecto";
+            return View(user);
+        }
     }
 }

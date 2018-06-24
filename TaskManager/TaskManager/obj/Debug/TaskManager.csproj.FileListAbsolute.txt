@@ -72,3 +72,45 @@ C:\Users\Nabri\source\repos\TP\TaskManager\TaskManager\bin\EntityFramework.dll
 C:\Users\Nabri\source\repos\TP\TaskManager\TaskManager\bin\EntityFramework.SqlServer.dll
 C:\Users\Nabri\source\repos\TP\TaskManager\TaskManager\bin\EntityFramework.xml
 C:\Users\Nabri\source\repos\TP\TaskManager\TaskManager\bin\EntityFramework.SqlServer.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\csc.exe
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\System.Collections.Immutable.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\System.Reflection.Metadata.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\vbc.exe
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\VBCSCompiler.exe
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\roslyn\VBCSCompiler.exe.config
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\TaskManager.dll.config
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\TaskManager.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\TaskManager.pdb
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\EntityFramework.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\EntityFramework.SqlServer.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Helpers.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Mvc.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Razor.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Deployment.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Razor.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\EntityFramework.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\EntityFramework.SqlServer.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Razor.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Deployment.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Razor.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Helpers.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\System.Web.Mvc.xml
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csprojResolveAssemblyReference.cache
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csproj.CoreCompileInputs.cache
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csproj.CopyComplete
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Recaptcha.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.dll
+C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.xml

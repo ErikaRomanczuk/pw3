@@ -30,8 +30,8 @@ namespace TaskManager.Models
         //TODO: Buscar experesion regular para contraseña
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [RegularExpression(@"^([^<>]){1,50}$", ErrorMessage = "El campo {0} es obligatorio.")]
-        [Display(Name = "Contraseña *")]
-        public string Contraseña { get; set; }
+        [Display(Name = "Contrasena *")]
+        public string Contrasena { get; set; }
 
         [Display(Name = "Activo")]
         public int Activo { get; set; }
@@ -48,5 +48,7 @@ namespace TaskManager.Models
         public List<CarpetaM> Carpetas { get; set; }
 
         public List<Tarea> Tarea { get; set; }
+
+        public string ErrorRegistro;
     }
 }
