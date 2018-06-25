@@ -16,19 +16,24 @@
             <th>Horas Estimadas</th>
             <th>Fecha Fin</th>
             <th>Prioridad</th>
+            <th>Acción</th>
         </tr>
     </thead>
     <tbody>
         @foreach( var tarea in Model )
         {
-            <tr>
-                <td>@tarea.IdTarea</td>
-                <td>@tarea.Nombre</td>
-                <td>@tarea.Descripcion</td>
-                <td>@tarea.EstimadoHoras</td>
-                <td>@tarea.FechaFin</td>
-                <td>@tarea.Prioridad</td>
-            </tr>
+        <tr>
+            <td>@tarea.IdTarea</td>
+            <td>@tarea.Nombre</td>
+            <td>@tarea.Descripcion</td>
+            <td>@tarea.EstimadoHoras</td>
+            <td>@tarea.FechaFin</td>
+            <td>@tarea.Prioridad</td>
+            <td>
+                @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = tarea.IdTarea})
+                @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = tarea.IdTarea })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

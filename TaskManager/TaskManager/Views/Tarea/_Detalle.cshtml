@@ -1,4 +1,4 @@
-﻿@model TaskManager.Models.Tarea
+﻿@model TaskManager.Models.TareaM
 
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -61,4 +61,14 @@
     </div>
 </div>
 
-
+<div class="form-group">
+    <label for="Carpeta">Carpeta</label>
+    <div class="col-md-12">
+        <select id="Carpeta" name="Carpeta">
+            @foreach(var c in ViewBag.carpeta)
+            {
+                <option value="c.IdCarpeta">c.Nombre</option>
+            }
+        </select>
+    </div>
+</div>

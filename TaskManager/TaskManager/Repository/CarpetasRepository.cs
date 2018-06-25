@@ -93,8 +93,8 @@ namespace TaskManager.Repository
 
             carpeta.Nombre = carpetaM.Nombre;
             carpeta.Descripcion = carpetaM.Descripcion;
-        //    carpeta.FechaCreacion = carpetaM.FechaCreacion;
-        //  carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
+            //    carpeta.FechaCreacion = carpetaM.FechaCreacion;
+            //  carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
             ctx.SaveChanges();
         }
     }

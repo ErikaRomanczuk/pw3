@@ -114,3 +114,44 @@ C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
 C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Recaptcha.dll
 C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.dll
 C:\Program Files\Web3\new\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csprojAssemblyReference.cache
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csproj.CoreCompileInputs.cache
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.pdb
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\csc.exe
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\vbc.exe
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\VBCSCompiler.exe
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\TaskManager.dll.config
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\TaskManager.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\TaskManager.pdb
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\EntityFramework.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\EntityFramework.SqlServer.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Helpers.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Mvc.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Razor.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Deployment.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Razor.dll
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\EntityFramework.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\EntityFramework.SqlServer.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\Newtonsoft.Json.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Razor.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Deployment.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Webpages.Razor.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Helpers.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\bin\System.Web.Mvc.xml
+C:\Users\Dev\Desktop\web3\pw3\TaskManager\TaskManager\obj\Debug\TaskManager.csproj.CopyComplete

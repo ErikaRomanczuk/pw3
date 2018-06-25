@@ -23,14 +23,18 @@ namespace TaskManager.Controllers
             return View(tareaRepository.buscarPorIdTarea(id));
         }
 
-        public ActionResult Delete()
+        [HttpPost]
+        public ActionResult Delete(int id)
         {
-            return View();
+            tareaRepository.Borrar(id);
+            return RedirectToAction("Listar");
         }
 
         [HttpPost]
         public ActionResult Crear(TareaM tarea)
         {
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            ViewBag.carpetas = carpetasRepository.listarCarpetasM();
             try
             {
                 tareaRepository.crear(tarea);
@@ -48,18 +52,19 @@ namespace TaskManager.Controllers
             return View(tarea);
         }
 
-        /** NOT WOWRKING 
+        
+        public ActionResult Modificar(int idTarea)
+        {
+            Tarea tarea = tareaRepository.buscarPorIdTarea(idTarea);
+            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+            return View(tareaM);
+        }
+
         [HttpPost]
         public ActionResult Modificar(Tarea usuario)
         {
             return View();
         }
-
-        public ActionResult Modificar()
-        {
-            return View();
-        }
-        **/
 
     }
 }

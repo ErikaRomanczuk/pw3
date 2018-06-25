@@ -179,6 +179,7 @@
     <Compile Include="Models\CarpetaM.cs" />
     <Compile Include="Models\ComentarioTarea.cs" />
     <Compile Include="Models\Tarea.cs" />
+    <Compile Include="Models\TareaM.cs" />
     <Compile Include="Models\UsuarioM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CarpetasRepository.cs" />

@@ -11,8 +11,9 @@ namespace TaskManager.Repository
         Context ctx = new Context();
         public List<TareaM> listarTodos()
         {
+            Context ctx2 = new Context();
             List<Tarea> tareas = new List<Tarea>();
-            tareas = ctx.Tarea.ToList();
+            tareas = ctx2.Tarea.ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach(var tareaEF in tareas)
@@ -27,7 +28,7 @@ namespace TaskManager.Repository
                 // carpeta??
                 tarea.Completada = tareaEF.Completada;
                 tarea.EstimadoHoras = tareaEF.EstimadoHoras;
-                tarea.Usuario = tareaEF.Usuario;
+                //tarea.Usuario = tareaEF.Usuario;
                 tareasM.Add(tarea);
             }
 
@@ -78,10 +79,8 @@ namespace TaskManager.Repository
             }
             tarea.Nombre = tareaM.Nombre;
             tarea.Descripcion = tareaM.Descripcion;
-            tarea.FechaFin = tareaM.FechaFin;
-            tarea.FechaCreacion = tareaM.FechaCreacion;
+            tarea.FechaFin = tareaM.FechaFin;   
             tarea.Prioridad = tareaM.Prioridad;
-            // carpeta??
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
             tarea.Nombre = tareaM.Nombre;
@@ -89,6 +88,23 @@ namespace TaskManager.Repository
             ctx.Tarea.Add(tarea);
             ctx.SaveChanges();
             return tarea;
+        }
+
+        public TareaM ModelarTarea(Tarea tarea)
+        {
+            TareaM tareaM = new TareaM();
+            tareaM.Nombre = tarea.Nombre;
+            tareaM.Descripcion = tarea.Descripcion;
+            tareaM.FechaFin = tarea.FechaFin;
+            tareaM.FechaCreacion = tarea.FechaCreacion;
+            tareaM.Prioridad = tarea.Prioridad;
+            tareaM.Completada = tarea.Completada;
+            tareaM.EstimadoHoras = tarea.EstimadoHoras;
+            tareaM.Nombre = tarea.Nombre;
+            // carpeta??
+            // usuario??
+            
+            return tareaM;
         }
     }
 }
