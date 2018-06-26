@@ -15,7 +15,16 @@ namespace TaskManager.Controllers
         // GET: Tarea
         public ActionResult Listar()
         {
-            return View(tareaRepository.listarTodos());
+            String filtro = Request["filtro"];
+            if (filtro != null && filtro != "")
+            {
+                return View(tareaRepository.listarConFiltroCompletado(filtro));
+            }
+            else
+            {
+                return View(tareaRepository.listarTodos());
+            }
+
         }
 
         public ActionResult detalle(int id)
@@ -46,7 +55,7 @@ namespace TaskManager.Controllers
             return View(tarea);
         }
 
-        
+
         public ActionResult Modificar(int idTarea)
         {
             Tarea tarea = tareaRepository.buscarPorIdTarea(idTarea);

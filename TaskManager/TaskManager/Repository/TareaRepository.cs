@@ -15,24 +15,30 @@ namespace TaskManager.Repository
 
         public List<TareaM> listarTodos()
         {
-            Context ctx2 = new Context();
+            Context ctx = new Context();
             List<Tarea> tareas = new List<Tarea>();
-            tareas = ctx2.Tarea.ToList();
+            tareas = ctx.Tarea.ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach (var tareaEF in tareas)
             {
-                TareaM tarea = new TareaM();
-                tarea.IdTarea = tareaEF.IdTarea;
-                tarea.Nombre = tareaEF.Nombre;
-                tarea.Descripcion = tareaEF.Descripcion;
-                tarea.FechaFin = tareaEF.FechaFin;
-                tarea.FechaCreacion = tareaEF.FechaCreacion;
-                tarea.Prioridad = tareaEF.Prioridad;
+                TareaM tarea = ModelarTarea(tareaEF);
+                tareasM.Add(tarea);
+            }
 
-                tarea.Completada = tareaEF.Completada;
-                tarea.EstimadoHoras = tareaEF.EstimadoHoras;
-                //tarea.Usuario = tareaEF.Usuario;
+            return tareasM;
+        }
+
+        public List<TareaM> listarConFiltroCompletado(String completado)
+        {
+            List<Tarea> tareas = new List<Tarea>();
+            int filtro = int.Parse(completado);
+            tareas = ctx.Tarea.Where(x => x.Completada == filtro).ToList();
+            List<TareaM> tareasM = new List<TareaM>();
+
+            foreach (var tareaEF in tareas)
+            {
+                TareaM tarea = ModelarTarea(tareaEF);
                 tareasM.Add(tarea);
             }
 
