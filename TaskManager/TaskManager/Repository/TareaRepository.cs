@@ -9,6 +9,8 @@ namespace TaskManager.Repository
     public class TareaRepository
     {
         Context ctx = new Context();
+        LoginRepository loginRepository = new LoginRepository();
+
         public List<TareaM> listarTodos()
         {
             Context ctx2 = new Context();
@@ -57,6 +59,7 @@ namespace TaskManager.Repository
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
             tarea.Nombre = tareaM.Nombre;
+            tarea.IdUsuario = loginRepository.GetUser().IdUsuario;
             ctx.Tarea.Add(tarea);
             ctx.SaveChanges();
         }
