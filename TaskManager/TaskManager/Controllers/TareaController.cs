@@ -12,6 +12,7 @@ namespace TaskManager.Controllers
     {
         TareaRepository tareaRepository = new TareaRepository();
         CarpetasRepository carpetasRepository = new CarpetasRepository();
+        LoginRepository loginRepository = new LoginRepository();
 
         // GET: Tarea
         public ActionResult Listar()
@@ -35,7 +36,12 @@ namespace TaskManager.Controllers
 
         public ActionResult Eliminar(int IdTarea)
         {
-            tareaRepository.Borrar(IdTarea);
+            Tarea tarea = new Tarea();
+            tarea = tareaRepository.buscarPorIdTarea((IdTarea));
+            if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
+            {
+                tareaRepository.Borrar(IdTarea);
+            }
             return RedirectToAction("Listar");
         }
 
@@ -63,8 +69,12 @@ namespace TaskManager.Controllers
             {
                 throw new Exception("Id de carpeta inexistente : " + idTarea);
             }
-            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
-            return View(tareaM);
+            if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
+            {
+                TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+                return View(tareaM);
+            }
+            return RedirectToAction("Listar");
         }
 
         [HttpPost]
