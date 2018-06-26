@@ -33,10 +33,9 @@ namespace TaskManager.Controllers
             return View(tareaRepository.buscarPorIdTarea(id));
         }
 
-        [HttpPost]
-        public ActionResult Delete(int id)
+        public ActionResult Eliminar(int IdTarea)
         {
-            tareaRepository.Borrar(id);
+            tareaRepository.Borrar(IdTarea);
             return RedirectToAction("Listar");
         }
 
