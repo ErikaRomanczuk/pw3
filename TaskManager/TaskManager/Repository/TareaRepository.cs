@@ -66,10 +66,8 @@ namespace TaskManager.Repository
             tarea.Prioridad = tareaM.Prioridad;
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
-            if (idCarpeta != null && idCarpeta != "")
-            {
-                tarea.IdCarpeta = int.Parse(idCarpeta);
-            }
+            int idCarpeta2 = int.Parse(idCarpeta);
+            tarea.IdCarpeta = idCarpeta2;
             tarea.Nombre = tareaM.Nombre;
             tarea.IdUsuario = loginRepository.GetUser().IdUsuario;
             ctx.Tarea.Add(tarea);
@@ -84,23 +82,30 @@ namespace TaskManager.Repository
             ctx.SaveChanges();
         }
 
-        public Tarea Modificar(TareaM tareaM)
+        public Tarea Modificar(TareaM tareaM, string idCarpeta)
         {
             Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
             if (tarea == null)
             {
                 throw new ArgumentException("Tarea con id: " + tarea.IdTarea + " es inexistente");
             }
-            tarea.Nombre = tareaM.Nombre;
-            tarea.Descripcion = tareaM.Descripcion;
-            tarea.FechaFin = tareaM.FechaFin;
-            tarea.Prioridad = tareaM.Prioridad;
-            tarea.Completada = tareaM.Completada;
-            tarea.EstimadoHoras = tareaM.EstimadoHoras;
-            tarea.Nombre = tareaM.Nombre;
+            try
+            {
+                tarea.Nombre = tareaM.Nombre;
+                tarea.Descripcion = tareaM.Descripcion;
+                tarea.FechaFin = tareaM.FechaFin;
+                tarea.Prioridad = tareaM.Prioridad;
+                tarea.Completada = tareaM.Completada;
+                tarea.EstimadoHoras = tareaM.EstimadoHoras;
+                tarea.Nombre = tareaM.Nombre;
+                tarea.IdCarpeta = int.Parse(idCarpeta);
 
-            ctx.Tarea.Add(tarea);
-            ctx.SaveChanges();
+                ctx.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception("Bool" + e);
+            }
             return tarea;
         }
 
@@ -118,7 +123,6 @@ namespace TaskManager.Repository
             tareaM.EstimadoHoras = tarea.EstimadoHoras;
             tareaM.Nombre = tarea.Nombre;
 
-            tareaM.IdUsuario = tarea.IdUsuario;
             if (tarea.IdUsuario != null)
             {
                 int idUsuario = tarea.IdUsuario;
@@ -128,7 +132,6 @@ namespace TaskManager.Repository
 
             if (tarea.IdCarpeta != null)
             {
-                tareaM.IdCarpeta = tarea.IdCarpeta;
                 Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
                 tareaM.CarpetaM = carpetasRepository.ModelarCarpeta(c);
             }

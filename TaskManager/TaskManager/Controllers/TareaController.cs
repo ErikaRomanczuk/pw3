@@ -11,6 +11,7 @@ namespace TaskManager.Controllers
     public class TareaController : Controller
     {
         TareaRepository tareaRepository = new TareaRepository();
+        CarpetasRepository carpetasRepository = new CarpetasRepository();
 
         // GET: Tarea
         public ActionResult Listar()
@@ -50,7 +51,6 @@ namespace TaskManager.Controllers
         public ActionResult Crear()
         {
             TareaM tarea = new TareaM();
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
             ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             return View(tarea);
         }
@@ -58,15 +58,31 @@ namespace TaskManager.Controllers
 
         public ActionResult Modificar(int idTarea)
         {
+            ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             Tarea tarea = tareaRepository.buscarPorIdTarea(idTarea);
+            if (tarea == null)
+            {
+                throw new Exception("Id de carpeta inexistente : " + idTarea);
+            }
             TareaM tareaM = tareaRepository.ModelarTarea(tarea);
             return View(tareaM);
         }
 
         [HttpPost]
-        public ActionResult Modificar(Tarea usuario)
+        public ActionResult Modificar(TareaM tarea)
         {
-            return View();
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            String idCarpeta = Request["Carpeta"];
+            try
+            {
+                tareaRepository.Modificar(tarea, idCarpeta);
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Mensaje = "Error al intentar guardar";
+                return View("Listar", ViewBag);
+            }
+            return RedirectToAction("Listar");
         }
 
     }
