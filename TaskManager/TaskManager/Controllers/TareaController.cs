@@ -33,22 +33,15 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(TareaM tarea)
         {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
-            ViewBag.carpetas = carpetasRepository.listarCarpetasM();
-            try
-            {
-                tareaRepository.crear(tarea);
-                return Redirect("Listar");
-            }
-            catch (Exception e)
-            {
-                return View("error");
-            }
+            tareaRepository.crear(tarea);
+            return Redirect("Listar");
         }
 
         public ActionResult Crear()
         {
             TareaM tarea = new TareaM();
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
+            ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             return View(tarea);
         }
 

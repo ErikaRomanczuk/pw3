@@ -14,7 +14,6 @@
             [Display(Name = "Nombre")]
             public string Nombre { get; set; }
 
-            [Required(ErrorMessage = "El campo {0} es obligatorio.")]
             [RegularExpression(@"^([^<>]){1,200}$", ErrorMessage = "El campo {0} es obligatorio y tiene de maximo 50 caracters.")]
             [Display(Name = "Descripcion")]
             public string Descripcion { get; set; }
@@ -34,7 +33,7 @@
             [Display(Name = "Carpeta")]
             public string Carpeta { get; set; }
 
-            [Display(Name = "Estado")]
+            [Display(Name = "Completado")]
             public short Completada { get; set; }
 
             [Display(Name = "Horas Estimadas")]
@@ -44,7 +43,8 @@
 
             public UsuarioM UsuarioM{ get; set; }
 
-        //    IdCarpeta
+            public int IdCarpeta { get; set; }
 
+            public CarpetaM CarpetaM { get; set; }
     }
     }

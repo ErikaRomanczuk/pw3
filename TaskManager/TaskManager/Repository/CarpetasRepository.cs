@@ -29,6 +29,27 @@ namespace TaskManager.Repository
             return (listaCarpetaM);
         }
 
+        public List<CarpetaM> listarOrdenadasCarpetasM()
+        {
+            List<Carpeta> listaCarpeta = new List<Carpeta>();
+            listaCarpeta = ctx.Carpeta
+                                .OrderBy(c => c.Nombre)
+                                .ToList();
+            List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
+            foreach (var x in listaCarpeta)
+            {
+                CarpetaM carpetaM = new CarpetaM();
+                // carpetaM.Usuario = repositoryUsuario.buscarUsuarioPorId(x.IdUsuario)
+                carpetaM.IdCarpeta = x.IdCarpeta;
+                carpetaM.Nombre = x.Nombre;
+                carpetaM.Descripcion = x.Descripcion;
+                carpetaM.FechaCreacion = x.FechaCreacion;
+                listaCarpetaM.Add(carpetaM);
+            }
+            return (listaCarpetaM);
+        }
+
+
         public void CrearCarpeta(CarpetaM carpetaM)
         {
             Carpeta carpeta = new Carpeta();
@@ -97,5 +118,6 @@ namespace TaskManager.Repository
             //  carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
             ctx.SaveChanges();
         }
+
     }
 }

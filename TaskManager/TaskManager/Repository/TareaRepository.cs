@@ -52,9 +52,8 @@ namespace TaskManager.Repository
             tarea.Nombre = tareaM.Nombre;
             tarea.Descripcion = tareaM.Descripcion;
             tarea.FechaFin = tareaM.FechaFin;
-            tarea.FechaCreacion = tareaM.FechaCreacion;
+            tarea.FechaCreacion = DateTime.Now;
             tarea.Prioridad = tareaM.Prioridad;
-            // carpeta??
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
             tarea.Nombre = tareaM.Nombre;

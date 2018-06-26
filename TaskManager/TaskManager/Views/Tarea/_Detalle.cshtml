@@ -6,6 +6,19 @@
 @Html.HiddenFor(m => m.IdTarea)
 
 <div class="form-group">
+    <label class="col-md-2 control-label" for="Carpeta">Carpeta</label>
+    <div class="col-md-12">
+        <select id="Carpeta" name="Carpeta" class="form-control">
+            <option value="">Sin carpeta</option>
+            @foreach (var c in ViewBag.carpetas)
+            {
+                <option value="@c.IdCarpeta">@c.Nombre</option>
+            }
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
     @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
         @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
@@ -13,10 +26,10 @@
     </div>
 </div>
 
-<div cla    ss="form-group">
+<div class="form-group">
     @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @required = "required" })
+        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control"})
         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -24,7 +37,13 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Prioridad, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Prioridad, new { @class = "form-control", @required = "required" })
+        <select for="Prioridad" id="Carpeta" name="Carpeta" class="form-control">
+            <option value="">Sin prioridad</option>
+            <option value="3">Urgente</option>
+            <option value="2">Alta</option>
+            <option value="1">Media</option>
+            <option value="0">Baja</option>
+        </select>
         @Html.ValidationMessageFor(m => m.Prioridad, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -48,27 +67,11 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Completada, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Completada, new { @class = "form-control", @required = "required" })
+        <select for="Prioridad" id="Completada" name="Completada" class="form-control">
+            <option value="0">No</option>
+            <option value="1">Si</option>
+        </select>
         @Html.ValidationMessageFor(m => m.Completada, "", new { @class = "text-danger" })
     </div>
 </div>
 
-<div class="form-group">
-    @Html.LabelFor(m => m.Carpeta, new { @class = "col-md-2 control-label" })
-    <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Carpeta, new { @class = "form-control", @required = "required" })
-        @Html.ValidationMessageFor(m => m.Carpeta, "", new { @class = "text-danger" })
-    </div>
-</div>
-
-<div class="form-group">
-    <label for="Carpeta">Carpeta</label>
-    <div class="col-md-12">
-        <select id="Carpeta" name="Carpeta">
-            @foreach(var c in ViewBag.carpeta)
-            {
-                <option value="c.IdCarpeta">c.Nombre</option>
-            }
-        </select>
-    </div>
-</div>
