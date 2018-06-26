@@ -9,22 +9,26 @@ namespace TaskManager.Repository
     public class CarpetasRepository
     {
         UsuarioRepository usuarioRepository = new UsuarioRepository();
+        LoginRepository loginRepository = new LoginRepository();
         Context ctx = new Context();
 
         public List<CarpetaM> listarCarpetasM()
         {
             List<Carpeta> listaCarpeta = new List<Carpeta>();
-               listaCarpeta =  ctx.Carpeta.ToList();
+            listaCarpeta =  ctx.Carpeta.ToList();
+            listaCarpeta = listaCarpeta.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
+
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
             foreach(var x in listaCarpeta)
             {
                 CarpetaM carpetaM = new CarpetaM();
-                // carpetaM.Usuario = repositoryUsuario.buscarUsuarioPorId(x.IdUsuario)
+                carpetaM.Usuario = loginRepository.GetUser();
                 carpetaM.IdCarpeta = x.IdCarpeta;
                 carpetaM.Nombre = x.Nombre;
                 carpetaM.Descripcion = x.Descripcion;
                 carpetaM.FechaCreacion = x.FechaCreacion;
                 listaCarpetaM.Add(carpetaM);
+
             }
             return (listaCarpetaM);
         }
@@ -55,7 +59,7 @@ namespace TaskManager.Repository
             Carpeta carpeta = new Carpeta();
             carpeta.Descripcion = carpetaM.Descripcion;
             carpeta.Nombre = carpetaM.Nombre;
-            //agregar usuario
+            carpeta.IdUsuario = loginRepository.GetUser().IdUsuario;
             carpeta.FechaCreacion = DateTime.Now;
             ctx.Carpeta.Add(carpeta);
             ctx.SaveChanges();
@@ -97,6 +101,18 @@ namespace TaskManager.Repository
             return carpetaM;
         }
 
+        public Carpeta ConvertirModelo (CarpetaM carpetaM)
+        {
+            Carpeta carpeta = new Carpeta();
+            carpeta.IdCarpeta = carpetaM.IdCarpeta;
+            carpeta.Nombre = carpetaM.Nombre;
+            carpeta.Descripcion = carpetaM.Descripcion;
+            carpeta.FechaCreacion = carpetaM.FechaCreacion;
+            carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
+
+            return carpeta;
+        }
+
         public void EliminarCarpeta (int idCarpeta)
         {
             Carpeta carpeta = BuscarCarpetaPorId(idCarpeta);
@@ -114,10 +130,29 @@ namespace TaskManager.Repository
 
             carpeta.Nombre = carpetaM.Nombre;
             carpeta.Descripcion = carpetaM.Descripcion;
-            //    carpeta.FechaCreacion = carpetaM.FechaCreacion;
-            //  carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
             ctx.SaveChanges();
         }
 
+        public void CrearCarpetaGeneral (int IdUsuario)
+        {
+            Carpeta carpeta = new Carpeta();
+            carpeta.Nombre = "General";
+            carpeta.Descripcion = "Carpeta por defecto";
+            carpeta.FechaCreacion = DateTime.Now;
+            carpeta.IdUsuario = IdUsuario;
+            ctx.Carpeta.Add(carpeta);
+            ctx.SaveChanges();
+        }
+
+        public string autentificarCarpeta (int idCarpeta)
+        {
+            Carpeta carpeta = BuscarCarpetaPorId(idCarpeta);
+            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            {
+                return "Listar";
+            }
+
+            else return null;
+        }
     }
 }

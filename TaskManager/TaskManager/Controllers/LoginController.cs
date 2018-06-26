@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("/Carpetas/Listar");
             }
 
         }

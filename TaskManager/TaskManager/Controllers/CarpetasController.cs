@@ -10,6 +10,8 @@ namespace TaskManager.Controllers
 {
     public class CarpetasController : Controller
     {
+        private object loginRepository;
+
         // GET: Carpeta
         public ActionResult Listar()
         {
@@ -34,7 +36,17 @@ namespace TaskManager.Controllers
         public ActionResult Modificar(int idCarpeta)
         {
             CarpetasRepository carpetasRepository = new CarpetasRepository();
-            Carpeta carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
+
+            //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
+            //id inválida por url
+            LoginRepository loginRepository = new LoginRepository();
+            Carpeta carpeta = new Carpeta();
+            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            {
+                return RedirectToAction("Listar");
+            }
+            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
             CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(carpeta);
             return View(carpetaM);
         }
@@ -57,8 +69,31 @@ namespace TaskManager.Controllers
         public ActionResult Eliminar (int idCarpeta)
         {
             CarpetasRepository carpetasRepository = new CarpetasRepository();
+            //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
+            //id inválida por url
+            LoginRepository loginRepository = new LoginRepository();
+            Carpeta carpeta = new Carpeta();
+            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            {
+                return RedirectToAction("Listar");
+            }
             carpetasRepository.EliminarCarpeta(idCarpeta);
             return RedirectToAction("Listar");
+        }
+
+        public ActionResult Prueba()
+        {
+            Context ctx = new Context();
+            Carpeta c = new Carpeta();
+            c.Nombre = "Prueba";
+            c.Descripcion = "Prueba";
+            c.FechaCreacion = DateTime.Now;
+            c.IdUsuario = 2;
+            ctx.Carpeta.Add(c);
+            ctx.SaveChanges();
+
+            return View();
         }
     }
 }
