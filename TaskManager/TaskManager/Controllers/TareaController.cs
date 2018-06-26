@@ -33,7 +33,8 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(TareaM tarea)
         {
-            tareaRepository.crear(tarea);
+            String idCarpeta = Request["Carpeta"];
+            tareaRepository.Crear(tarea, idCarpeta);
             return Redirect("Listar");
         }
 

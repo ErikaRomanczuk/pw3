@@ -41,9 +41,11 @@
 
             public int IdTarea { get; set; }
 
+            public int? IdUsuario { get; set; }
+
             public UsuarioM UsuarioM{ get; set; }
 
-            public int IdCarpeta { get; set; }
+            public int? IdCarpeta { get; set; }
 
             public CarpetaM CarpetaM { get; set; }
     }

@@ -10,6 +10,8 @@ namespace TaskManager.Repository
     {
         Context ctx = new Context();
         LoginRepository loginRepository = new LoginRepository();
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
+        CarpetasRepository carpetasRepository = new CarpetasRepository();
 
         public List<TareaM> listarTodos()
         {
@@ -18,16 +20,16 @@ namespace TaskManager.Repository
             tareas = ctx2.Tarea.ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
-            foreach(var tareaEF in tareas)
+            foreach (var tareaEF in tareas)
             {
                 TareaM tarea = new TareaM();
                 tarea.IdTarea = tareaEF.IdTarea;
                 tarea.Nombre = tareaEF.Nombre;
                 tarea.Descripcion = tareaEF.Descripcion;
-                tarea.FechaFin= tareaEF.FechaFin;
+                tarea.FechaFin = tareaEF.FechaFin;
                 tarea.FechaCreacion = tareaEF.FechaCreacion;
                 tarea.Prioridad = tareaEF.Prioridad;
-                // carpeta??
+
                 tarea.Completada = tareaEF.Completada;
                 tarea.EstimadoHoras = tareaEF.EstimadoHoras;
                 //tarea.Usuario = tareaEF.Usuario;
@@ -41,14 +43,14 @@ namespace TaskManager.Repository
         {
             List<Tarea> tareas = ctx.Tarea.ToList();
             Tarea tarea = tareas.Where(x => x.IdTarea == id).FirstOrDefault();
-            if( tarea == null)
+            if (tarea == null)
             {
                 throw new Exception("Id de carpeta inexistente");
             }
             return tarea;
         }
 
-        public void crear(TareaM tareaM)
+        public void Crear(TareaM tareaM, String idCarpeta)
         {
             Tarea tarea = new Tarea();
             tarea.Nombre = tareaM.Nombre;
@@ -58,6 +60,10 @@ namespace TaskManager.Repository
             tarea.Prioridad = tareaM.Prioridad;
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
+            if (idCarpeta != null && idCarpeta != "")
+            {
+                tarea.IdCarpeta = int.Parse(idCarpeta);
+            }
             tarea.Nombre = tareaM.Nombre;
             tarea.IdUsuario = loginRepository.GetUser().IdUsuario;
             ctx.Tarea.Add(tarea);
@@ -75,13 +81,13 @@ namespace TaskManager.Repository
         public Tarea Modificar(TareaM tareaM)
         {
             Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
-            if ( tarea == null )
+            if (tarea == null)
             {
-                throw new ArgumentException("Carpeta con id: " + tarea.IdTarea + " es inexistente");
+                throw new ArgumentException("Tarea con id: " + tarea.IdTarea + " es inexistente");
             }
             tarea.Nombre = tareaM.Nombre;
             tarea.Descripcion = tareaM.Descripcion;
-            tarea.FechaFin = tareaM.FechaFin;   
+            tarea.FechaFin = tareaM.FechaFin;
             tarea.Prioridad = tareaM.Prioridad;
             tarea.Completada = tareaM.Completada;
             tarea.EstimadoHoras = tareaM.EstimadoHoras;
@@ -95,6 +101,8 @@ namespace TaskManager.Repository
         public TareaM ModelarTarea(Tarea tarea)
         {
             TareaM tareaM = new TareaM();
+
+            tareaM.IdTarea = tarea.IdTarea;
             tareaM.Nombre = tarea.Nombre;
             tareaM.Descripcion = tarea.Descripcion;
             tareaM.FechaFin = tarea.FechaFin;
@@ -103,9 +111,22 @@ namespace TaskManager.Repository
             tareaM.Completada = tarea.Completada;
             tareaM.EstimadoHoras = tarea.EstimadoHoras;
             tareaM.Nombre = tarea.Nombre;
-            // carpeta??
-            // usuario??
-            
+
+            tareaM.IdUsuario = tarea.IdUsuario;
+            if (tarea.IdUsuario != null)
+            {
+                int idUsuario = tarea.IdUsuario;
+                Usuario usuario = usuarioRepository.buscarUsuarioPorId(idUsuario);
+                tareaM.UsuarioM = usuarioRepository.modelarUsuario(usuario);
+            }
+
+            if (tarea.IdCarpeta != null)
+            {
+                tareaM.IdCarpeta = tarea.IdCarpeta;
+                Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+                tareaM.CarpetaM = carpetasRepository.ModelarCarpeta(c);
+            }
+
             return tareaM;
         }
     }
