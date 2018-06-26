@@ -8,8 +8,8 @@
 <h2>Listar</h2>
 
     <form method="get" action="" calss="form-control">
-        <label class="col-md-2 control-label" for="filtro">filtro</label>
         <div class="form-group">
+            <label class="col-md-2 control-label" for="filtro">filtro</label>
             <div class="col-md-8">
                 <select for="filtro" id="filtro" name="filtro" class="form-control">
                     <option value=""> Todos</option>
@@ -48,8 +48,8 @@
                     <td>@tarea.FechaFin</td>
                     <td>@tarea.Prioridad</td>
                     <td>
-                        @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = tarea.IdTarea })
-                        @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = tarea.IdTarea })
+                        @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
+                        @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
                     </td>
                 </tr>
                 }
