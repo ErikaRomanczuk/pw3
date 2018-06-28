@@ -11,10 +11,8 @@
 <table class="table table-striped">
     <thead>
         <tr>
-            <th>ID</th>
             <th>Nombre</th>
             <th>Descripción</th>
-            <th>Usuario</th>
             <th>Fecha de creación</th>
             <th>Acción</th>
         </tr>
@@ -23,10 +21,8 @@
         @foreach (var carpeta in Model)
         {
         <tr>
-            <td>@carpeta.IdCarpeta</td>
             <td>@carpeta.Nombre</td>
             <td>@carpeta.Descripcion</td>
-            <td>@carpeta.Usuario.IdUsuario</td>
             <td>@carpeta.FechaCreacion</td>
             <td>
                 @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })

@@ -131,11 +131,12 @@ namespace TaskManager.Repository
                 tareaM.UsuarioM = usuarioRepository.modelarUsuario(usuario);
             }
 
-            if (tarea.IdCarpeta != null)
-            {
-                Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-                tareaM.CarpetaM = carpetasRepository.ModelarCarpeta(c);
-            }
+            //if (tarea.IdCarpeta != null)
+            //{
+            //    Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+            //    CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(c);
+            //    tareaM.CarpetaM = carpetaM;
+            //}
 
             return tareaM;
         }

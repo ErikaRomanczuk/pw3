@@ -12,10 +12,12 @@ namespace TaskManager.Controllers
     {
         private object loginRepository;
 
+        CarpetasRepository CarpetasRepository = new CarpetasRepository();
+        LoginRepository LoginRepository = new LoginRepository();
+
         // GET: Carpeta
         public ActionResult Listar()
         {
-            CarpetasRepository CarpetasRepository = new CarpetasRepository();
             return View(CarpetasRepository.listarCarpetasM());
         }
 
@@ -28,35 +30,29 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(CarpetaM carpetaM)
         {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
-            carpetasRepository.CrearCarpeta(carpetaM);
+            CarpetasRepository.CrearCarpeta(carpetaM);
             return RedirectToAction("Listar");
         }
 
         public ActionResult Modificar(int idCarpeta)
         {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
-
             //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
             //id inválida por url
-            LoginRepository loginRepository = new LoginRepository();
-            Carpeta carpeta = new Carpeta();
-            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return RedirectToAction("Listar");
             }
-            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(carpeta);
+            carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            CarpetaM carpetaM = CarpetasRepository.ModelarCarpeta(carpeta);
             return View(carpetaM);
         }
         [HttpPost]
         public ActionResult Modificar(CarpetaM carpetaM)
         {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
             try
             {
-                carpetasRepository.ModificarCarpeta(carpetaM);
+                CarpetasRepository.ModificarCarpeta(carpetaM);
             }
             catch (Exception ex)
             {
@@ -68,17 +64,14 @@ namespace TaskManager.Controllers
 
         public ActionResult Eliminar (int idCarpeta)
         {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
             //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
             //id inválida por url
-            LoginRepository loginRepository = new LoginRepository();
-            Carpeta carpeta = new Carpeta();
-            carpeta = carpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
+            if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return RedirectToAction("Listar");
             }
-            carpetasRepository.EliminarCarpeta(idCarpeta);
+            CarpetasRepository.EliminarCarpeta(idCarpeta);
             return RedirectToAction("Listar");
         }
 

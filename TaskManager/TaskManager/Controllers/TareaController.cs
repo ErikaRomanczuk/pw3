@@ -13,6 +13,7 @@ namespace TaskManager.Controllers
         TareaRepository tareaRepository = new TareaRepository();
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         LoginRepository loginRepository = new LoginRepository();
+        DetalleTareaRepository detalleTareaRepository = new DetalleTareaRepository();
 
         // GET: Tarea
         public ActionResult Listar()
@@ -29,9 +30,36 @@ namespace TaskManager.Controllers
 
         }
 
-        public ActionResult detalle(int id)
+        public ActionResult Detalle(int IdTarea)
         {
-            return View(tareaRepository.buscarPorIdTarea(id));
+            Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            if(tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
+            {
+                return RedirectToAction("Listar");
+            }
+            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+            ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
+            return View(tareaM);
+        }
+
+        public ActionResult CrearComentarioTarea (int IdTarea)
+        {
+            Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            if (tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
+            {
+                return RedirectToAction("Listar");
+            }
+            ComentarioTareaM comentarioTareaM = new ComentarioTareaM();
+            ViewBag.IdTarea = IdTarea;
+            return View(comentarioTareaM);
+        }
+
+        [HttpPost]
+        public ActionResult CrearComentarioTareaM(ComentarioTareaM comentarioTareaM)
+        {
+            string IdTarea = Request["IdTarea"];
+            detalleTareaRepository.Crear(comentarioTareaM, IdTarea);
+            return RedirectToAction("Listar");
         }
 
         public ActionResult Eliminar(int IdTarea)

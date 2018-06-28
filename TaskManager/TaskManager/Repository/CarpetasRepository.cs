@@ -16,8 +16,9 @@ namespace TaskManager.Repository
         {
             List<Carpeta> listaCarpeta = new List<Carpeta>();
             listaCarpeta =  ctx.Carpeta.ToList();
-            listaCarpeta = listaCarpeta.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
-
+            listaCarpeta = listaCarpeta.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario)
+                                       .OrderBy(x=> x.Nombre)
+                                       .ToList();
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
             foreach(var x in listaCarpeta)
             {
@@ -43,7 +44,7 @@ namespace TaskManager.Repository
             foreach (var x in listaCarpeta)
             {
                 CarpetaM carpetaM = new CarpetaM();
-                // carpetaM.Usuario = repositoryUsuario.buscarUsuarioPorId(x.IdUsuario)
+                carpetaM.Usuario = loginRepository.GetUser();
                 carpetaM.IdCarpeta = x.IdCarpeta;
                 carpetaM.Nombre = x.Nombre;
                 carpetaM.Descripcion = x.Descripcion;

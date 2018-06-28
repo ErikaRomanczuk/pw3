@@ -49,6 +49,7 @@
                     <td>@tarea.Prioridad</td>
                     <td>
                         @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
+                        @Html.ActionLink("Detalle", "Detalle", new { IdTarea = tarea.IdTarea })
                         @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
                     </td>
                 </tr>
