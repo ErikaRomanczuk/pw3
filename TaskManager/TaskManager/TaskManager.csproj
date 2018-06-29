@@ -121,6 +121,7 @@
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\recaptcha.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -177,12 +178,12 @@
     </Compile>
     <Compile Include="Models\ArchivoTarea.cs" />
     <Compile Include="Models\CarpetaM.cs" />
-    <Compile Include="Models\ComentarioTarea.cs" />
-    <Compile Include="Models\Tarea.cs" />
+    <Compile Include="Models\ComentarioTareaM.cs" />
     <Compile Include="Models\TareaM.cs" />
     <Compile Include="Models\UsuarioM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\CarpetasRepository.cs" />
+    <Compile Include="Repository\DetalleTareaRepository.cs" />
     <Compile Include="Repository\HomeRepository.cs" />
     <Compile Include="Repository\LoginRepository.cs">
       <SubType>ASPXCodeBehind</SubType>

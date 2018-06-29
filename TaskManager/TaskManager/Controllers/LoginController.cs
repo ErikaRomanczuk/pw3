@@ -5,7 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Repository;
-using Recaptcha;
+//using Recaptcha;
 
 namespace TaskManager.Controllers
 {
