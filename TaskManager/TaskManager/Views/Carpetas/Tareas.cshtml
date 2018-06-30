@@ -1,7 +1,58 @@
-﻿@model TaskManager.Models.Tarea
+﻿@using TaskManager.Models
+@model List<TareaM>
+
 @{
-    ViewBag.Title = "Tareas";
+    ViewBag.Title = "Listar Tareas";
 }
 
-<h2>Tareas</h2>
+<h2>Listar</h2>
 
+<form method="get" action="" calss="form-control">
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="filtro">filtro</label>
+        <div class="col-md-8">
+            <select for="filtro" id="filtro" name="filtro" class="form-control">
+                <option value=""> Todos</option>
+                <option value="1">Completas</option>
+                <option value="0">Incompletas</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Aplicar Filtros" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+<br />
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Fecha Fin</th>
+            <th>Nombre</th>
+            <th>Prioridad</th>
+            <th>Carpeta</th>
+            <th>Estimado</th>
+            <th>Completada</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tarea in Model)
+        {
+            <tr>
+                <td>@tarea.FechaFin</td>
+                <td>@tarea.Nombre</td>
+                <td>@tarea.Prioridad</td>
+                <td>@tarea.CarpetaM.Nombre</td>
+                <td>@tarea.EstimadoHoras</td>
+                <td>@tarea.Completada</td>
+                <td>
+                    @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
+                    @Html.ActionLink("Detalle", "Detalle", new { IdTarea = tarea.IdTarea })
+                    @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

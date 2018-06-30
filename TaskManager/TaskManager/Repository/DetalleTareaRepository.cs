@@ -41,5 +41,18 @@ namespace TaskManager.Repository
             }
             return listaComentarioTareaM;
         }
+
+        public void Eliminar(int IdComentarioTarea)
+        {
+            ctx.ComentarioTarea.Remove(buscarComentarioTareaPorId(IdComentarioTarea));
+            ctx.SaveChanges();
+        }
+
+        public void Modificar(ComentarioTareaM comentarioTareaM)
+        {
+            ComentarioTarea comentarioTarea = buscarComentarioTareaPorId(comentarioTareaM.IdComentarioTarea);
+            comentarioTarea.Texto = comentarioTareaM.Texto;
+            ctx.SaveChanges();
+        }
     }
 }

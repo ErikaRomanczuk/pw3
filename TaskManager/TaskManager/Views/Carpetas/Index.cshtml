@@ -1,7 +1,39 @@
-﻿
+﻿@using TaskManager.Controllers
+@using TaskManager.Models
+@model List<CarpetaM>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Listar";
 }
 
-<h2>Index</h2>
+<h2>Listar</h2>
 
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Fecha de creación</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var carpeta in Model)
+        {
+        <tr>
+            <td>@carpeta.Nombre</td>
+            <td>@carpeta.Descripcion</td>
+            <td>@carpeta.FechaCreacion</td>
+            <td>
+                @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })
+                @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = carpeta.IdCarpeta })
+                @Html.ActionLink("Tareas", "Tareas", new { idCarpeta = carpeta.IdCarpeta })
+            </td>
+        </tr>
+        }
+    </tbody>
+
+
+</table>
+
+<a href="Crear" class="btn btn-success"> Crear Carpeta </a>

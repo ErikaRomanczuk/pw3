@@ -16,7 +16,7 @@ namespace TaskManager.Controllers
         LoginRepository LoginRepository = new LoginRepository();
 
         // GET: Carpeta
-        public ActionResult Listar()
+        public ActionResult Index()
         {
             return View(CarpetasRepository.listarCarpetasM());
         }
@@ -31,7 +31,7 @@ namespace TaskManager.Controllers
         public ActionResult Crear(CarpetaM carpetaM)
         {
             CarpetasRepository.CrearCarpeta(carpetaM);
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Modificar(int idCarpeta)
@@ -41,7 +41,7 @@ namespace TaskManager.Controllers
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
             carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             CarpetaM carpetaM = CarpetasRepository.ModelarCarpeta(carpeta);
@@ -57,9 +57,9 @@ namespace TaskManager.Controllers
             catch (Exception ex)
             {
                 ViewBag.Mensaje = "Error al intentar guardar";
-                return View("Listar", ViewBag);
+                return View("Index", ViewBag);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Eliminar (int idCarpeta)
@@ -69,10 +69,10 @@ namespace TaskManager.Controllers
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
             CarpetasRepository.EliminarCarpeta(idCarpeta);
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Prueba()
@@ -87,6 +87,11 @@ namespace TaskManager.Controllers
             ctx.SaveChanges();
 
             return View();
+        }
+
+        public ActionResult Tareas(int IdCarpeta)
+        {
+            return View(CarpetasRepository.ListarTareasDeCarpeta(IdCarpeta));
         }
     }
 }

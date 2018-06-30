@@ -213,7 +213,6 @@
     <Content Include="Views\Tarea\Modificar.cshtml" />
     <Content Include="Views\Carpetas\Tareas.cshtml" />
     <Content Include="Views\Carpetas\Crear.cshtml" />
-    <Content Include="Views\Carpetas\Index.cshtml" />
     <Content Include="Views\Carpetas\_Detalle.cshtml" />
     <Content Include="Views\Tarea\_Detalle.cshtml" />
     <Content Include="Views\Carpetas\Modificar.cshtml" />
@@ -222,7 +221,7 @@
     <Content Include="Views\Tarea\Detalle.cshtml" />
     <Content Include="Views\Login\Registracion.cshtml" />
     <Content Include="Views\Login\_MailRegistradoPopup.cshtml" />
-    <Content Include="Views\Carpetas\Listar.cshtml" />
+    <Content Include="Views\Carpetas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

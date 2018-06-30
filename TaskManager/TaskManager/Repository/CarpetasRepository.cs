@@ -10,6 +10,7 @@ namespace TaskManager.Repository
     {
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         LoginRepository loginRepository = new LoginRepository();
+        TareaRepository tareaRepository = new TareaRepository();
         Context ctx = new Context();
 
         public List<CarpetaM> listarCarpetasM()
@@ -154,6 +155,13 @@ namespace TaskManager.Repository
             }
 
             else return null;
+        }
+
+        public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)
+        {
+           List<TareaM> listaTareaM = tareaRepository.listarTodos();
+            List<TareaM> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
+            return listaDeTareasDeCarpeta;
         }
     }
 }

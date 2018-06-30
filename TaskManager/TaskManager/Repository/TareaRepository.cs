@@ -11,7 +11,7 @@ namespace TaskManager.Repository
         Context ctx = new Context();
         LoginRepository loginRepository = new LoginRepository();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
-        CarpetasRepository carpetasRepository = new CarpetasRepository();
+       // CarpetasRepository carpetasRepository = new CarpetasRepository();
 
         public List<TareaM> listarTodos()
         {
