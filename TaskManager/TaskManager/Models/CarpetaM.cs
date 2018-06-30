@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using TaskManager.Repository;
 
 namespace TaskManager.Models
 {
@@ -24,6 +25,32 @@ namespace TaskManager.Models
         public DateTime FechaCreacion { get; set; }
         // public Usuario IdUsuario { get; set; }
 
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
+
+        public CarpetaM ModelarCarpeta(Carpeta carpeta)
+        {
+            CarpetaM carpetaM = new CarpetaM();
+            carpetaM.IdCarpeta = carpeta.IdCarpeta;
+            carpetaM.Nombre = carpeta.Nombre;
+            carpetaM.Descripcion = carpeta.Descripcion;
+            carpetaM.FechaCreacion = carpeta.FechaCreacion;
+            //guardo el id del usuario, busco al usuario y lo modelo
+            //TODO: Validar nulleable
+            if (carpeta.IdUsuario != null)
+            {
+                int idUsuario = (int)carpeta.IdUsuario;
+                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
+                carpetaM.Usuario = usuarioRepository.ModelarUsuario(usuario);
+
+            }
+            else
+            {
+                //crearle tryCatch para validar si es usuario null
+            }
+
+
+            return carpetaM;
+        }
 
     }
 }

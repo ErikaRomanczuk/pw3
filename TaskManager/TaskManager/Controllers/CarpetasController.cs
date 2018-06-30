@@ -12,6 +12,7 @@ namespace TaskManager.Controllers
     {
         private object loginRepository;
 
+        CarpetaM carpetaModelo = new CarpetaM();
         CarpetasRepository CarpetasRepository = new CarpetasRepository();
         LoginRepository LoginRepository = new LoginRepository();
 
@@ -44,7 +45,7 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Index");
             }
             carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            CarpetaM carpetaM = CarpetasRepository.ModelarCarpeta(carpeta);
+            CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(carpeta);
             return View(carpetaM);
         }
         [HttpPost]
