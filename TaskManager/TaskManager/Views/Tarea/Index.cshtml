@@ -12,14 +12,14 @@
             <h3> FILTRO </h3>
         </div>
         <div class="panel-body">
-            <form method="get" action="Index" calss="form-control">
+            <form method="get" action="" calss="form-control">
                 <div class="form-group">
                     <label for="filtro">Estado</label>
                     <div class="col-md-12">
                         <select for="filtro" id="filtro" name="filtro" class="form-control">
                             <option value=""> Todos</option>
-                            <option value="1">Completas</option>
-                            <option value="0">Incompletas</option>
+                            <option @( Request.Form["filtro"] == "1" ? "selected" : "") value="1" > Completas</option>
+                            <option @( Request.Form["filtro"] == "0" ? "selected" : "") value="0" >Incompletas</option>
                         </select>
                     </div>
                     <div class="form-group">
