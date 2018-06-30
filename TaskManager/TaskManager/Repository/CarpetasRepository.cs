@@ -11,7 +11,6 @@ namespace TaskManager.Repository
         CarpetaM carpetaModelo = new CarpetaM();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         LoginRepository loginRepository = new LoginRepository();
-        TareaRepository tareaRepository = new TareaRepository();
         Context ctx = new Context();
 
         public List<CarpetaM> listarCarpetasM()
@@ -61,7 +60,8 @@ namespace TaskManager.Repository
         public Carpeta BuscarCarpetaPorId(int IdCarpeta)
         {
             List<Carpeta> listaCarpetas = ctx.Carpeta.ToList();
-            Carpeta carpeta = listaCarpetas.Where(x => x.IdCarpeta == IdCarpeta).FirstOrDefault();
+            Carpeta carpeta = new Carpeta();
+            carpeta = listaCarpetas.Where(x => x.IdCarpeta == IdCarpeta).FirstOrDefault();
             if(carpeta == null)
             { 
                 throw new Exception("Id de carpeta inexistente");
@@ -124,11 +124,6 @@ namespace TaskManager.Repository
             else return null;
         }
 
-        public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)
-        {
-           List<TareaM> listaTareaM = tareaRepository.listarTodos();
-            List<TareaM> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
-            return listaDeTareasDeCarpeta;
-        }
+
     }
 }

@@ -11,7 +11,8 @@ namespace TaskManager.Repository
         Context ctx = new Context();
         LoginRepository loginRepository = new LoginRepository();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
-       // CarpetasRepository carpetasRepository = new CarpetasRepository();
+        CarpetasRepository carpetasRepository = new CarpetasRepository();
+        CarpetaM carpetaModelo = new CarpetaM();
 
         public List<TareaM> listarTodos()
         {
@@ -131,14 +132,21 @@ namespace TaskManager.Repository
                 tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
             }
 
-            //if (tarea.IdCarpeta != null)
-            //{
-            //    Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-            //    CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(c);
-            //    tareaM.CarpetaM = carpetaM;
-            //}
+            if (tarea.IdCarpeta != null)
+            {
+                Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+                CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
+                tareaM.CarpetaM = carpetaM;
+            }
 
             return tareaM;
+        }
+
+        public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)
+        {
+            List<TareaM> listaTareaM = listarTodos();
+            List<TareaM> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
+            return listaDeTareasDeCarpeta;
         }
     }
 }

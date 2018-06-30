@@ -15,6 +15,7 @@ namespace TaskManager.Controllers
         CarpetaM carpetaModelo = new CarpetaM();
         CarpetasRepository CarpetasRepository = new CarpetasRepository();
         LoginRepository LoginRepository = new LoginRepository();
+        TareaRepository tareaRepository = new TareaRepository();
 
         // GET: Carpeta
         public ActionResult Index()
@@ -92,7 +93,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Tareas(int IdCarpeta)
         {
-            return View(CarpetasRepository.ListarTareasDeCarpeta(IdCarpeta));
+            return View(tareaRepository.ListarTareasDeCarpeta(IdCarpeta));
         }
     }
 }
