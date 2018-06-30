@@ -16,7 +16,7 @@ namespace TaskManager.Controllers
         DetalleTareaRepository detalleTareaRepository = new DetalleTareaRepository();
 
         // GET: Tarea
-        public ActionResult Listar()
+        public ActionResult Index()
         {
             String filtro = Request["filtro"];
             if (filtro != null && filtro != "")
@@ -35,7 +35,7 @@ namespace TaskManager.Controllers
             Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
             if(tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
             TareaM tareaM = tareaRepository.ModelarTarea(tarea);
             ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
@@ -47,7 +47,7 @@ namespace TaskManager.Controllers
             Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
             if (tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
             ComentarioTareaM comentarioTareaM = new ComentarioTareaM();
             ViewBag.IdTarea = IdTarea;
@@ -59,7 +59,7 @@ namespace TaskManager.Controllers
         {
             string IdTarea = Request["IdTarea"];
             detalleTareaRepository.Crear(comentarioTareaM, IdTarea);
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Eliminar(int IdTarea)
@@ -70,7 +70,7 @@ namespace TaskManager.Controllers
             {
                 tareaRepository.Borrar(IdTarea);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -78,7 +78,7 @@ namespace TaskManager.Controllers
         {
             String idCarpeta = Request["Carpeta"];
             tareaRepository.Crear(tarea, idCarpeta);
-            return Redirect("Listar");
+            return Redirect("Index");
         }
 
         public ActionResult Crear()
@@ -102,7 +102,7 @@ namespace TaskManager.Controllers
                 TareaM tareaM = tareaRepository.ModelarTarea(tarea);
                 return View(tareaM);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -117,9 +117,9 @@ namespace TaskManager.Controllers
             catch (Exception ex)
             {
                 ViewBag.Mensaje = "Error al intentar guardar";
-                return View("Listar", ViewBag);
+                return View("Index", ViewBag);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
     }
