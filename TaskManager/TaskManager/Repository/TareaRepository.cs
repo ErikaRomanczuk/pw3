@@ -84,6 +84,14 @@ namespace TaskManager.Repository
             ctx.SaveChanges();
         }
 
+
+        public void CompletarPorIdTarea(int id)
+        {
+            Tarea tarea = buscarPorIdTarea(id);
+            tarea.Completada = 1;
+            ctx.SaveChanges();  
+        }
+
         public Tarea Modificar(TareaM tareaM, string idCarpeta)
         {
             Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
@@ -132,12 +140,12 @@ namespace TaskManager.Repository
                 tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
             }
 
-           // if (tarea.IdCarpeta != null)
-           // {
-           //     Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-           //     CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
-           //     tareaM.CarpetaM = carpetaM;
-           // }
+            // if (tarea.IdCarpeta != null)
+            // {
+            //     Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+            //     CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
+            //     tareaM.CarpetaM = carpetaM;
+            // }
 
             return tareaM;
         }

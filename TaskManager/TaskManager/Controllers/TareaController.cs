@@ -122,5 +122,15 @@ namespace TaskManager.Controllers
             return RedirectToAction("Index");
         }
 
+        public ActionResult Completar(int IdTarea)
+        {
+            Tarea tarea = new Tarea();
+            tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
+            {
+                tareaRepository.CompletarPorIdTarea(IdTarea);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }
