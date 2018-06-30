@@ -127,8 +127,8 @@ namespace TaskManager.Repository
             if (tarea.IdUsuario != null)
             {
                 int idUsuario = tarea.IdUsuario;
-                Usuario usuario = usuarioRepository.buscarUsuarioPorId(idUsuario);
-                tareaM.UsuarioM = usuarioRepository.modelarUsuario(usuario);
+                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
+                tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
             }
 
             //if (tarea.IdCarpeta != null)

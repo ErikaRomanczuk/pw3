@@ -17,7 +17,7 @@ namespace TaskManager.Repository
         public bool RegistrarNewUser(UsuarioM user)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
-            Usuario userInBase = usuarioRepository.buscarUsuarioPorEmail(user.Email);
+            Usuario userInBase = usuarioRepository.BuscarUsuarioPorEmail(user.Email);
 
             if (userInBase != null)
             {
@@ -27,15 +27,16 @@ namespace TaskManager.Repository
                 }
                 else
                 {
+                    user.IdUsuario = userInBase.IdUsuario;
                     ActivarUsuario(user);
-                    usuarioRepository.modificarUsuario(user);
+                    usuarioRepository.ModificarUsuario(user);
                     return true;
                 }
             }
             else
             {
                 ActivarUsuario(user);
-                usuarioRepository.crearUsuario(user);
+                usuarioRepository.CrearUsuario(user);
                 return true;
             }
         }
@@ -130,25 +131,5 @@ namespace TaskManager.Repository
             }
             return result;
         }
-
-        public bool verificarCampoVacio(UsuarioM user)
-        {
-            if (user.Apellido != null || user.Apellido != String.Empty)
-            {
-                if (user.Nombre != null || user.Nombre != String.Empty)
-                {
-                    if (user.Email != null || user.Email != String.Empty)
-                    {
-                        if (user.Contrasena != null || user.Contrasena != String.Empty)
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
     }
 }

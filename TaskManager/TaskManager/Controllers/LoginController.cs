@@ -5,32 +5,51 @@ using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Repository;
-//using Recaptcha;
 
 namespace TaskManager.Controllers
 {
     public class LoginController : Controller
     {
-        // GET: Login
+        LoginRepository LoginRepository = new LoginRepository();
+        RegistracionRepository RegistracionRepository = new RegistracionRepository();
+
+        string ErrorMailEnUso = "El E-Mail ya se encuentra en uso";
+        string ErrorCaptchaIncorrecto = "Captcha Incorrecto";
+
         public ActionResult Login()
         {
-            UsuarioM user = new UsuarioM();
+            UsuarioM usuarioCookie = LoginRepository.getCookie();
+
+            if (usuarioCookie != null)
+            {
+                return Login(usuarioCookie);
+            }
             return View();
         }
 
         [HttpPost]
-        public ActionResult ValidarLogin(UsuarioM user)
+        public ActionResult Login(UsuarioM user)
         {
-            bool validacion = new LoginRepository().VerificarLogin(user);
- 
-            if (validacion)
+
+            string validacion = LoginRepository.VerificarLogin(user);
+            var recordar = Request.Form["recordarUsuario"];
+
+            if (validacion == "OK")
             {
+                if (recordar != null)
+                {
+                    if (recordar.Contains("true"))
+                    {
+                        LoginRepository.generarCookie();
+                    }
+                }
                 return RedirectToAction("Index", "Home", null);
             }
             else
             {
-                return RedirectToAction("/Carpetas/Listar");
+                ViewBag.errorLogin = validacion;
             }
+            return View("Login", user);
 
         }
 
@@ -39,29 +58,37 @@ namespace TaskManager.Controllers
             return View();
         }
 
+        public ActionResult Logout()
+        {
+            LoginRepository.Logout();
+            return View("Index");
+        }
+
         [HttpPost]
         public ActionResult Registracion(UsuarioM user)
         {
-             RegistracionRepository registracionRepository = new RegistracionRepository();
 
             string EncodedResponse = Request.Form["g-Recaptcha-Response"];
-            bool recaptcha = (registracionRepository.IsReCaptchValid(Request.Form["g-Recaptcha-Response"]));
+            bool recaptcha = (RegistracionRepository.IsReCaptchValid(Request.Form["g-Recaptcha-Response"]));
 
             if (recaptcha)
             {
-                if(registracionRepository.verificarCampoVacio(user))
+                if (ModelState.IsValid)
                 {
-                    if (registracionRepository.RegistrarNewUser(user))
+                    if (RegistracionRepository.RegistrarNewUser(user))
                     {
-                        return RedirectToAction("ValidarLogin", user);
+                        return Login(user);
                     }
                     else
                     {
-                        ViewBag.errorMailEnUso = "El E-Mail ya se encuentra en uso";
+                        ViewBag.errorMailEnUso = ErrorMailEnUso;
                     }
                 }
             }
-            ViewBag.errorCaptcha = "Captcha Incorrecto";
+            else
+            {
+                ViewBag.errorCaptcha = ErrorCaptchaIncorrecto;
+            }
             return View(user);
         }
     }

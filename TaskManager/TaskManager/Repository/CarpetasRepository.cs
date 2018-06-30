@@ -89,8 +89,8 @@ namespace TaskManager.Repository
             if (carpeta.IdUsuario != null)
             {
                 int idUsuario = (int)carpeta.IdUsuario;
-                Usuario usuario = usuarioRepository.buscarUsuarioPorId(idUsuario);
-                carpetaM.Usuario = usuarioRepository.modelarUsuario(usuario);
+                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
+                carpetaM.Usuario = usuarioRepository.ModelarUsuario(usuario);
 
             }
             else
@@ -109,7 +109,7 @@ namespace TaskManager.Repository
             carpeta.Nombre = carpetaM.Nombre;
             carpeta.Descripcion = carpetaM.Descripcion;
             carpeta.FechaCreacion = carpetaM.FechaCreacion;
-            carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
+  //          carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
 
             return carpeta;
         }

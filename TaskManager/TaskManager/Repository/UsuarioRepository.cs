@@ -9,41 +9,42 @@ namespace TaskManager.Repository
     public class UsuarioRepository
     {
         Context ctx = new Context();
-        public Usuario buscarUsuarioPorId(int IdUsuario)
+        public Usuario BuscarUsuarioPorId(int IdUsuario)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
             Usuario usuario = listaUsuarios.Where(x => x.IdUsuario == IdUsuario).FirstOrDefault();
             return usuario;
         }
 
-        public Usuario buscarUsuarioPorEmail(string email)
+        public Usuario BuscarUsuarioPorEmail(string email)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
             Usuario usuario = listaUsuarios.Where(x => x.Email == email).FirstOrDefault();
             return usuario;
         }
 
-        public Usuario buscarUsuarioPorEmailYPass(UsuarioM usr)
+        public Usuario BuscarUsuarioPorEmailYPass(UsuarioM usr)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
             Usuario usuario = listaUsuarios.Where(x => x.Email == usr.Email && x.Contrasenia == usr.Contrasena).FirstOrDefault();
             return usuario;
         }
 
-        public void modificarUsuario(UsuarioM usuarioModel)
+        public void ModificarUsuario(UsuarioM usuarioModel)
         {
-            Usuario usuario = buscarUsuarioPorId(usuarioModel.IdUsuario);
+            Usuario usuario = BuscarUsuarioPorId(usuarioModel.IdUsuario);
 
             if (usuario != null)
             {
-                usuario = convertirModelo(usuarioModel);
+                usuario = ConvertirModelo(usuarioModel);
                 ctx.SaveChanges();
             }
 
         }
 
-        public Usuario convertirModelo(UsuarioM usuarioModel)
+        public Usuario ConvertirModelo(UsuarioM usuarioModel)
         {
+            CarpetasRepository carpetasRepository = new CarpetasRepository();
             Usuario usuario = new Usuario();
 
             usuario.IdUsuario = usuarioModel.IdUsuario;
@@ -56,13 +57,17 @@ namespace TaskManager.Repository
             usuario.FechaRegistracion = usuarioModel.FechaRegistracion;
             usuario.CodigoActivacion = usuarioModel.CodigoActivacion;
 
+            foreach (CarpetaM carpetaModel in usuarioModel.Carpetas)
+            {
+                usuario.Carpeta.Add(carpetasRepository.ConvertirModelo(carpetaModel));
+            }
             return usuario;
         }
 
 
-        public void crearUsuario(UsuarioM usuarioModel)
+        public void CrearUsuario(UsuarioM usuarioModel)
         {
-            Usuario usuario = convertirModelo(usuarioModel);
+            Usuario usuario = ConvertirModelo(usuarioModel);
             DateTime localDate = DateTime.Now;
 
             usuario.FechaRegistracion = localDate;
@@ -70,7 +75,7 @@ namespace TaskManager.Repository
             ctx.SaveChanges();
         }
 
-        public UsuarioM modelarUsuario(Usuario usuario)
+        public UsuarioM ModelarUsuario(Usuario usuario)
         {
             UsuarioM usuarioM = new UsuarioM();
             usuarioM.IdUsuario = usuario.IdUsuario;
@@ -100,13 +105,11 @@ namespace TaskManager.Repository
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
             Usuario usuario = listaUsuarios.Where(x => x.CodigoActivacion == codigo).FirstOrDefault();
 
-            if (usuario != null)
-            {
-                return true;
-            }
+            if (usuario != null) return true;
+
             return false;
         }
 
-       
+
     }
 }
