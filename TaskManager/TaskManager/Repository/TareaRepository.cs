@@ -16,10 +16,9 @@ namespace TaskManager.Repository
 
         public List<TareaM> listarTodos()
         {
-            Context ctx = new Context();
             List<Tarea> tareas = new List<Tarea>();
             tareas = ctx.Tarea.ToList();
-            tareas = tareas.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
+            tareas = tareas.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach (var tareaEF in tareas)
@@ -35,7 +34,8 @@ namespace TaskManager.Repository
         {
             List<Tarea> tareas = new List<Tarea>();
             int filtro = int.Parse(completado);
-            tareas = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
+            tareas = ctx.Tarea.ToList();
+            tareas = tareas.Where(x => x.Completada == filtro && x.IdUsuario == loginRepository.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach (var tareaEF in tareas)
