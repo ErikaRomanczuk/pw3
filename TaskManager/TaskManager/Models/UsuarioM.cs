@@ -21,17 +21,15 @@ namespace TaskManager.Models
         [Display(Name = "Apellido *")]
         public string Apellido { get; set; }
 
-        //TODO: Buscar experesion regular para email
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [StringLength(200, ErrorMessage = "El campo {0} tiene de maximo 200 caracteres.")]
         [EmailAddress(ErrorMessage ="Ingresar un Email Valido")]
         [Display(Name = "Email *")]
         public string Email { get; set; }
 
-        //TODO: Buscar experesion regular para contraseña
+
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        [StringLength(20, ErrorMessage = "El campo {0} tiene de maximo 20 caracteres.")]
-        //[RegularExpression("", ErrorMessage = "El campo {0} debe contener almenos una Mayuscula, una Minuscula y un Numero")]
+        [RegularExpression("^(?=\\w*\\d)(?=\\w*[A-Z])(?=\\w*[a-z])\\S{0,20}$", ErrorMessage = "El campo {0} debe contener como maximo 20 caracteres, almenos una Mayuscula, una Minuscula y un Numero")]
         [Display(Name = "Contraseña *")]
         public string Contrasena { get; set; }
 

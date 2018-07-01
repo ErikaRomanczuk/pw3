@@ -9,6 +9,12 @@ namespace TaskManager.Repository
     public class UsuarioRepository
     {
         Context ctx = new Context();
+
+        /// <summary>
+        /// Busca el usuario por ID en el contexto
+        /// </summary>
+        /// <param name="IdUsuario"></param>
+        /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorId(int IdUsuario)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
@@ -16,6 +22,11 @@ namespace TaskManager.Repository
             return usuario;
         }
 
+        /// <summary>
+        /// Busca el usuario por E-Mail en el contexto
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorEmail(string email)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
@@ -23,6 +34,11 @@ namespace TaskManager.Repository
             return usuario;
         }
 
+        /// <summary>
+        /// Busca el usuario por E-Mail y Contraseña en el Contexto
+        /// </summary>
+        /// <param name="usr"></param>
+        /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorEmailYPass(UsuarioM usr)
         {
             List<Usuario> listaUsuarios = ctx.Usuario.ToList();
@@ -30,6 +46,11 @@ namespace TaskManager.Repository
             return usuario;
         }
 
+
+        /// <summary>
+        /// Modifica el usuario en el Contexto
+        /// </summary>
+        /// <param name="usuarioModel">Modelo de usuario a Modificar</param>
         public void ModificarUsuario(UsuarioM usuarioModel)
         {
             Usuario usuario = BuscarUsuarioPorId(usuarioModel.IdUsuario);

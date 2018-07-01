@@ -14,6 +14,12 @@ namespace TaskManager.Repository
     public class RegistracionRepository
     {
 
+        /// <summary>
+        /// Recibe un usuario con todos sus datos a cargar y valida si esta activo o no
+        /// y dependiendo si es un usuario existente inactivo, activa o crea un nuevo usuario en la base de datos 
+        /// </summary>
+        /// <param name="user">Usuario a Registrar</param>
+        /// <returns>Retorna verdadero si el registro se completo exitosamente o falso si el usuario a ingresar estaba activo</returns>
         public bool RegistrarNewUser(UsuarioM user)
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
@@ -41,6 +47,10 @@ namespace TaskManager.Repository
             }
         }
 
+        /// <summary>
+        /// Activa el usuario y genera la carpeta general en caso de que no la tenga
+        /// </summary>
+        /// <param name="user"></param>
         public void ActivarUsuario(UsuarioM user)
         {
             DateTime LocalDate = DateTime.Now;
@@ -68,6 +78,10 @@ namespace TaskManager.Repository
             user.Carpetas.Add(new CarpetaM { Nombre = Nombre, Descripcion = Descripcion, FechaCreacion = LocalDate });
         }
 
+        /// <summary>
+        /// Genera un codigo de activacion Random con la forma : XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXXX
+        /// </summary>
+        /// <returns>Un String con el codigo de activacion</returns>
         public string GenerarCodigoActivacion()
         {
             UsuarioRepository usuarioRepository = new UsuarioRepository();
@@ -111,6 +125,12 @@ namespace TaskManager.Repository
 
         }
 
+
+        /// <summary>
+        /// Validacion del Recaptcha
+        /// </summary>
+        /// <param name="responseCaptcha"></param>
+        /// <returns>Boolean</returns>
         public bool IsReCaptchValid(string responseCaptcha)
         {
             var result = false;
