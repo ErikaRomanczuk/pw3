@@ -53,7 +53,11 @@ namespace TaskManager.Models
             tareaM.Nombre = tarea.Nombre;
             tareaM.Descripcion = tarea.Descripcion;
             tareaM.FechaCreacion = tarea.FechaCreacion;
-            
+
+            tareaM.FechaFin = tarea.FechaFin;
+            tareaM.EstimadoHoras = tarea.EstimadoHoras;
+            tareaM.Prioridad = tarea.Prioridad;
+
             if (tarea.IdUsuario != null) // Siempre null por la DB.
             {
                 UsuarioRepository usuarioRepository = new UsuarioRepository();
@@ -61,6 +65,13 @@ namespace TaskManager.Models
                 Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
                 tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
             }
+            
+            //if (tarea.IdCarpeta != null)
+            //{
+            //    Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+            //    CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
+            //    tareaM.CarpetaM = carpetaM;
+            //}
 
             return tareaM;
         }

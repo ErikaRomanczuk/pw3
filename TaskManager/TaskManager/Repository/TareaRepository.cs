@@ -13,7 +13,7 @@ namespace TaskManager.Repository
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         CarpetaM carpetaModelo = new CarpetaM();
-
+        TareaM tareaModelo = new TareaM();
         public List<TareaM> listarTodos()
         {
             List<Tarea> tareas = new List<Tarea>();
@@ -23,7 +23,7 @@ namespace TaskManager.Repository
 
             foreach (var tareaEF in tareas)
             {
-                TareaM tarea = ModelarTarea(tareaEF);
+                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
                 tareasM.Add(tarea);
             }
 
@@ -40,7 +40,7 @@ namespace TaskManager.Repository
 
             foreach (var tareaEF in tareas)
             {
-                TareaM tarea = ModelarTarea(tareaEF);
+                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
                 tareasM.Add(tarea);
             }
 
@@ -117,37 +117,6 @@ namespace TaskManager.Repository
                 throw new Exception("Bool" + e);
             }
             return tarea;
-        }
-
-        public TareaM ModelarTarea(Tarea tarea)
-        {
-            TareaM tareaM = new TareaM();
-
-            tareaM.IdTarea = tarea.IdTarea;
-            tareaM.Nombre = tarea.Nombre;
-            tareaM.Descripcion = tarea.Descripcion;
-            tareaM.FechaFin = tarea.FechaFin;
-            tareaM.FechaCreacion = tarea.FechaCreacion;
-            tareaM.Prioridad = tarea.Prioridad;
-            tareaM.Completada = tarea.Completada;
-            tareaM.EstimadoHoras = tarea.EstimadoHoras;
-            tareaM.Nombre = tarea.Nombre;
-
-            if (tarea.IdUsuario != null)
-            {
-                int idUsuario = tarea.IdUsuario;
-                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
-            }
-
-            // if (tarea.IdCarpeta != null)
-            // {
-            //     Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-            //     CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
-            //     tareaM.CarpetaM = carpetaM;
-            // }
-
-            return tareaM;
         }
 
         public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)

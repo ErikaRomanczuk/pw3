@@ -14,7 +14,7 @@ namespace TaskManager.Controllers
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         LoginRepository loginRepository = new LoginRepository();
         DetalleTareaRepository detalleTareaRepository = new DetalleTareaRepository();
-
+        TareaM tareaModelo = new TareaM();
         // GET: Tarea
         public ActionResult Index()
         {
@@ -37,7 +37,7 @@ namespace TaskManager.Controllers
             {
                 return RedirectToAction("Index");
             }
-            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+            TareaM tareaM = tareaModelo.ModelarTarea(tarea);
             ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
             return View(tareaM);
         }
@@ -99,7 +99,7 @@ namespace TaskManager.Controllers
             }
             if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
             {
-                TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+                TareaM tareaM = tareaModelo.ModelarTarea(tarea);
                 return View(tareaM);
             }
             return RedirectToAction("Index");
