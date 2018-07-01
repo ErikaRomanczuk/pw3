@@ -20,11 +20,23 @@ namespace TaskManager.Controllers
         // GET: Carpeta
         public ActionResult Index()
         {
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             return View(CarpetasRepository.listarCarpetasM());
         }
 
         public ActionResult Crear()
         {
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Crear");
+                return RedirectToAction("Login", "Login");
+            }
+
             CarpetaM carpetaM = new CarpetaM();
             return View(carpetaM);
         }
@@ -32,26 +44,44 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(CarpetaM carpetaM)
         {
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Crear");
+                return RedirectToAction("Login", "Login");
+            }
+
             CarpetasRepository.CrearCarpeta(carpetaM);
             return RedirectToAction("Index");
         }
 
         public ActionResult Modificar(int idCarpeta)
         {
-            //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
-            //id inválida por url
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return RedirectToAction("Index");
             }
+
             carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(carpeta);
             return View(carpetaM);
         }
+
         [HttpPost]
         public ActionResult Modificar(CarpetaM carpetaM)
         {
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             try
             {
                 CarpetasRepository.ModificarCarpeta(carpetaM);
@@ -66,8 +96,12 @@ namespace TaskManager.Controllers
 
         public ActionResult Eliminar (int idCarpeta)
         {
-            //No estoy seguro si esto va acá o en el repositorio. La cosa es que acá prohíbo que me ingresen 
-            //id inválida por url
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
             if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
             {
@@ -93,6 +127,12 @@ namespace TaskManager.Controllers
 
         public ActionResult Tareas(int IdCarpeta)
         {
+            if (LoginRepository.GetUser() == null)
+            {
+                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             return View(tareaRepository.ListarTareasDeCarpeta(IdCarpeta));
         }
     }

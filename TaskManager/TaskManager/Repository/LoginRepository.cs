@@ -74,5 +74,30 @@ namespace TaskManager.Repository
                 return null;
             }
         }
+
+        public void SetRedirectTo(string controller, string metodo )
+        {
+            HttpCookie cookie = new HttpCookie("redirect");
+            cookie["controller"] = controller;
+            cookie["metodo"] = metodo;
+            cookie.Expires = DateTime.Now.AddMinutes(2);
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+            return;
+        }
+
+        public Dictionary<string, string> GetRedirectTo()
+        {
+            HttpCookie Cookie = HttpContext.Current.Request.Cookies.Get("redirect");
+            var controller = Cookie["controller"];
+            var metodo = Cookie["metodo"];
+            if (controller != null && metodo != null)
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("controller", controller);
+                dictionary.Add("metodo", metodo);
+                return dictionary;
+            }
+            return null;
+        }
     }
 }
