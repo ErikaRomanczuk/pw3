@@ -15,9 +15,10 @@ namespace TaskManager.Repository
 
         public List<CarpetaM> listarCarpetasM()
         {
+            UsuarioM usuarioM = new UsuarioM().GetUser();
             List<Carpeta> listaCarpeta = new List<Carpeta>();
             listaCarpeta =  ctx.Carpeta.ToList();
-            listaCarpeta = listaCarpeta.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario)
+            listaCarpeta = listaCarpeta.Where(x => x.IdUsuario == usuarioM.IdUsuario)
                                        .OrderBy(x=> x.Nombre)
                                        .ToList();
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
@@ -51,7 +52,7 @@ namespace TaskManager.Repository
             Carpeta carpeta = new Carpeta();
             carpeta.Descripcion = carpetaM.Descripcion;
             carpeta.Nombre = carpetaM.Nombre;
-            carpeta.IdUsuario = loginRepository.GetUser().IdUsuario;
+            carpeta.IdUsuario = new UsuarioM { }.GetUser().IdUsuario;
             carpeta.FechaCreacion = DateTime.Now;
             ctx.Carpeta.Add(carpeta);
             ctx.SaveChanges();
@@ -69,18 +70,6 @@ namespace TaskManager.Repository
             return carpeta;
         }
 
-
-        public Carpeta ConvertirModelo (CarpetaM carpetaM)
-        {
-            Carpeta carpeta = new Carpeta();
-            carpeta.IdCarpeta = carpetaM.IdCarpeta;
-            carpeta.Nombre = carpetaM.Nombre;
-            carpeta.Descripcion = carpetaM.Descripcion;
-            carpeta.FechaCreacion = carpetaM.FechaCreacion;
-  //          carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
-
-            return carpeta;
-        }
 
         public void EliminarCarpeta (int idCarpeta)
         {
@@ -116,7 +105,7 @@ namespace TaskManager.Repository
         public string autentificarCarpeta (int idCarpeta)
         {
             Carpeta carpeta = BuscarCarpetaPorId(idCarpeta);
-            if (loginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            if (new UsuarioM { }.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return "Listar";
             }

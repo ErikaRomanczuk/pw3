@@ -50,75 +50,20 @@ namespace TaskManager.Repository
         /// <summary>
         /// Modifica el usuario en el Contexto
         /// </summary>
-        /// <param name="usuarioModel">Modelo de usuario a Modificar</param>
-        public void ModificarUsuario(UsuarioM usuarioModel)
+        /// <param name="usuario">Usuario a Modificar</param>
+        public void ModificarUsuario(Usuario usuario)
         {
-            Usuario usuario = BuscarUsuarioPorId(usuarioModel.IdUsuario);
-
-            if (usuario != null)
-            {
-                usuario = ConvertirModelo(usuarioModel);
                 ctx.SaveChanges();
-            }
-
-        }
-
-        public Usuario ConvertirModelo(UsuarioM usuarioModel)
-        {
-            CarpetasRepository carpetasRepository = new CarpetasRepository();
-            Usuario usuario = new Usuario();
-
-            usuario.IdUsuario = usuarioModel.IdUsuario;
-            usuario.Activo = (Int16)usuarioModel.Activo;
-            usuario.Apellido = usuarioModel.Apellido;
-            usuario.Nombre = usuarioModel.Nombre;
-            usuario.Contrasenia = usuarioModel.Contrasena;
-            usuario.Email = usuarioModel.Email;
-            usuario.FechaActivacion = (DateTime?)usuarioModel.FechaActivacion;
-            usuario.FechaRegistracion = usuarioModel.FechaRegistracion;
-            usuario.CodigoActivacion = usuarioModel.CodigoActivacion;
-
-            foreach (CarpetaM carpetaModel in usuarioModel.Carpetas)
-            {
-                usuario.Carpeta.Add(carpetasRepository.ConvertirModelo(carpetaModel));
-            }
-            return usuario;
         }
 
 
-        public void CrearUsuario(UsuarioM usuarioModel)
+        public void CrearUsuario(Usuario usuario)
         {
-            Usuario usuario = ConvertirModelo(usuarioModel);
             DateTime localDate = DateTime.Now;
 
             usuario.FechaRegistracion = localDate;
             ctx.Usuario.Add(usuario);
             ctx.SaveChanges();
-        }
-
-        public UsuarioM ModelarUsuario(Usuario usuario)
-        {
-            UsuarioM usuarioM = new UsuarioM();
-            usuarioM.IdUsuario = usuario.IdUsuario;
-            usuarioM.Nombre = usuario.Nombre;
-            usuarioM.Apellido = usuario.Apellido;
-            usuarioM.Email = usuario.Email;
-            usuarioM.Contrasena = usuario.Contrasenia;
-            usuarioM.Activo = usuario.Activo;
-            if (usuario.FechaActivacion != null)
-            {
-                usuarioM.FechaActivacion = (DateTime)usuario.FechaActivacion;
-            }
-            else
-            {
-                DateTime myDate = DateTime.ParseExact("1900-01-01 00:00:00,000", "yyyy-MM-dd HH:mm:ss,fff", System.Globalization.CultureInfo.InvariantCulture);
-                usuarioM.FechaActivacion = myDate;
-            }
-
-            usuarioM.FechaRegistracion = usuario.FechaRegistracion;
-            usuarioM.CodigoActivacion = usuario.CodigoActivacion;
-
-            return usuarioM;
         }
 
         public bool codigoActivacionExiste(string codigo)

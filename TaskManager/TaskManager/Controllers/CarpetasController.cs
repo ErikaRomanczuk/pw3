@@ -10,7 +10,6 @@ namespace TaskManager.Controllers
 {
     public class CarpetasController : Controller
     {
-        private object loginRepository;
 
         CarpetaM carpetaModelo = new CarpetaM();
         CarpetasRepository CarpetasRepository = new CarpetasRepository();
@@ -20,10 +19,10 @@ namespace TaskManager.Controllers
         // GET: Carpeta
         public ActionResult Index()
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Index");
-                return RedirectToAction("Login", "Login");
+              /*  LoginRepository.SetRedirectTo("Carpetas", "Index");
+                return RedirectToAction("Login", "Login");*/
             }
 
             return View(CarpetasRepository.listarCarpetasM());
@@ -31,7 +30,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Crear()
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Crear");
                 return RedirectToAction("Login", "Login");
@@ -44,7 +43,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Crear(CarpetaM carpetaM)
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Crear");
                 return RedirectToAction("Login", "Login");
@@ -56,14 +55,14 @@ namespace TaskManager.Controllers
 
         public ActionResult Modificar(int idCarpeta)
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");
             }
 
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            if (new UsuarioM { }.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return RedirectToAction("Index");
             }
@@ -76,7 +75,7 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Modificar(CarpetaM carpetaM)
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");
@@ -96,14 +95,14 @@ namespace TaskManager.Controllers
 
         public ActionResult Eliminar (int idCarpeta)
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");
             }
 
             Carpeta carpeta = CarpetasRepository.BuscarCarpetaPorId(idCarpeta);
-            if (LoginRepository.GetUser().IdUsuario != carpeta.IdUsuario)
+            if (new UsuarioM { }.GetUser().IdUsuario != carpeta.IdUsuario)
             {
                 return RedirectToAction("Index");
             }
@@ -127,7 +126,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Tareas(int IdCarpeta)
         {
-            if (LoginRepository.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null)
             {
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");

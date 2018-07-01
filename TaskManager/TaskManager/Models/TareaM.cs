@@ -63,7 +63,7 @@ namespace TaskManager.Models
                 UsuarioRepository usuarioRepository = new UsuarioRepository();
                 int idUsuario = (int)tarea.IdUsuario;
                 Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
+                tareaM.UsuarioM = new UsuarioM { }.ModelarUsuario(usuario);
             }
             
             if (tarea.IdCarpeta != null)

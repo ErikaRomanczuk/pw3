@@ -18,16 +18,14 @@ namespace TaskManager.Repository
         /// </summary>
         /// <param name="usuario"></param>
         /// <returns> Un mensaje ya sea de error o que la validacion salio OK </returns>
-        public string VerificarLogin(UsuarioM usuario)
+        public string VerificarLogin(Usuario usuario)
         {
-            Usuario userInBase = UsuarioRepository.BuscarUsuarioPorEmailYPass(usuario);
-
-            if (userInBase != null)
+            if (usuario != null)
             {
-                if (userInBase.Activo == 1)
+                if (usuario.Activo == 1)
                 {
-                    usuario = UsuarioRepository.ModelarUsuario(userInBase);
-                    Session["userLogged"] = usuario;
+                    UsuarioM usr = new UsuarioM();
+                    usr.guardarEnSesion(usuario);
                     return "OK";
                 }
                 else return "Usuario Inactivo";
@@ -36,69 +34,7 @@ namespace TaskManager.Repository
         }
 
 
-        /// <summary>
-        /// Cierra y vacia la Sesion actual
-        /// </summary>
-        public void Logout()
-        {
-            Session.Abandon();
-        }
-
-        /// <summary>
-        /// Metodo que retorna el Usuario Logueado Almacenado en la Sesion
-        /// </summary>
-        /// <returns>El Modelo del usuario en sesion</returns>
-        public UsuarioM GetUser()
-        {
-            return (UsuarioM)Session["userLogged"];
-        }
-
-
-        /// <summary>
-        /// Metodo que Crea y setea un cookie en el sistema con el ID del usuario logueado
-        /// El tiempo de expiracion de la cookie creada es 1 dia
-        /// </summary>
-        public void generarCookie()
-        {
-            UsuarioM user = GetUser();
-            HttpCookie cookie = new HttpCookie("User");
-
-            cookie["ID"] = user.IdUsuario.ToString();
-            cookie.Expires = DateTime.Now.AddDays(1);
-            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
-        }
-
-        /// <summary>
-        /// Lee la cookie creada con el ID del usuario 
-        /// </summary>
-        /// <returns>id del usuario</returns>
-        public UsuarioM getCookie()
-        {
-            try
-            {
-                HttpCookie Cookie = HttpContext.Current.Request.Cookies.Get("User");
-                var id = Cookie["ID"];
-
-                if (id != null)
-                {
-                    if (id != String.Empty)
-                    {
-                        int idUsuario = int.Parse(id);
-
-                        UsuarioM usuarioM = UsuarioRepository.ModelarUsuario(UsuarioRepository.BuscarUsuarioPorId(idUsuario));
-
-                        if (usuarioM != null) return usuarioM;
-                    }
-                }
-                return null;
-            }
-            catch
-            {
-                return null;
-            }
-        }
-
-        public void SetRedirectTo(string controller, string metodo )
+        public void SetRedirectTo(string controller, string metodo)
         {
             HttpCookie cookie = new HttpCookie("redirect");
             cookie["controller"] = controller;
@@ -111,15 +47,19 @@ namespace TaskManager.Repository
         public Dictionary<string, string> GetRedirectTo()
         {
             HttpCookie Cookie = HttpContext.Current.Request.Cookies.Get("redirect");
-            var controller = Cookie["controller"];
-            var metodo = Cookie["metodo"];
-            if (controller != null && metodo != null)
+            if (Cookie != null)
             {
-                var dictionary = new Dictionary<string, string>();
-                dictionary.Add("controller", controller);
-                dictionary.Add("metodo", metodo);
-                return dictionary;
+                var controller = Cookie["controller"];
+                var metodo = Cookie["metodo"];
+                if (controller != null && metodo != null)
+                {
+                    var dictionary = new Dictionary<string, string>();
+                    dictionary.Add("controller", controller);
+                    dictionary.Add("metodo", metodo);
+                    return dictionary;
+                }
             }
+
             return null;
         }
     }

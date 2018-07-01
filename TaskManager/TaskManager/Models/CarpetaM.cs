@@ -40,7 +40,7 @@ namespace TaskManager.Models
             {
                 int idUsuario = (int)carpeta.IdUsuario;
                 Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                carpetaM.Usuario = usuarioRepository.ModelarUsuario(usuario);
+                carpetaM.Usuario = new UsuarioM{ }.ModelarUsuario(usuario);
 
             }
             else
@@ -50,6 +50,18 @@ namespace TaskManager.Models
 
 
             return carpetaM;
+        }
+
+                public Carpeta ConvertirModelo (CarpetaM carpetaM)
+        {
+            Carpeta carpeta = new Carpeta();
+            carpeta.IdCarpeta = carpetaM.IdCarpeta;
+            carpeta.Nombre = carpetaM.Nombre;
+            carpeta.Descripcion = carpetaM.Descripcion;
+            carpeta.FechaCreacion = carpetaM.FechaCreacion;
+  //          carpeta.IdUsuario = carpetaM.Usuario.IdUsuario;
+
+            return carpeta;
         }
 
     }

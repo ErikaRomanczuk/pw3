@@ -10,15 +10,14 @@ namespace TaskManager.Controllers
 {
     public class LoginController : Controller
     {
-        LoginRepository LoginRepository = new LoginRepository();
-        RegistracionRepository RegistracionRepository = new RegistracionRepository();
 
         string ErrorMailEnUso = "El E-Mail ya se encuentra en uso";
         string ErrorCaptchaIncorrecto = "Captcha Incorrecto";
+        RegistracionRepository RegistracionRepository = new RegistracionRepository();
 
         public ActionResult Login()
         {
-            UsuarioM usuarioCookie = LoginRepository.getCookie();
+            UsuarioM usuarioCookie = new UsuarioM().getCookie();
 
             if (usuarioCookie != null)
             {
@@ -31,7 +30,7 @@ namespace TaskManager.Controllers
         public ActionResult Login(UsuarioM user)
         {
 
-            string validacion = LoginRepository.VerificarLogin(user);
+            string validacion = user.VerificarLogin();
             var recordar = Request.Form["recordarUsuario"];
 
             if (validacion == "OK")
@@ -40,11 +39,11 @@ namespace TaskManager.Controllers
                 {
                     if (recordar.Contains("true"))
                     {
-                        LoginRepository.generarCookie();
+                        user.generarCookie();
                     }
                 }
 
-                Dictionary<string,string> redirectTo = LoginRepository.GetRedirectTo();
+                Dictionary<string,string> redirectTo = new LoginRepository().GetRedirectTo();
                 if ( redirectTo != null)
                 {
                     return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
@@ -67,7 +66,7 @@ namespace TaskManager.Controllers
 
         public ActionResult Logout()
         {
-            LoginRepository.Logout();
+            new UsuarioM { }.Logout();
             return View("Index");
         }
 
@@ -82,7 +81,7 @@ namespace TaskManager.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (RegistracionRepository.RegistrarNewUser(user))
+                    if (user.Registrar())
                     {
                         return Login(user);
                     }
