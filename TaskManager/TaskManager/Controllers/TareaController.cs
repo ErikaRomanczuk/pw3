@@ -14,7 +14,7 @@ namespace TaskManager.Controllers
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         LoginRepository loginRepository = new LoginRepository();
         DetalleTareaRepository detalleTareaRepository = new DetalleTareaRepository();
-        TareaM tareaModelo = new TareaM();
+        TareaViewModel tareaModelo = new TareaViewModel();
 
         // GET: Tarea
         public ActionResult Index()
@@ -24,14 +24,14 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login","Login");
             }
 
-            String filtro = Request["filtro"];
+            string filtro = Request["filtro"];
             if (filtro != null && filtro != "")
             {
-                return View(tareaRepository.listarConFiltroCompletado(filtro));
+                return View( tareaRepository.ListarConFiltroCompletado(filtro).Select(x => TareaViewModel.FromTarea(x)).ToList());
             }
             else
             {
-                return View(tareaRepository.listarTodos());
+                return View(tareaRepository.ListarTodos().Select(x=> TareaViewModel.FromTarea(x)).ToList());
             }
 
         }
@@ -49,7 +49,7 @@ namespace TaskManager.Controllers
             {
                 return RedirectToAction("Index");
             }
-            TareaM tareaM = tareaModelo.ModelarTarea(tarea);
+            TareaViewModel tareaM = TareaViewModel.FromTarea(tarea);
             ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
             return View(tareaM);
         }
@@ -105,7 +105,7 @@ namespace TaskManager.Controllers
         }
 
         [HttpPost]
-        public ActionResult Crear(TareaM tarea)
+        public ActionResult Crear(TareaViewModel tarea)
         {
             if (new UsuarioM { }.GetUser() == null)
             {
@@ -113,8 +113,8 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            String idCarpeta = Request["Carpeta"];
-            tareaRepository.Crear(tarea, idCarpeta);
+
+            tareaRepository.Crear(TareaViewModel.ToTarea(tarea));
             return Redirect("Index");
         }
 
@@ -126,7 +126,7 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            TareaM tarea = new TareaM();
+            TareaViewModel tarea = new TareaViewModel();
             ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             return View(tarea);
         }
@@ -149,14 +149,14 @@ namespace TaskManager.Controllers
             }
             if (new UsuarioM { }.GetUser().IdUsuario == tarea.IdUsuario)
             {
-                TareaM tareaM = tareaModelo.ModelarTarea(tarea);
+                TareaViewModel tareaM = TareaViewModel.FromTarea(tarea);
                 return View(tareaM);
             }
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public ActionResult Modificar(TareaM tarea)
+        public ActionResult Modificar(TareaViewModel tarea)
         {
             if (new UsuarioM { }.GetUser() == null)
             {
@@ -165,10 +165,10 @@ namespace TaskManager.Controllers
             }
 
             CarpetasRepository carpetasRepository = new CarpetasRepository();
-            String idCarpeta = Request["Carpeta"];
+   
             try
             {
-                tareaRepository.Modificar(tarea, idCarpeta);
+                tareaRepository.Modificar(TareaViewModel.ToTarea(tarea));
             }
             catch (Exception ex)
             {
@@ -186,7 +186,6 @@ namespace TaskManager.Controllers
                 loginRepository.SetRedirectTo("Tarea", "Index");
                 return RedirectToAction("Login", "Login");
             }
-
             Tarea tarea = new Tarea();
             tarea = tareaRepository.buscarPorIdTarea(IdTarea);
             if (new UsuarioM { }.GetUser().IdUsuario == tarea.IdUsuario)

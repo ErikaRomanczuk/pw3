@@ -6,7 +6,7 @@ using System.Web;
 
 namespace TaskManager.Models
 {
-    public class ArchivoTarea
+    public class ArchivoTareaViewModel
     {
         public int IdArchivo { get; set; }
 
@@ -15,6 +15,14 @@ namespace TaskManager.Models
         [Display(Name = "Fecha")]
         public DateTime FechaCreacion { get; set; }
 
-        //  public int IdTarea { get; set; }
+        public int IdTarea { get; set; }
+
+        public TareaViewModel Tarea { get; set; }
+
+        public ArchivoTareaViewModel Map(ArchivoTarea at)
+        {
+            ArchivoTareaViewModel a = new ArchivoTareaViewModel();
+            return a;
+        }
     }
 }

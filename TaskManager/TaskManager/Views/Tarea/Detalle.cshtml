@@ -1,5 +1,5 @@
 ﻿@using TaskManager.Models
-@model TareaM
+@model TareaViewModel
 
 @{
     ViewBag.Title = "Detalle";
@@ -11,22 +11,8 @@
 <p><strong>Descripción: </strong>@Model.Descripcion</p>
 <p><strong>Horas estimadas: </strong>@Model.EstimadoHoras</p>
 <p><strong>Fecha Fin: </strong>@Model.FechaFin</p>
-@if (Model.Prioridad == 1)
-{
-    <p><strong>Prioridad : </strong> Baja </p>
-}
-else if (Model.Prioridad == 2)
-{
-    <p><strong>Prioridad : </strong> Media </p>
-}
-else if (Model.Prioridad == 3)
-{
-    <p><strong>Prioridad : </strong> Alta </p>
-}
-else if (Model.Prioridad == 4)
-{
-    <p><strong>Prioridad : </strong> Urgente </p>
-}
+<p><strong>Prioridad : </strong>@Model.PrioridadDescripcion </p>
+   
 
 <p><strong>Completada: </strong>@( Model.Completada == 1 ? "Si" : "No")</p>
 

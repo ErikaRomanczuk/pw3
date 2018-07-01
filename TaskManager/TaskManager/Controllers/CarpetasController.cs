@@ -110,19 +110,6 @@ namespace TaskManager.Controllers
             return RedirectToAction("Index");
         }
 
-        public ActionResult Prueba()
-        {
-            Context ctx = new Context();
-            Carpeta c = new Carpeta();
-            c.Nombre = "Prueba";
-            c.Descripcion = "Prueba";
-            c.FechaCreacion = DateTime.Now;
-            c.IdUsuario = 2;
-            ctx.Carpeta.Add(c);
-            ctx.SaveChanges();
-
-            return View();
-        }
 
         public ActionResult Tareas(int IdCarpeta)
         {
@@ -131,8 +118,8 @@ namespace TaskManager.Controllers
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");
             }
-
-            return View(tareaRepository.ListarTareasDeCarpeta(IdCarpeta));
+            List<TareaViewModel> tareaM = tareaRepository.ListarTareasDeCarpeta(IdCarpeta).Select(x => TareaViewModel.FromTarea(x)).ToList();
+            return View(tareaM);
         }
     }
 }

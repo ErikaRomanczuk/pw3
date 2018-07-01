@@ -43,11 +43,12 @@ namespace TaskManager.Controllers
                     }
                 }
 
-                Dictionary<string,string> redirectTo = new LoginRepository().GetRedirectTo();
-                if ( redirectTo != null)
-                {
-                    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
-                }
+                // TO DO: Ver porque no funciona
+                //Dictionary<string,string> redirectTo = LoginRepository.GetRedirectTo();
+                //if ( redirectTo != null)
+                //{
+                //    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
+                //}
 
                 return RedirectToAction("Index", "Home", null);
             }

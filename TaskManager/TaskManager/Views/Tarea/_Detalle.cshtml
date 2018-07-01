@@ -1,5 +1,8 @@
-﻿@model TaskManager.Models.TareaM
-
+﻿@model TaskManager.Models.TareaViewModel
+@{ 
+    List<TaskManager.Models.CarpetaM> carpetaViewModels = ViewBag.carpetas;
+    List<SelectListItem> carpetaDropdownItems = carpetaViewModels.Select(x => new SelectListItem() { Text = x.Nombre, Value = x.IdCarpeta.ToString() }).ToList();
+}
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
 @Html.HiddenFor(m => m.FechaCreacion)
@@ -8,12 +11,8 @@
 <div class="form-group">
     <label class="col-md-2 control-label" for="Carpeta">Carpeta</label>
     <div class="col-md-12">
-        <select id="Carpeta" name="Carpeta" class="form-control">
-            @foreach (var c in ViewBag.carpetas)
-            {
-                <option value="@c.IdCarpeta">@c.Nombre</option>
-            }
-        </select>
+        @Html.DropDownListFor(x=>x.IdCarpeta, carpetaDropdownItems)
+
     </div>
 </div>
 

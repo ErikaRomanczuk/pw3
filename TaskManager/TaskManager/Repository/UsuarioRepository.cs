@@ -17,8 +17,8 @@ namespace TaskManager.Repository
         /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorId(int IdUsuario)
         {
-            List<Usuario> listaUsuarios = ctx.Usuario.ToList();
-            Usuario usuario = listaUsuarios.Where(x => x.IdUsuario == IdUsuario).FirstOrDefault();
+
+            Usuario usuario = ctx.Usuario.Where(x => x.IdUsuario == IdUsuario).FirstOrDefault();
             return usuario;
         }
 
@@ -29,8 +29,7 @@ namespace TaskManager.Repository
         /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorEmail(string email)
         {
-            List<Usuario> listaUsuarios = ctx.Usuario.ToList();
-            Usuario usuario = listaUsuarios.Where(x => x.Email == email).FirstOrDefault();
+            Usuario usuario = ctx.Usuario.Where(x => x.Email == email).FirstOrDefault();
             return usuario;
         }
 
@@ -41,8 +40,8 @@ namespace TaskManager.Repository
         /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorEmailYPass(UsuarioM usr)
         {
-            List<Usuario> listaUsuarios = ctx.Usuario.ToList();
-            Usuario usuario = listaUsuarios.Where(x => x.Email == usr.Email && x.Contrasenia == usr.Contrasena).FirstOrDefault();
+
+            Usuario usuario = ctx.Usuario.Where(x => x.Email == usr.Email && x.Contrasenia == usr.Contrasena).FirstOrDefault();
             return usuario;
         }
 
@@ -53,7 +52,7 @@ namespace TaskManager.Repository
         /// <param name="usuario">Usuario a Modificar</param>
         public void ModificarUsuario(Usuario usuario)
         {
-                ctx.SaveChanges();
+            ctx.SaveChanges();
         }
 
 
@@ -68,10 +67,13 @@ namespace TaskManager.Repository
 
         public bool codigoActivacionExiste(string codigo)
         {
-            List<Usuario> listaUsuarios = ctx.Usuario.ToList();
-            Usuario usuario = listaUsuarios.Where(x => x.CodigoActivacion == codigo).FirstOrDefault();
 
-            if (usuario != null) return true;
+            Usuario usuario = ctx.Usuario.Where(x => x.CodigoActivacion == codigo).FirstOrDefault();
+
+            if (usuario != null)
+            {
+                return true;
+            }
 
             return false;
         }

@@ -13,39 +13,47 @@ namespace TaskManager.Repository
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         CarpetaM carpetaModelo = new CarpetaM();
-        TareaM tareaModelo = new TareaM();
-        public List<TareaM> listarTodos()
+        TareaViewModel tareaModelo = new TareaViewModel();
+
+        public List<Tarea> ListarTodos()
         {
-            List<Tarea> tareas = new List<Tarea>();
-            tareas = ctx.Tarea.ToList();
-            tareas = tareas.Where(x => x.IdUsuario == new UsuarioM { }.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
-            List<TareaM> tareasM = new List<TareaM>();
-
-            foreach (var tareaEF in tareas)
+            int idUser = new UsuarioM { }.GetUser().IdUsuario;
+            if (idUser < 0)
             {
-                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
-                tareasM.Add(tarea);
+                return null;
             }
-
-            return tareasM;
+            
+            List<Tarea> tareas = ctx.Tarea.Where(x => x.IdUsuario == idUser)
+                                          .OrderByDescending(x => x.FechaCreacion)
+                                          .ToList();
+            return tareas;
         }
 
-        public List<TareaM> listarConFiltroCompletado(String completado)
+        public List<Tarea> ListarConFiltroCompletado(String completado)
         {
-            List<Tarea> tareas = new List<Tarea>();
+        
             int filtro = int.Parse(completado);
-            tareas = ctx.Tarea.ToList();
-            tareas = tareas.Where(x => x.Completada == filtro && x.IdUsuario == new UsuarioM { }.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
-            List<TareaM> tareasM = new List<TareaM>();
+            List<Tarea> tareas  = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario ==new UsuarioM { }.GetUser().IdUsuario)
+                                           .OrderByDescending(x => x.FechaCreacion)
+                                           .ToList();
 
-            foreach (var tareaEF in tareas)
-            {
-                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
-                tareasM.Add(tarea);
-            }
-
-            return tareasM;
+            return tareas;
         }
+
+        /// <summary>
+        /// Lista de tareas ordenadas por prioridad y fecha de vencimiento
+        /// </summary>
+        /// <param name="usuarioID">Se filtra por ID para traer las tareas de ese usuario</param>
+        /// <returns>Lista de TAREAS filtradas</returns>
+        public List<Tarea> TareasPriotarias(int usuarioID)
+        {
+            List<Tarea> tareas = ctx.Tarea.Where(x => x.Completada == 0 && x.IdUsuario == usuarioID)
+                                          .OrderByDescending(x => x.FechaFin)
+                                          .OrderByDescending(x => x.Prioridad)
+                                          .ToList();
+            return tareas;
+        }
+
 
         public Tarea buscarPorIdTarea(int id)
         {
@@ -58,20 +66,27 @@ namespace TaskManager.Repository
             return tarea;
         }
 
-        public void Crear(TareaM tareaM, String idCarpeta)
+        //    public void Crear(TareaViewModel tareaM, String idCarpeta)
+        //    {
+        //        Tarea tarea = new Tarea();
+        //        tarea.Nombre = tareaM.Nombre;
+        //        tarea.Descripcion = tareaM.Descripcion;
+        //        tarea.FechaFin = tareaM.FechaFin;
+        //        tarea.FechaCreacion = DateTime.Now;
+        //        tarea.Prioridad = tareaM.Prioridad;
+        //        tarea.Completada = tareaM.Completada;
+        //        tarea.EstimadoHoras = tareaM.EstimadoHoras;
+        //        int idCarpeta2 = int.Parse(idCarpeta);
+        //        tarea.IdCarpeta = idCarpeta2;
+        //        tarea.Nombre = tareaM.Nombre;
+        //        tarea.IdUsuario = loginRepository.GetUser().IdUsuario;
+        //        ctx.Tarea.Add(tarea);
+        //        ctx.SaveChanges();
+        //    }
+
+        public void Crear(Tarea tarea)
         {
-            Tarea tarea = new Tarea();
-            tarea.Nombre = tareaM.Nombre;
-            tarea.Descripcion = tareaM.Descripcion;
-            tarea.FechaFin = tareaM.FechaFin;
             tarea.FechaCreacion = DateTime.Now;
-            tarea.Prioridad = tareaM.Prioridad;
-            tarea.Completada = tareaM.Completada;
-            tarea.EstimadoHoras = tareaM.EstimadoHoras;
-            int idCarpeta2 = int.Parse(idCarpeta);
-            tarea.IdCarpeta = idCarpeta2;
-            tarea.Nombre = tareaM.Nombre;
-            tarea.IdUsuario = new UsuarioM { }.GetUser().IdUsuario;
             ctx.Tarea.Add(tarea);
             ctx.SaveChanges();
         }
@@ -92,7 +107,7 @@ namespace TaskManager.Repository
             ctx.SaveChanges();  
         }
 
-        public Tarea Modificar(TareaM tareaM, string idCarpeta)
+        public Tarea Modificar(Tarea tareaM)
         {
             Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
             if (tarea == null)
@@ -108,7 +123,7 @@ namespace TaskManager.Repository
                 tarea.Completada = tareaM.Completada;
                 tarea.EstimadoHoras = tareaM.EstimadoHoras;
                 tarea.Nombre = tareaM.Nombre;
-                tarea.IdCarpeta = int.Parse(idCarpeta);
+                tarea.IdCarpeta = tareaM.IdCarpeta;
 
                 ctx.SaveChanges();
             }
@@ -119,11 +134,14 @@ namespace TaskManager.Repository
             return tarea;
         }
 
-        public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)
+        public List<Tarea> ListarTareasDeCarpeta(int idCarpeta)
         {
-            List<TareaM> listaTareaM = listarTodos();
-            List<TareaM> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
-            return listaDeTareasDeCarpeta;
+            // List<TareaViewModel> listaTareaM = ListarTodos();
+            // List<TareaViewModel> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
+            // return listaDeTareasDeCarpeta;
+
+            List<Tarea> list = ctx.Tarea.Where(x => x.IdCarpeta == idCarpeta).ToList();
+            return list;
         }
     }
 }

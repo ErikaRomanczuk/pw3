@@ -1,0 +1,83 @@
+﻿@using TaskManager.Models
+@model List<TareaViewModel>
+
+
+<div>
+    <!-- wrapper -->
+    <div id="wrapper" class="toggled">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand"><a>Pepe</a>  </li>
+                <li><a href="@Url.Action("Index", "Tarea")"><span class="glyphicon glyphicon-list-alt"></span> Mis Tareas</a>  </li>
+                <li><a href="@Url.Action("Crear", "Tarea")"><span class="glyphicon glyphicon-list-alt"></span> Crear Tarea</a></li>
+                <li><a href="@Url.Action("Index", "Carpetas")"> <span class="glyphicon glyphicon-folder-open"></span> Mis Carpetas</a></li>
+                <li><a href="@Url.Action("Crear", "Carpetas")"> <span class="glyphicon glyphicon-folder-open"></span> Crear Carpeta</a></li>
+            </ul>
+        </div>
+        @if (Model == null || Model.Count == 0)
+
+        {
+            <div class="row">
+                <div class="col-md-10 col-lg-offset-1">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Sin Tareas Pendientes
+                        </div>
+                        <div class="panel-body">
+                            Usted no contiene tareas pendientes o sin finalizar.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Fecha Fin</th>
+                        <th>Nombre</th>
+                        <th>Prioridad</th>
+                        <th>Carpeta</th>
+                        <th>Estimado</th>
+                        <th>Completada</th>
+                        <th>Ver</th>
+                        <th>Completar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var tarea in Model)
+                {
+                        <tr>
+                            <td>@tarea.FechaFin</td>
+                            <td>@tarea.Nombre</td>
+                            <td>@tarea.PrioridadDescripcion</td>
+
+
+                            <td>@tarea.EstimadoHoras</td>
+                            <td>@tarea.CompletadaDescripcion</td>
+                            <td class="text-right">
+                                <span class="glyphicon glyphicon-eye-open">
+                                    @Html.ActionLink("Detalle", "Detalle", new
+                               {
+                                   IdTarea = tarea.IdTarea
+                               })
+                                </span>
+                            </td>
+                            <td class="text-right">
+                                @if (tarea.Completada == 0)
+                                {
+                                    @Html.ActionLink("Completar", "Completar", new { IdTarea = tarea.IdTarea })
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+
+    </div>
+    <!-- /#wrapper -->
+</div>

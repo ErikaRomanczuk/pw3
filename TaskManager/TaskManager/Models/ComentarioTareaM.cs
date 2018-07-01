@@ -17,12 +17,14 @@ namespace TaskManager.Models
         [Display(Name = "Feccha de creacion")]
         public DateTime FechaCreacion { get; set; }
 
-        public TareaM TareaM { get; set; }
+        public TareaViewModel TareaM { get; set; }
 
         //  public int IdTarea { get; set; }
 
         TareaRepository tareaRepository = new TareaRepository();
-        TareaM tareaModelo = new TareaM();
+
+        TareaViewModel tareaModelo = new TareaViewModel();
+
         public ComentarioTareaM ComentarioTareaMapeo (ComentarioTarea comentarioTarea)
         {
             ComentarioTareaM comentarioTareaM = new ComentarioTareaM();
@@ -30,7 +32,7 @@ namespace TaskManager.Models
             comentarioTareaM.Texto = comentarioTarea.Texto;
             comentarioTareaM.FechaCreacion = comentarioTarea.FechaCreacion;
             Tarea tarea = tareaRepository.buscarPorIdTarea(comentarioTarea.IdTarea);
-            TareaM tareaM = tareaModelo.ModelarTarea(tarea);
+            TareaViewModel tareaM = TareaViewModel.FromTarea(tarea);
             comentarioTareaM.TareaM = tareaM;
             return comentarioTareaM;
 
