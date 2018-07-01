@@ -100,9 +100,13 @@
   <ItemGroup>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\PanelAdmin.css" />
     <Content Include="Content\Site.css" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
+    <Content Include="Imagenes\MultiDispositivos.png" />
+    <Content Include="Imagenes\pantallasVerde.png" />
+    <Content Include="Imagenes\taskManagerBusnisesClass.png" />
     <Content Include="Model1.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>Model1.Context.cs</LastGenOutput>
@@ -208,6 +212,8 @@
     <Content Include="Views\Login\Registracion.cshtml" />
     <Content Include="Views\Login\_MailRegistradoPopup.cshtml" />
     <Content Include="Views\Carpetas\Listar.cshtml" />
+    <Content Include="Views\Home\_admin.cshtml" />
+    <Content Include="Views\Home\_Guest.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
