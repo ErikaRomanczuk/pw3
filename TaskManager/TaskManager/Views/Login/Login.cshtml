@@ -1,4 +1,5 @@
-﻿@model TaskManager.Models.Usuario
+﻿@using TaskManager.Models
+@model UsuarioM
 
 @{
     ViewBag.Title = "Login";
@@ -6,6 +7,7 @@
 <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+
 <!------ Include the above in your HEAD tag ---------->
 <div class="container">
     <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
@@ -16,34 +18,41 @@
             <div style="padding-top:30px" class="panel-body">
                 <div style="display:none" id="login-alert" class="alert alert-danger col-sm-12"></div>
 
-                @using (Html.BeginForm("ValidarLogin", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
-    {
-            @Html.AntiForgeryToken()
-            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @using (Html.BeginForm("Login", null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "form-horizontal" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="label label-danger">@ViewBag.errorLogin</span>
+                    </div>
+
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                        @Html.ValidationMessageFor(m => m.Email, "", new { @class = "label label-danger" })
+                        @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-Mail", Style = "margin-right:10px" })
+                    </div>
 
 
-            <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control", placeholder = "E-Mail" })
-                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
-            </div>
+                    <div style="margin-bottom: 25px" class="input-group">
+                        <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                        @Html.ValidationMessageFor(m => m.Contrasena, "", new { @class = "label label-danger" })
+                        @Html.PasswordFor(m => m.Contrasena, new { @class = "form-control", placeholder = "Contrasena", Style = "margin-right:10px" })
+                    </div>
 
+                    <div style="margin-bottom: 25px" class="input-group">
+                        @Html.CheckBox("recordarUsuario")@Html.Label("Recordame")
+                    </div>
 
-            <div style="margin-bottom: 25px" class="input-group">
-                <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
-                @Html.PasswordFor(m => m.Contraseña, new { @class = "form-control", placeholder = "Contraseña" })
-                @Html.ValidationMessageFor(m => m.Contraseña, "", new { @class = "text-danger" })
-            </div>
+                    <div style="margin-top:10px" class="form-group">
+                        <!-- Button -->
+                        <div class="col-sm-12 controls">
+                            <button type="submit" id="btn-login" href="#" class="btn btn-success">Login  </button>
+                            @Html.ActionLink("Registrarse", "Registracion", null, new { @class = "btn btn-primary" })
+                        </div>
+                    </div>
 
-            <div style="margin-top:10px" class="form-group">
-                <!-- Button -->
-                <div class="col-sm-12 controls">
-                    <button type="submit" id="btn-login" href="#" class="btn btn-success">Login  </button>
-                    @Html.ActionLink("Registrarse", "Registracion", null, new { @class = "btn btn-primary" })
-                </div>
-            </div>
-
-}
+                }
             </div>
         </div>
     </div>

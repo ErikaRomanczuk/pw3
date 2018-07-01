@@ -1,4 +1,4 @@
-﻿@model TaskManager.Models.Tarea
+﻿@model TaskManager.Models.TareaM
 
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
@@ -6,17 +6,29 @@
 @Html.HiddenFor(m => m.IdTarea)
 
 <div class="form-group">
-    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
+    <label class="col-md-2 control-label" for="Carpeta">Carpeta</label>
+    <div class="col-md-12">
+        <select id="Carpeta" name="Carpeta" class="form-control">
+            @foreach (var c in ViewBag.carpetas)
+            {
+                <option value="@c.IdCarpeta">@c.Nombre</option>
+            }
+        </select>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label", @required = "required" })
     <div class="col-md-12">
         @Html.TextBoxFor(m => m.Nombre, new { @class = "form-control" })
         @Html.ValidationMessageFor(m => m.Nombre, "", new { @class = "text-danger" })
     </div>
 </div>
 
-<div cla    ss="form-group">
+<div class="form-group">
     @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Descripcion, new { @class = "form-control", @required = "required" })
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control"})
         @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -24,7 +36,14 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Prioridad, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Prioridad, new { @class = "form-control", @required = "required" })
+        <select for="Prioridad" id="Prioridad" name="Prioridad" class="form-control">
+            <option @( Model.Prioridad == 1 ? "selected" : "") value="1">Baja</option>
+            <option @( Model.Prioridad == 2 ? "selected" : "") value="2">Media</option>
+            <option @( Model.Prioridad == 3 ? "selected" : "") value="3">Alta</option>
+            <option @( Model.Prioridad == 4 ? "selected" : "") value="4">Urgente</option>
+            <option value="">Sin prioridad</option>
+
+        </select>
         @Html.ValidationMessageFor(m => m.Prioridad, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -32,7 +51,7 @@
 <div class="form-group">
     @Html.LabelFor(m => m.FechaFin, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.FechaFin, new { @class = "form-control", @required = "required" })
+        <input class="col-md-12 form-control" type="date" name="FechaFin" id="FechaFin" value="@Model.FechaFin" />
         @Html.ValidationMessageFor(m => m.FechaFin, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -40,7 +59,7 @@
 <div class="form-group">
     @Html.LabelFor(m => m.EstimadoHoras, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.EstimadoHoras, new { @class = "form-control", @required = "required" })
+        @Html.TextBoxFor(m => m.EstimadoHoras, new { @class = "form-control"})
         @Html.ValidationMessageFor(m => m.EstimadoHoras, "", new { @class = "text-danger" })
     </div>
 </div>
@@ -48,17 +67,11 @@
 <div class="form-group">
     @Html.LabelFor(m => m.Completada, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Completada, new { @class = "form-control", @required = "required" })
+        <select for="Prioridad" id="Completada" name="Completada" class="form-control">
+            <option @( Model.Completada == 0 ? "selected" : "") value="0">No</option>
+            <option @( Model.Completada == 1 ? "selected" : "") value="1">Si</option>
+        </select>
         @Html.ValidationMessageFor(m => m.Completada, "", new { @class = "text-danger" })
     </div>
 </div>
-
-<div class="form-group">
-    @Html.LabelFor(m => m.Carpeta, new { @class = "col-md-2 control-label" })
-    <div class="col-md-12">
-        @Html.TextBoxFor(m => m.Carpeta, new { @class = "form-control", @required = "required" })
-        @Html.ValidationMessageFor(m => m.Carpeta, "", new { @class = "text-danger" })
-    </div>
-</div>
-
 

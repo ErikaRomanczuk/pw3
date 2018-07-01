@@ -7,85 +7,97 @@ using System.Web.SessionState;
 
 namespace TaskManager.Repository
 {
-    public class LoginRepository : System.Web.UI.Page //Si no hereda de esta clase no me deja usar la variable de sesion
+    public class LoginRepository : System.Web.UI.Page
     {
-        private static string mailTest = "Admin.admin@admin.com";
-        private static string passTest = "1234";
-       
-        public bool VerificarLogin(Usuario usuario)
-        {
-            //Deberia verificar si el mail-contraseña que se intenta loguear coincide con alguno de la tabla
-            foreach (Usuario userInBase in GetUsers())
-            {
-                if (usuario.Email.Equals(userInBase.Email) && usuario.Contrasenia.Equals(userInBase.Contrasenia))
-                {
-                    /*Si encontramos coincidencia retornamos TRUE para que acceda al sistema y ya lo guardamos en la sesion 
-                    para mas adelante poder cargar la lista de carpetas de ESE usuario*/
-                    Session["userLogged"] = userInBase;
-                    return true;
-                }
-            }
-            return false;
-        }
-       
-        public List<Usuario> GetUsers()
-        {
-            //Provisorio, aca deberia traer lista de usuarios de la base de datos 
-            List<Usuario> usuarios = new List<Usuario>();
-       
-            usuarios.Add(new Usuario { Email = mailTest, Contrasenia = passTest });
-            return usuarios;
-        }
-       /*
-        public bool RegistrarNewUser(Usuario user)
-        {
-            foreach (Usuario userInBase in GetUsers())
-            {
-                if (user.Email.Equals(userInBase.Email))
-                {
-                    if (user.Activo.Equals(1))
-                    {
-                        return false;
-                    }
-                    else if (user.Activo.Equals(0))
-                    {
-                        ActivarUsuario(user);
-                        //Agregar metodo para cambiar nombre, apellido y contraseña de usuario desactivado
-                        return true;
-                    }
-                    return false;
-                }
-            }
-            ActivarUsuario(user);
-            //Agregar nuevo usuario a la tabla "Usuario" de la base -- Añadir en el insert del DAO la fecha de registro
-       
-            return true;
-        }
-       
-        public void ActivarUsuario(Usuario user)
-        {
-            DateTime LocalDate = DateTime.Now;
-            string Nombre = "General";
-            string Descripcion = "Carpeta por Defecto";
-       
-            user.Activo = 1;
-        
-            if(user.Carpetas != null)
-            {
-                if(user.Carpetas.Count != 0)
-                {
-                    foreach (CarpetaM carpeta in user.Carpetas)
-                    {
-                        if (carpeta.Nombre.Equals(Nombre))
-                        {
-                            return;
-                        }
-                    }
-                }
-            }
-           
-            user.Carpetas.Add(new CarpetaM {Nombre = Nombre, Descripcion = Descripcion, FechaCreacion = LocalDate });
-        }*/
+        UsuarioRepository UsuarioRepository = new UsuarioRepository();
 
+        public string VerificarLogin(UsuarioM usuario)
+        {
+            Usuario userInBase = UsuarioRepository.BuscarUsuarioPorEmailYPass(usuario);
+
+            if (userInBase != null)
+            {
+                if (userInBase.Activo == 1)
+                {
+                    usuario = UsuarioRepository.ModelarUsuario(userInBase);
+                    Session["userLogged"] = usuario;
+                    return "OK";
+                }
+                else return "Usuario Inactivo";
+            }
+            else return "Datos de Login Incorrectos";
+        }
+
+        public void Logout()
+        {
+            Session.Abandon();
+        }
+
+        public UsuarioM GetUser()
+        {
+            return (UsuarioM)Session["userLogged"];
+        }
+
+        public void generarCookie()
+        {
+            UsuarioM user = GetUser();
+            HttpCookie cookie = new HttpCookie("User");
+
+            cookie["ID"] = user.IdUsuario.ToString();
+            cookie.Expires = DateTime.Now.AddDays(1);
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+        }
+
+
+        public UsuarioM getCookie()
+        {
+            try
+            {
+                HttpCookie Cookie = HttpContext.Current.Request.Cookies.Get("User");
+                var id = Cookie["ID"];
+
+                if (id != null)
+                {
+                    if (id != String.Empty)
+                    {
+                        int idUsuario = int.Parse(id);
+
+                        UsuarioM usuarioM = UsuarioRepository.ModelarUsuario(UsuarioRepository.BuscarUsuarioPorId(idUsuario));
+
+                        if (usuarioM != null) return usuarioM;
+                    }
+                }
+                return null;
+            }
+            catch
+            {
+                return null;
+            }
+        }
+
+        public void SetRedirectTo(string controller, string metodo )
+        {
+            HttpCookie cookie = new HttpCookie("redirect");
+            cookie["controller"] = controller;
+            cookie["metodo"] = metodo;
+            cookie.Expires = DateTime.Now.AddMinutes(2);
+            System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
+            return;
+        }
+
+        public Dictionary<string, string> GetRedirectTo()
+        {
+            HttpCookie Cookie = HttpContext.Current.Request.Cookies.Get("redirect");
+            var controller = Cookie["controller"];
+            var metodo = Cookie["metodo"];
+            if (controller != null && metodo != null)
+            {
+                var dictionary = new Dictionary<string, string>();
+                dictionary.Add("controller", controller);
+                dictionary.Add("metodo", metodo);
+                return dictionary;
+            }
+            return null;
+        }
     }
 }
