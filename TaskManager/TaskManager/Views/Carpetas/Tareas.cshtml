@@ -7,24 +7,6 @@
 
 <h2>Listar</h2>
 
-<form method="get" action="" calss="form-control">
-    <div class="form-group">
-        <label class="col-md-2 control-label" for="filtro">filtro</label>
-        <div class="col-md-8">
-            <select for="filtro" id="filtro" name="filtro" class="form-control">
-                <option value=""> Todos</option>
-                <option value="1">Completas</option>
-                <option value="0">Incompletas</option>
-            </select>
-        </div>
-        <div class="col-md-2">
-            <input type="submit" value="Aplicar Filtros" class="btn btn-primary" />
-        </div>
-    </div>
-</form>
-
-<br />
-
 <table class="table table-striped">
     <thead>
         <tr>
@@ -48,9 +30,9 @@
                 <td>@tarea.EstimadoHoras</td>
                 <td>@tarea.Completada</td>
                 <td>
-                    @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
-                    @Html.ActionLink("Detalle", "Detalle", new { IdTarea = tarea.IdTarea })
-                    @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
+                    @Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = tarea.IdTarea },null)
+                    @Html.ActionLink("Detalle", "Detalle", "Tarea", new { IdTarea = tarea.IdTarea }, null)
+                    @Html.ActionLink("Eliminar", "Eliminar", "Tarea", new { IdTarea = tarea.IdTarea }, null)
                 </td>
             </tr>
         }

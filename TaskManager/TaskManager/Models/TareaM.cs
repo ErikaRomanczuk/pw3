@@ -66,12 +66,14 @@ namespace TaskManager.Models
                 tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
             }
             
-            //if (tarea.IdCarpeta != null)
-            //{
-            //    Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-            //    CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
-            //    tareaM.CarpetaM = carpetaM;
-            //}
+            if (tarea.IdCarpeta != null)
+            {
+                CarpetasRepository carpetasRepository = new CarpetasRepository();
+                CarpetaM carpetaModelo = new CarpetaM();
+                Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
+                CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
+                tareaM.CarpetaM = carpetaM;
+            }
 
             return tareaM;
         }
