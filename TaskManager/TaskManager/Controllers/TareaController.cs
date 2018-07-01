@@ -14,10 +14,16 @@ namespace TaskManager.Controllers
         CarpetasRepository carpetasRepository = new CarpetasRepository();
         LoginRepository loginRepository = new LoginRepository();
         DetalleTareaRepository detalleTareaRepository = new DetalleTareaRepository();
+        TareaM tareaModelo = new TareaM();
 
         // GET: Tarea
-        public ActionResult Listar()
+        public ActionResult Index()
         {
+            if ( loginRepository.GetUser() == null ) {
+                loginRepository.SetRedirectTo("Tarea","Index");
+                return RedirectToAction("Login","Login");
+            }
+
             String filtro = Request["filtro"];
             if (filtro != null && filtro != "")
             {
@@ -32,22 +38,35 @@ namespace TaskManager.Controllers
 
         public ActionResult Detalle(int IdTarea)
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
             if(tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
-            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+            TareaM tareaM = tareaModelo.ModelarTarea(tarea);
             ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
             return View(tareaM);
         }
 
         public ActionResult CrearComentarioTarea (int IdTarea)
         {
+
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
             if (tarea.IdUsuario != loginRepository.GetUser().IdUsuario)
             {
-                return RedirectToAction("Listar");
+                return RedirectToAction("Index");
             }
             ComentarioTareaM comentarioTareaM = new ComentarioTareaM();
             ViewBag.IdTarea = IdTarea;
@@ -57,32 +76,56 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult CrearComentarioTareaM(ComentarioTareaM comentarioTareaM)
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             string IdTarea = Request["IdTarea"];
             detalleTareaRepository.Crear(comentarioTareaM, IdTarea);
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         public ActionResult Eliminar(int IdTarea)
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             Tarea tarea = new Tarea();
             tarea = tareaRepository.buscarPorIdTarea((IdTarea));
             if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
             {
                 tareaRepository.Borrar(IdTarea);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Crear(TareaM tarea)
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             String idCarpeta = Request["Carpeta"];
             tareaRepository.Crear(tarea, idCarpeta);
-            return Redirect("Listar");
+            return Redirect("Index");
         }
 
         public ActionResult Crear()
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Crear");
+                return RedirectToAction("Login", "Login");
+            }
+
             TareaM tarea = new TareaM();
             ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             return View(tarea);
@@ -91,6 +134,13 @@ namespace TaskManager.Controllers
 
         public ActionResult Modificar(int idTarea)
         {
+
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
             Tarea tarea = tareaRepository.buscarPorIdTarea(idTarea);
             if (tarea == null)
@@ -99,15 +149,21 @@ namespace TaskManager.Controllers
             }
             if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
             {
-                TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+                TareaM tareaM = tareaModelo.ModelarTarea(tarea);
                 return View(tareaM);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
         public ActionResult Modificar(TareaM tarea)
         {
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
             CarpetasRepository carpetasRepository = new CarpetasRepository();
             String idCarpeta = Request["Carpeta"];
             try
@@ -117,10 +173,27 @@ namespace TaskManager.Controllers
             catch (Exception ex)
             {
                 ViewBag.Mensaje = "Error al intentar guardar";
-                return View("Listar", ViewBag);
+                return View("Index", ViewBag);
             }
-            return RedirectToAction("Listar");
+            return RedirectToAction("Index");
         }
 
+        public ActionResult Completar(int IdTarea)
+        {
+
+            if (loginRepository.GetUser() == null)
+            {
+                loginRepository.SetRedirectTo("Tarea", "Index");
+                return RedirectToAction("Login", "Login");
+            }
+
+            Tarea tarea = new Tarea();
+            tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            if (loginRepository.GetUser().IdUsuario == tarea.IdUsuario)
+            {
+                tareaRepository.CompletarPorIdTarea(IdTarea);
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

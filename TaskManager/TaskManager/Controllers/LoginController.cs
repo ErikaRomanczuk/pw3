@@ -43,6 +43,13 @@ namespace TaskManager.Controllers
                         LoginRepository.generarCookie();
                     }
                 }
+
+                Dictionary<string,string> redirectTo = LoginRepository.GetRedirectTo();
+                if ( redirectTo != null)
+                {
+                    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
+                }
+
                 return RedirectToAction("Index", "Home", null);
             }
             else

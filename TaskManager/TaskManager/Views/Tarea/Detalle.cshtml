@@ -7,13 +7,31 @@
 
 <h2>Detalle</h2>
 
-
-
 <p><strong>Nombre: </strong>@Model.Nombre</p>
 <p><strong>Descripción: </strong>@Model.Descripcion</p>
 <p><strong>Horas estimadas: </strong>@Model.EstimadoHoras</p>
 <p><strong>Fecha Fin: </strong>@Model.FechaFin</p>
-<p><strong>Prioridad</strong>@Model.Prioridad</p> <br /> <br />
+@if (Model.Prioridad == 1)
+{
+    <p><strong>Prioridad : </strong> Baja </p>
+}
+else if (Model.Prioridad == 2)
+{
+    <p><strong>Prioridad : </strong> Media </p>
+}
+else if (Model.Prioridad == 3)
+{
+    <p><strong>Prioridad : </strong> Alta </p>
+}
+else if (Model.Prioridad == 4)
+{
+    <p><strong>Prioridad : </strong> Urgente </p>
+}
+
+<p><strong>Completada: </strong>@( Model.Completada == 1 ? "Si" : "No")</p>
+
+<br />
+<br />
 
 <table class="table table-striped">
     <thead>

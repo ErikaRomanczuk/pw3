@@ -8,6 +8,7 @@ namespace TaskManager.Repository
 {
     public class CarpetasRepository
     {
+        CarpetaM carpetaModelo = new CarpetaM();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         LoginRepository loginRepository = new LoginRepository();
         Context ctx = new Context();
@@ -22,12 +23,7 @@ namespace TaskManager.Repository
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
             foreach(var x in listaCarpeta)
             {
-                CarpetaM carpetaM = new CarpetaM();
-                carpetaM.Usuario = loginRepository.GetUser();
-                carpetaM.IdCarpeta = x.IdCarpeta;
-                carpetaM.Nombre = x.Nombre;
-                carpetaM.Descripcion = x.Descripcion;
-                carpetaM.FechaCreacion = x.FechaCreacion;
+                CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(x);
                 listaCarpetaM.Add(carpetaM);
 
             }
@@ -43,12 +39,7 @@ namespace TaskManager.Repository
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();
             foreach (var x in listaCarpeta)
             {
-                CarpetaM carpetaM = new CarpetaM();
-                carpetaM.Usuario = loginRepository.GetUser();
-                carpetaM.IdCarpeta = x.IdCarpeta;
-                carpetaM.Nombre = x.Nombre;
-                carpetaM.Descripcion = x.Descripcion;
-                carpetaM.FechaCreacion = x.FechaCreacion;
+                CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(x);
                 listaCarpetaM.Add(carpetaM);
             }
             return (listaCarpetaM);
@@ -69,7 +60,8 @@ namespace TaskManager.Repository
         public Carpeta BuscarCarpetaPorId(int IdCarpeta)
         {
             List<Carpeta> listaCarpetas = ctx.Carpeta.ToList();
-            Carpeta carpeta = listaCarpetas.Where(x => x.IdCarpeta == IdCarpeta).FirstOrDefault();
+            Carpeta carpeta = new Carpeta();
+            carpeta = listaCarpetas.Where(x => x.IdCarpeta == IdCarpeta).FirstOrDefault();
             if(carpeta == null)
             { 
                 throw new Exception("Id de carpeta inexistente");
@@ -77,30 +69,6 @@ namespace TaskManager.Repository
             return carpeta;
         }
 
-        public CarpetaM ModelarCarpeta (Carpeta carpeta)
-        {
-            CarpetaM carpetaM = new CarpetaM();
-            carpetaM.IdCarpeta = carpeta.IdCarpeta;
-            carpetaM.Nombre = carpeta.Nombre;
-            carpetaM.Descripcion = carpeta.Descripcion;
-            carpetaM.FechaCreacion = carpeta.FechaCreacion;
-            //guardo el id del usuario, busco al usuario y lo modelo
-            //TODO: Validar nulleable
-            if (carpeta.IdUsuario != null)
-            {
-                int idUsuario = (int)carpeta.IdUsuario;
-                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                carpetaM.Usuario = usuarioRepository.ModelarUsuario(usuario);
-
-            }
-            else
-            {
-                //crearle tryCatch para validar si es usuario null
-            }
-
-
-            return carpetaM;
-        }
 
         public Carpeta ConvertirModelo (CarpetaM carpetaM)
         {
@@ -134,16 +102,16 @@ namespace TaskManager.Repository
             ctx.SaveChanges();
         }
 
-        public void CrearCarpetaGeneral (int IdUsuario)
-        {
-            Carpeta carpeta = new Carpeta();
-            carpeta.Nombre = "General";
-            carpeta.Descripcion = "Carpeta por defecto";
-            carpeta.FechaCreacion = DateTime.Now;
-            carpeta.IdUsuario = IdUsuario;
-            ctx.Carpeta.Add(carpeta);
-            ctx.SaveChanges();
-        }
+      //  public void CrearCarpetaGeneral (int IdUsuario)
+      //  {
+      //      Carpeta carpeta = new Carpeta();
+      //      carpeta.Nombre = "General";
+      //      carpeta.Descripcion = "Carpeta por defecto";
+      //      carpeta.FechaCreacion = DateTime.Now;
+      //      carpeta.IdUsuario = IdUsuario;
+      //      ctx.Carpeta.Add(carpeta);
+      //      ctx.SaveChanges();
+      //  }
 
         public string autentificarCarpeta (int idCarpeta)
         {
@@ -155,5 +123,7 @@ namespace TaskManager.Repository
 
             else return null;
         }
+
+
     }
 }

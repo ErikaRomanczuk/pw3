@@ -12,18 +12,18 @@ namespace TaskManager.Repository
         LoginRepository loginRepository = new LoginRepository();
         UsuarioRepository usuarioRepository = new UsuarioRepository();
         CarpetasRepository carpetasRepository = new CarpetasRepository();
-
+        CarpetaM carpetaModelo = new CarpetaM();
+        TareaM tareaModelo = new TareaM();
         public List<TareaM> listarTodos()
         {
-            Context ctx = new Context();
             List<Tarea> tareas = new List<Tarea>();
             tareas = ctx.Tarea.ToList();
-            tareas = tareas.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
+            tareas = tareas.Where(x => x.IdUsuario == loginRepository.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach (var tareaEF in tareas)
             {
-                TareaM tarea = ModelarTarea(tareaEF);
+                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
                 tareasM.Add(tarea);
             }
 
@@ -34,12 +34,13 @@ namespace TaskManager.Repository
         {
             List<Tarea> tareas = new List<Tarea>();
             int filtro = int.Parse(completado);
-            tareas = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario == loginRepository.GetUser().IdUsuario).ToList();
+            tareas = ctx.Tarea.ToList();
+            tareas = tareas.Where(x => x.Completada == filtro && x.IdUsuario == loginRepository.GetUser().IdUsuario).OrderByDescending(x => x.FechaCreacion).ToList();
             List<TareaM> tareasM = new List<TareaM>();
 
             foreach (var tareaEF in tareas)
             {
-                TareaM tarea = ModelarTarea(tareaEF);
+                TareaM tarea = tareaModelo.ModelarTarea(tareaEF);
                 tareasM.Add(tarea);
             }
 
@@ -83,6 +84,14 @@ namespace TaskManager.Repository
             ctx.SaveChanges();
         }
 
+
+        public void CompletarPorIdTarea(int id)
+        {
+            Tarea tarea = buscarPorIdTarea(id);
+            tarea.Completada = 1;
+            ctx.SaveChanges();  
+        }
+
         public Tarea Modificar(TareaM tareaM, string idCarpeta)
         {
             Tarea tarea = buscarPorIdTarea(tareaM.IdTarea);
@@ -110,35 +119,11 @@ namespace TaskManager.Repository
             return tarea;
         }
 
-        public TareaM ModelarTarea(Tarea tarea)
+        public List<TareaM> ListarTareasDeCarpeta(int idCarpeta)
         {
-            TareaM tareaM = new TareaM();
-
-            tareaM.IdTarea = tarea.IdTarea;
-            tareaM.Nombre = tarea.Nombre;
-            tareaM.Descripcion = tarea.Descripcion;
-            tareaM.FechaFin = tarea.FechaFin;
-            tareaM.FechaCreacion = tarea.FechaCreacion;
-            tareaM.Prioridad = tarea.Prioridad;
-            tareaM.Completada = tarea.Completada;
-            tareaM.EstimadoHoras = tarea.EstimadoHoras;
-            tareaM.Nombre = tarea.Nombre;
-
-            if (tarea.IdUsuario != null)
-            {
-                int idUsuario = tarea.IdUsuario;
-                Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                tareaM.UsuarioM = usuarioRepository.ModelarUsuario(usuario);
-            }
-
-            //if (tarea.IdCarpeta != null)
-            //{
-            //    Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
-            //    CarpetaM carpetaM = carpetasRepository.ModelarCarpeta(c);
-            //    tareaM.CarpetaM = carpetaM;
-            //}
-
-            return tareaM;
+            List<TareaM> listaTareaM = listarTodos();
+            List<TareaM> listaDeTareasDeCarpeta = listaTareaM.Where(x => x.CarpetaM.IdCarpeta == idCarpeta).ToList();
+            return listaDeTareasDeCarpeta;
         }
     }
 }

@@ -22,6 +22,7 @@ namespace TaskManager.Models
         //  public int IdTarea { get; set; }
 
         TareaRepository tareaRepository = new TareaRepository();
+        TareaM tareaModelo = new TareaM();
         public ComentarioTareaM ComentarioTareaMapeo (ComentarioTarea comentarioTarea)
         {
             ComentarioTareaM comentarioTareaM = new ComentarioTareaM();
@@ -29,7 +30,7 @@ namespace TaskManager.Models
             comentarioTareaM.Texto = comentarioTarea.Texto;
             comentarioTareaM.FechaCreacion = comentarioTarea.FechaCreacion;
             Tarea tarea = tareaRepository.buscarPorIdTarea(comentarioTarea.IdTarea);
-            TareaM tareaM = tareaRepository.ModelarTarea(tarea);
+            TareaM tareaM = tareaModelo.ModelarTarea(tarea);
             comentarioTareaM.TareaM = tareaM;
             return comentarioTareaM;
 
