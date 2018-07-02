@@ -14,6 +14,7 @@ namespace TaskManager.Controllers
         string ErrorMailEnUso = "El E-Mail ya se encuentra en uso";
         string ErrorCaptchaIncorrecto = "Captcha Incorrecto";
         RegistracionRepository RegistracionRepository = new RegistracionRepository();
+        UsuarioRepository UsuarioRepository = new UsuarioRepository();
 
         public ActionResult Login()
         {
@@ -35,6 +36,8 @@ namespace TaskManager.Controllers
 
             if (validacion == "OK")
             {
+                Usuario usuario = UsuarioRepository.BuscarUsuarioPorEmailYPass(user);
+
                 if (recordar != null)
                 {
                     if (recordar.Contains("true"))
@@ -42,13 +45,13 @@ namespace TaskManager.Controllers
                         user.generarCookie();
                     }
                 }
+                user.guardarEnSesion(usuario);
 
-                // TO DO: Ver porque no funciona
-                //Dictionary<string,string> redirectTo = LoginRepository.GetRedirectTo();
-                //if ( redirectTo != null)
-                //{
-                //    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
-                //}
+                Dictionary<string, string> redirectTo = new LoginRepository().GetRedirectTo();
+                if (redirectTo != null)
+                {
+                    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
+                }
 
                 return RedirectToAction("Index", "Home", null);
             }
@@ -74,7 +77,6 @@ namespace TaskManager.Controllers
         [HttpPost]
         public ActionResult Registracion(UsuarioM user)
         {
-
             string EncodedResponse = Request.Form["g-Recaptcha-Response"];
             bool recaptcha = (RegistracionRepository.IsReCaptchValid(Request.Form["g-Recaptcha-Response"]));
 
@@ -82,13 +84,31 @@ namespace TaskManager.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    if (user.Registrar())
+                    Usuario userInBase = UsuarioRepository.BuscarUsuarioPorEmail(user.Email);
+                    if (userInBase != null)
                     {
-                        return Login(user);
+                        if (userInBase.Activo.Equals(1))
+                        {
+                            ViewBag.errorMailEnUso = ErrorMailEnUso;
+                        }
+                        else
+                        {
+                            user.IdUsuario = userInBase.IdUsuario;
+                            user.ActivarUsuario();
+
+                            Usuario usuario = UsuarioRepository.BuscarUsuarioPorId(user.IdUsuario);
+
+                            user.ModificarUsuarioEntidad(usuario);
+                            UsuarioRepository.ModificarUsuario(usuario);
+                            return Login(user);
+                        }
+
                     }
                     else
                     {
-                        ViewBag.errorMailEnUso = ErrorMailEnUso;
+                        Usuario usuario = user.ConvertirModelo();
+                        UsuarioRepository.CrearUsuario(usuario);
+                        return Login(user);
                     }
                 }
             }

@@ -40,7 +40,6 @@ namespace TaskManager.Repository
         /// <returns>Usuario</returns>
         public Usuario BuscarUsuarioPorEmailYPass(UsuarioM usr)
         {
-
             Usuario usuario = ctx.Usuario.Where(x => x.Email == usr.Email && x.Contrasenia == usr.Contrasena).FirstOrDefault();
             return usuario;
         }

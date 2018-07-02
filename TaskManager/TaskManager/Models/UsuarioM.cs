@@ -62,63 +62,16 @@ namespace TaskManager.Models
 
 
         /// <summary>
-        /// Crea el usuario en el contexto
-        /// </summary>
-        public void Crear()
-        {
-            Usuario usuario = this.ConvertirModelo();
-            UsuarioRepository.CrearUsuario(usuario);
-        }
-
-        /// <summary>
-        /// Modifica el usuario en el Contexto
-        /// </summary>
-        public void Modificar()
-        {
-            Usuario usuario = UsuarioRepository.BuscarUsuarioPorId(this.IdUsuario);
-
-            usuario = this.ConvertirModelo();
-            UsuarioRepository.ModificarUsuario(usuario);
-
-        }
-
-
-        /// <summary>
-        /// Realiza el registro del usuario en la BDD
-        /// </summary>
-        /// <returns></returns>
-        public bool Registrar()
-        {
-            Usuario userInBase = UsuarioRepository.BuscarUsuarioPorEmail(this.Email);
-            if (userInBase != null)
-            {
-                if (userInBase.Activo.Equals(1))
-                {
-                    return false;
-                }
-                else
-                {
-                    this.IdUsuario = userInBase.IdUsuario;
-                    this.ActivarUsuario();
-                    this.Modificar();
-                    return true;
-                }
-            }
-            else
-            {
-                this.ActivarUsuario();
-                this.Crear();
-                return true;
-            }
-        }
-
-        /// <summary>
         /// Verifica el login
         /// </summary>
         /// <returns></returns>
         public String VerificarLogin()
         {
             Usuario userInBase = UsuarioRepository.BuscarUsuarioPorEmailYPass(this);
+            if(userInBase != null)
+            {
+                this.IdUsuario = userInBase.IdUsuario;   
+            }
             return LoginRepository.VerificarLogin(userInBase);
         }
 
@@ -276,6 +229,15 @@ namespace TaskManager.Models
         }
 
 
+        public void ModificarUsuarioEntidad(Usuario usr)
+        {
+            usr.Nombre = this.Nombre;
+            usr.Apellido = this.Apellido;
+            usr.Contrasenia = this.Contrasena;
+            usr.Activo = (Int16)this.Activo;
+            usr.CodigoActivacion = this.CodigoActivacion;
+        }
+
         /// <summary>
         /// Metodo que retorna el Usuario Logueado Almacenado en la Sesion
         /// </summary>
@@ -292,10 +254,9 @@ namespace TaskManager.Models
         /// </summary>
         public void generarCookie()
         {
-            UsuarioM user = GetUser();
             HttpCookie cookie = new HttpCookie("User");
 
-            cookie["ID"] = user.IdUsuario.ToString();
+            cookie["ID"] = this.IdUsuario.ToString();
             cookie.Expires = DateTime.Now.AddDays(1);
             System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
         }

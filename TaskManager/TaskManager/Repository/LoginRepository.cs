@@ -24,8 +24,6 @@ namespace TaskManager.Repository
             {
                 if (usuario.Activo == 1)
                 {
-                    UsuarioM usr = new UsuarioM();
-                    usr.guardarEnSesion(usuario);
                     return "OK";
                 }
                 else return "Usuario Inactivo";

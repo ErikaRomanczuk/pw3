@@ -20,20 +20,19 @@
     <tbody>
         @foreach (var carpeta in Model)
         {
-        <tr>
-            <td>@carpeta.Nombre</td>
-            <td>@carpeta.Descripcion</td>
-            <td>@carpeta.FechaCreacion</td>
-            <td>
-                @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })
-                @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = carpeta.IdCarpeta })
-                @Html.ActionLink("Tareas", "Tareas", new { idCarpeta = carpeta.IdCarpeta })
-            </td>
-        </tr>
+            <tr>
+                <td>@carpeta.Nombre</td>
+                <td>@carpeta.Descripcion</td>
+                <td>@carpeta.FechaCreacion</td>
+                <td>
+                    @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })
+                    @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = carpeta.IdCarpeta })
+                    @Html.ActionLink("Tareas", "Tareas", new { idCarpeta = carpeta.IdCarpeta })
+                </td>
+            </tr>
         }
     </tbody>
 
 
 </table>
-
-<a href="Crear" class="btn btn-success"> Crear Carpeta </a>
+@Html.ActionLink("Crear", "Crear", "Carpetas", null, new { @class = "btn btn-success" })

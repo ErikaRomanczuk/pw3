@@ -1,5 +1,5 @@
 ﻿@using TaskManager.Models
-@model List<TareaM>
+@model List<TareaViewModel>
 
 @{
     ViewBag.Title = "Listar Tareas";
@@ -26,7 +26,7 @@
                 <td>@tarea.FechaFin</td>
                 <td>@tarea.Nombre</td>
                 <td>@tarea.Prioridad</td>
-                <td>@tarea.CarpetaM.Nombre</td>
+                <td>@tarea.Carpeta.Nombre</td>
                 <td>@tarea.EstimadoHoras</td>
                 <td>@tarea.Completada</td>
                 <td>
