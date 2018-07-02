@@ -71,7 +71,7 @@ namespace TaskManager.Controllers
         public ActionResult Logout()
         {
             new UsuarioM { }.Logout();
-            return View("Index");
+            return RedirectToAction("Index","Home",null);
         }
 
         [HttpPost]

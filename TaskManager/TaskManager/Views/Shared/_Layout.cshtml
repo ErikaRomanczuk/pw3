@@ -1,6 +1,14 @@
-﻿@{ 
-    bool UserLoggedIn = HttpContext.Current.Session["userLogged"] != null;
-    string nombre = "NOMBRE USUARIO";//HttpContext.Current.Session["userLogged"].ToString();
+﻿@using TaskManager.Models
+@{ 
+    UsuarioM userLogged = (UsuarioM)HttpContext.Current.Session["userLogged"];
+    bool UserLoggedIn = userLogged != null;
+    string nombre = "";
+
+    if (UserLoggedIn)
+    {
+         nombre = userLogged.Nombre;
+    }
+
 }
 <!DOCTYPE html>
 <html>
