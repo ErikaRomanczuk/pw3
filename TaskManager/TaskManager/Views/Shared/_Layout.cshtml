@@ -1,12 +1,13 @@
 ﻿@{ 
     bool UserLoggedIn = HttpContext.Current.Session["userLogged"] != null;
+    string nombre = "NOMBRE USUARIO";//HttpContext.Current.Session["userLogged"].ToString();
 }
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <title>@ViewBag.Title - TaskManager</title>
     <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
@@ -28,8 +29,8 @@
                 </button>
                 @if (UserLoggedIn)
                 {
-                    <a href="#" id="ShowMenuButton">
-                        <span class="glyphicon glyphicon-eye-open "></span>
+                    <a href="#" id="ShowMenuButton" class = "navbar-brand">
+                        <span class="glyphicon  glyphicon-align-justify"></span>
                     </a>
                 }
                 @Html.ActionLink("TaskManager", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
@@ -45,11 +46,12 @@
             <!-- Sidebar -->
             <div id="sidebar-wrapper">
                 <ul class="sidebar-nav">
-                    <li class="sidebar-brand"><a>Pepe</a>  </li>
+                    <li class="sidebar-brand"><a>@nombre</a>  </li>
                     <li><a href="@Url.Action("Index", "Tarea")"><span class="glyphicon glyphicon-list-alt"></span> Mis Tareas</a>  </li>
                     <li><a href="@Url.Action("Crear", "Tarea")"><span class="glyphicon glyphicon-list-alt"></span> Crear Tarea</a></li>
                     <li><a href="@Url.Action("Index", "Carpetas")"> <span class="glyphicon glyphicon-folder-open"></span> Mis Carpetas</a></li>
                     <li><a href="@Url.Action("Crear", "Carpetas")"> <span class="glyphicon glyphicon-folder-open"></span> Crear Carpeta</a></li>
+                    <li><a href="@Url.Action("Logout", "Login")"> <span class="glyphicon glyphicon-remove"></span> Cerrar Sesion</a></li>
                 </ul>
             </div>
         }
@@ -59,7 +61,7 @@
         </div>
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <p class="text-center">&copy; @DateTime.Now.Year - Task Manager</p>
         </footer>
 
 

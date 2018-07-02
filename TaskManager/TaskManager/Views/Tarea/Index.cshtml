@@ -6,76 +6,79 @@
 }
 
 
+<div class="container">
+    @if (Model == null || Model.Count <= 0)
+    {
+        <p>
+            Usted no tiene tareas , debe crear una.
+            <a href="@Url.Action("Crear", "Tarea")" class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span> Crear Tarea</a>
+        </p>
+    }
+    else
+    {
 
-@if (Model == null || Model.Count <= 0)
-{
-    <p> Usted no tiene tareas , debe crear una.
-        <a href="@Url.Action("Crear", "Tarea")" class="btn btn-info"><span class="glyphicon glyphicon-list-alt"></span> Crear Tarea</a></p>
-}
-else
-{
+        <div class="row">
+            <div class="panel">
 
-    <div class="row">
-        <div class="panel">
-
-            <div class="panel-heading">
-                <h3> FILTRO </h3>
-            </div>
-            <div class="panel-body">
-                <form method="get" action="" calss="form-control">
-                    <div class="form-group">
-                        <label for="filtro">Estado</label>
-                        <div class="col-md-12">
-                            <select for="filtro" id="filtro" name="filtro" class="form-control">
-                                <option value=""> Todos</option>
-                                <option @( Request.Form["filtro"] == "1" ? "selected" : "") value="1"> Completas</option>
-                                <option @( Request.Form["filtro"] == "0" ? "selected" : "") value="0">Incompletas</option>
-                            </select>
-                        </div>
+                <div class="panel-heading">
+                    <h3> Filtro </h3>
+                </div>
+                <div class="panel-body">
+                    <form method="get" action="" calss="form-control">
                         <div class="form-group">
+                            <label for="filtro">Estado</label>
                             <div class="col-md-12">
-                                <input type="submit" value="Aplicar Filtros" class="btn btn-primary pull-right" />
+                                <select for="filtro" id="filtro" name="filtro" class="form-control">
+                                    <option value=""> Todos</option>
+                                    <option @( Request.Form["filtro"] == "1" ? "selected" : "") value="1"> Completas</option>
+                                    <option @( Request.Form["filtro"] == "0" ? "selected" : "") value="0">Incompletas</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-12">
+                                    <input type="submit" value="Aplicar Filtros" class="btn btn-primary pull-right" />
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
         </div>
-    </div>
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Horas Estimadas</th>
-            <th>Fecha Fin</th>
-            <th>Prioridad</th>
-            <th class="text-center">Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tarea in Model)
-        {
-        <tr>
-            <td>@tarea.IdTarea</td>
-            <td>@tarea.Nombre</td>
-            <td>@tarea.Descripcion</td>
-            <td>@tarea.EstimadoHoras</td>
-            <td>@tarea.FechaFin</td>
-            <td>@tarea.PrioridadDescripcion </td>
-            <td class="text-right">
-                @if (tarea.Completada == 0)
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Descripción</th>
+                    <th>Horas Estimadas</th>
+                    <th>Fecha Fin</th>
+                    <th>Prioridad</th>
+                    <th class="text-center">Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarea in Model)
                 {
-                    @Html.ActionLink("Completar", "Completar", new { IdTarea = tarea.IdTarea })
-                }
+                    <tr>
+                        <td>@tarea.IdTarea</td>
+                        <td>@tarea.Nombre</td>
+                        <td>@tarea.Descripcion</td>
+                        <td>@tarea.EstimadoHoras</td>
+                        <td>@tarea.FechaFin</td>
+                        <td>@tarea.PrioridadDescripcion </td>
+                        <td class="text-right">
+                            @if (tarea.Completada == 0)
+                            {
+                                @Html.ActionLink("Completar", "Completar", new { IdTarea = tarea.IdTarea })
+                            }
 
-                @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
-                @Html.ActionLink("Detalle", "Detalle", new { IdTarea = tarea.IdTarea })
-                @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
-            </td>
-        </tr>
-        }
-    </tbody>
-</table>
-}
+                            @Html.ActionLink("Modificar", "Modificar", new { IdTarea = tarea.IdTarea })
+                            @Html.ActionLink("Detalle", "Detalle", new { IdTarea = tarea.IdTarea })
+                            @Html.ActionLink("Eliminar", "Eliminar", new { IdTarea = tarea.IdTarea })
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

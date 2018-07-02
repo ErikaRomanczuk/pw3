@@ -4,114 +4,126 @@
 @{
     ViewBag.Title = "Detalle";
 }
+<div class="container">
+    <h2>Detalle</h2>
 
-<h2>Detalle</h2>
+    <p><strong>Nombre: </strong>@Model.Nombre</p>
+    <p><strong>Descripción: </strong>@Model.Descripcion</p>
+    <p><strong>Horas estimadas: </strong>@Model.EstimadoHoras</p>
+    <p><strong>Fecha Fin: </strong>@Model.FechaFin</p>
+    <p><strong>Prioridad : </strong>@Model.PrioridadDescripcion </p>
 
-<p><strong>Nombre: </strong>@Model.Nombre</p>
-<p><strong>Descripción: </strong>@Model.Descripcion</p>
-<p><strong>Horas estimadas: </strong>@Model.EstimadoHoras</p>
-<p><strong>Fecha Fin: </strong>@Model.FechaFin</p>
-<p><strong>Prioridad : </strong>@Model.PrioridadDescripcion </p>
-   
 
-<p><strong>Completada: </strong>@( Model.Completada == 1 ? "Si" : "No")</p>
+    <p><strong>Completada: </strong>@( Model.Completada == 1 ? "Si" : "No")</p>
 
-<br />
-<br />
-<h2>Comentarios</h2>
-@Html.ActionLink("Crear nuevo comentario", "CrearComentarioTarea", new { IdTarea = Model.IdTarea })
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Descripción
-            </th>
-            <th>
-                Fecha de creación
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var x in ViewBag.ListaComentarioTareaM)
-        {
+    <br />
+    <hr />
+    <br />
+    <h3>Comentarios</h3>
+    @Html.ActionLink("Crear nuevo comentario", "CrearComentarioTarea", new { IdTarea = Model.IdTarea })
+
+    <table class="table table-striped">
+        <thead>
             <tr>
                 <th>
-                    @x.Texto
+                    Descripción
                 </th>
                 <th>
-                    @x.FechaCreacion
+                    Fecha de creación
                 </th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var x in ViewBag.ListaComentarioTareaM)
+            {
+                <tr>
+                    <th>
+                        @x.Texto
+                    </th>
+                    <th>
+                        @x.FechaCreacion
+                    </th>
+                </tr>
+            }
+        </tbody>
 
-</table>
+    </table>
 
-<h2>Adjuntos</h2>
+    <br />
+    <hr />
+
+    <h3>Adjuntos</h3>
 
 
-<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#adjuntoModal">
-    Nuevo adjunto
-</button>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>
-                Archivo
-            </th>
-            <th>
-                Fecha subida
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var archivo in Model.ArchivoTarea)
-        {
+    @if (Model.ArchivoTarea != null && Model.ArchivoTarea.Count > 0)
+    {<table class="table table-striped">
+        <thead>
             <tr>
-                <td><a href="@archivo.RutaArchivo">@archivo.RutaArchivo</a></td>
-                <td>@archivo.FechaCreacion.ToString("dd/MM/yyyy hh:mm:ss")</td>
+                <th>
+                    Archivo
+                </th>
+                <th>
+                    Fecha subida
+                </th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var archivo in Model.ArchivoTarea)
+            {
+                <tr>
+                    <td><a href="@archivo.RutaArchivo">@archivo.RutaArchivo</a></td>
+                    <td>@archivo.FechaCreacion.ToString("dd/MM/yyyy hh:mm:ss")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    }
+    else
+    {
+        <p> Usted no contiene archivos adjuntados a la tarea. Haciendo Click en el boto "Nuevo Adjunto" puede subir archivos </p>
+    }
 
-<div class="modal fade" id="adjuntoModal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Nuevo adjunto</h4>
-            </div>
-            <div class="modal-body" id="SubirAdjuntoContainer">
-                @using (Html.BeginForm("SubirAdjunto", "Tarea", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#adjuntoModal">
+        <span class="glyphicon glyphicon-plus"></span>   Nuevo adjunto
+    </button>
+
+
+    <div class="modal fade" id="adjuntoModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Nuevo adjunto</span></button>
+
+                </div>
+                <div class="modal-body" id="SubirAdjuntoContainer">
+                    @using (Html.BeginForm("SubirAdjunto", "Tarea", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    @Html.HiddenFor(X => X.IdTarea)
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <div class="form-control">
-                                <label>
-                                    Seleccioná un archivo
-                                    <input type="file" name="adjunto" id="adjunto" />
-                                </label>
-                            </div>
+                @Html.HiddenFor(X => X.IdTarea)
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="form-control">
+
+                            <input type="file" name="adjunto" id="adjunto" />
+
                         </div>
                     </div>
+                </div>
                 }
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="button" class="btn btn-primary" id="SubirAdjuntoAceptar">Aceptar</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="SubirAdjuntoAceptar">Aceptar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
 
-<script type="text/javascript">
-    $(document).ready(function () {
-        $("#SubirAdjuntoAceptar").click(function () {
-            $("#SubirAdjuntoAceptar").addClass("disabled");
-            $("#SubirAdjuntoContainer form").submit();
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("#SubirAdjuntoAceptar").click(function () {
+                $("#SubirAdjuntoAceptar").addClass("disabled");
+                $("#SubirAdjuntoContainer form").submit();
+            });
         });
-    });
-</script>
+    </script>
+</div>
