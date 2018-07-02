@@ -20,34 +20,61 @@
     <hr />
     <br />
     <h3>Comentarios</h3>
-    @Html.ActionLink("Crear nuevo comentario", "CrearComentarioTarea", new { IdTarea = Model.IdTarea })
+  @*  @Html.ActionLink("Crear nuevo comentario", "CrearComentarioTarea", new { IdTarea = Model.IdTarea })*@
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>
-                    Descripción
-                </th>
-                <th>
-                    Fecha de creación
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var x in ViewBag.ListaComentarioTareaM)
+
+
+
+    @foreach (var x in ViewBag.ListaComentarioTareaM)
             {
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <strong>Fecha:</strong> <span class="text-muted">@x.FechaCreacion</span>
+                    </div>
+                    <div class="panel-body">
+                        @x.Texto
+                    </div><!-- /panel-body -->
+                </div><!-- /panel panel-default -->
+            </div><!-- /col-sm-5 -->
+        </div>
+    }
+
+    <a href="@Url.Action("CrearComentarioTarea","Tarea", new { IdTarea = Model.IdTarea })" class="btn btn-success">
+
+        <span class="glyphicon glyphicon-plus"></span> Nuevo Comentario
+    </a>
+
+
+
+
+    @*<table class="table table-striped">
+            <thead>
                 <tr>
                     <th>
-                        @x.Texto
+                        Descripción
                     </th>
                     <th>
-                        @x.FechaCreacion
+                        Fecha de creación
                     </th>
                 </tr>
-            }
-        </tbody>
+            </thead>
+            <tbody>
+                @foreach (var x in ViewBag.ListaComentarioTareaM)
+                {
+                    <tr>
+                        <th>
+                            @x.Texto
+                        </th>
+                        <th>
+                            @x.FechaCreacion
+                        </th>
+                    </tr>
+                }
+            </tbody>
 
-    </table>
+        </table>*@
 
     <br />
     <hr />
@@ -92,23 +119,23 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">Nuevo adjunto</span></button>
-
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Nuevo adjunto</h3>
                 </div>
                 <div class="modal-body" id="SubirAdjuntoContainer">
                     @using (Html.BeginForm("SubirAdjunto", "Tarea", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                @Html.HiddenFor(X => X.IdTarea)
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-control">
+                    {
+                        @Html.HiddenFor(X => X.IdTarea)
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="form-control">
 
-                            <input type="file" name="adjunto" id="adjunto" />
+                                    <input type="file" name="adjunto" id="adjunto" />
 
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                }
+                    }
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
