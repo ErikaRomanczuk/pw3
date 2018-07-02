@@ -2,20 +2,21 @@
 @{
     ViewBag.Title = "Crear";
 }
+<div class="container">
+    <h2>Crear Tarea</h2>
 
-<h2>Crear Tarea</h2>
-
-@using (Html.BeginForm("Crear", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    <h4>Complete los datos para crear la tarea</h4>
-    <hr />
+    @using (Html.BeginForm("Crear", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <h4>Complete los datos para crear la tarea</h4>
+        <hr />
 
 
-    @Html.Partial("_Detalle", Model);
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Guardar" class="btn btn-primary" />
+        @Html.Partial("_Detalle", Model);
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Guardar" class="btn btn-primary" />
+            </div>
         </div>
-    </div>
 
-}
+    }
+</div>

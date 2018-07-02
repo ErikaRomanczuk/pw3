@@ -4,37 +4,38 @@
 @{
     ViewBag.Title = "Listar Tareas";
 }
+<div class="container">
+    <h2>Listar</h2>
 
-<h2>Listar</h2>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Fecha Fin</th>
-            <th>Nombre</th>
-            <th>Prioridad</th>
-            <th>Carpeta</th>
-            <th>Estimado</th>
-            <th>Completada</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var tarea in Model)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@tarea.FechaFin</td>
-                <td>@tarea.Nombre</td>
-                <td>@tarea.Prioridad</td>
-                <td>@tarea.Carpeta.Nombre</td>
-                <td>@tarea.EstimadoHoras</td>
-                <td>@tarea.Completada</td>
-                <td>
-                    @Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = tarea.IdTarea },null)
-                    @Html.ActionLink("Detalle", "Detalle", "Tarea", new { IdTarea = tarea.IdTarea }, null)
-                    @Html.ActionLink("Eliminar", "Eliminar", "Tarea", new { IdTarea = tarea.IdTarea }, null)
-                </td>
+                <th>Fecha Fin</th>
+                <th>Nombre</th>
+                <th>Prioridad</th>
+                <th>Carpeta</th>
+                <th>Estimado</th>
+                <th>Completada</th>
+                <th>Acción</th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var tarea in Model)
+            {
+                <tr>
+                    <td>@tarea.FechaFin</td>
+                    <td>@tarea.Nombre</td>
+                    <td>@tarea.Prioridad</td>
+                    <td>@tarea.CarpetaM.Nombre</td>
+                    <td>@tarea.EstimadoHoras</td>
+                    <td>@tarea.Completada</td>
+                    <td>
+                        @Html.ActionLink("Modificar", "Modificar", "Tarea", new { IdTarea = tarea.IdTarea }, null)
+                        @Html.ActionLink("Detalle", "Detalle", "Tarea", new { IdTarea = tarea.IdTarea }, null)
+                        @Html.ActionLink("Eliminar", "Eliminar", "Tarea", new { IdTarea = tarea.IdTarea }, null)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

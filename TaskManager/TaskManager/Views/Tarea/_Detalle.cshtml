@@ -50,7 +50,7 @@
 <div class="form-group">
     @Html.LabelFor(m => m.FechaFin, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        <input class="col-md-12 form-control" type="date" name="FechaFin" id="FechaFin" value="@Model.FechaFin" />
+        @Html.TextBoxFor(x => x.FechaFin, "dd/MM/yyyy",  new { @type = "datetime-local", @class = "col-md-12 form-control" })
         @Html.ValidationMessageFor(m => m.FechaFin, "", new { @class = "text-danger" })
        
     </div>

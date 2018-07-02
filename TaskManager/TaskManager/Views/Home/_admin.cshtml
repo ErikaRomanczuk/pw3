@@ -1,64 +1,70 @@
 ﻿@using TaskManager.Models
 @model List<TareaViewModel>
 
+<div class="container">
 
+    @if (Model == null || Model.Count == 0)
 
-@if (Model == null || Model.Count == 0)
-
-{
-    <div class="row">
-        <div class="col-md-10 col-lg-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Sin Tareas Pendientes
-                </div>
-                <div class="panel-body">
-                    Usted no contiene tareas pendientes o sin finalizar.
+    {
+        <div class="row">
+            <div class="col-md-10 col-lg-offset-1">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Sin Tareas Pendientes
+                    </div>
+                    <div class="panel-body">
+                        Usted no contiene tareas pendientes o sin finalizar.
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Fecha Fin</th>
-                <th>Nombre</th>
-                <th>Prioridad</th>
-                <th>Carpeta</th>
-                <th>Estimado</th>
-                <th>Completada</th>
-                <th>Ver</th>
-                <th>Completar</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var tarea in Model)
-        {
+    }
+    else
+    {
+        <h3>Tareas Pendientes</h3>
+        <p> Aqui podra ver la lista de tareas pendientes que tiene , haciendo click en completar puede finalizarla de manera automatica</p>
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@tarea.FechaFin</td>
-                    <td>@tarea.Nombre</td>
-                    <td>@tarea.PrioridadDescripcion</td>
-
-
-                    <td>@tarea.EstimadoHoras</td>
-                    <td>@tarea.CompletadaDescripcion</td>
-                    <td class="text-right">
-                        <span class="glyphicon glyphicon-eye-open">
-                            @Html.ActionLink("Detalle", "Detalle", "Tarea", new { IdTarea = tarea.IdTarea }, new { })
-                        </span>
-                    </td>
-                    <td class="text-right">
-                        @if (tarea.Completada == 0)
-                        {
-                            @Html.ActionLink("Completar", "Completar", "Tarea", new { IdTarea = tarea.IdTarea }, new { })
-                        }
-                    </td>
+                    <th>Fecha Fin</th>
+                    <th>Nombre</th>
+                    <th>Prioridad</th>
+                    <th>Carpeta</th>
+                    <th>Estimado</th>
+                    <th>Completada</th>
+                    <th class="text-center">Ver</th>
+                    <th class="text-center">Completar</th>
                 </tr>
+            </thead>
+            <tbody>
+                @foreach (var tarea in Model)
+                {
+                    <tr>
+                        <td>@tarea.FechaFin</td>
+                        <td>@tarea.Nombre</td>
+                        <td>@tarea.PrioridadDescripcion</td>
+                        <td>@tarea.CarpetaM.Nombre</td>
+
+                        <td>@tarea.EstimadoHoras</td>
+                        <td>@tarea.CompletadaDescripcion</td>
+                        <td class="text-center">
+
+                            <a href="@Url.Action("Detalle", "Tarea",new { IdTarea = tarea.IdTarea })" class="text-success">
+
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                            </a>
+
+                        </td>
+                        <td class="text-center">
+                            <a href="@Url.Action("Completar", "Tarea",new { IdTarea = tarea.IdTarea })" class="text-success">
+                                <span class="glyphicon glyphicon-ok"></span>
+                            </a>                
+                        </td>
+
+                    </tr>
+                    }
+                </tbody>
+            </table>
             }
-        </tbody>
-    </table>
-}
+        </div>

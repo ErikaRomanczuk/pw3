@@ -5,34 +5,34 @@
 @{
     ViewBag.Title = "Listar";
 }
+<div class="container">
+    <h2>Listar</h2>
 
-<h2>Listar</h2>
-
-<table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Fecha de creación</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var carpeta in Model)
-        {
+    <table class="table table-striped">
+        <thead>
             <tr>
-                <td>@carpeta.Nombre</td>
-                <td>@carpeta.Descripcion</td>
-                <td>@carpeta.FechaCreacion</td>
-                <td>
-                    @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })
-                    @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = carpeta.IdCarpeta })
-                    @Html.ActionLink("Tareas", "Tareas", new { idCarpeta = carpeta.IdCarpeta })
-                </td>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Fecha de creación</th>
+                <th>Acción</th>
             </tr>
-        }
-    </tbody>
+        </thead>
+        <tbody>
+            @foreach (var carpeta in Model)
+            {
+                <tr>
+                    <td>@carpeta.Nombre</td>
+                    <td>@carpeta.Descripcion</td>
+                    <td>@carpeta.FechaCreacion</td>
+                    <td>
+                        @Html.ActionLink("Modificar", "Modificar", new { idCarpeta = carpeta.IdCarpeta })
+                        @Html.ActionLink("Eliminar", "Eliminar", new { idCarpeta = carpeta.IdCarpeta })
+                        @Html.ActionLink("Tareas", "Tareas", new { idCarpeta = carpeta.IdCarpeta })
+                    </td>
+                </tr>
+            }
+        </tbody>
+	</table>
+	@Html.ActionLink("Crear", "Crear", "Carpetas", null, new { @class = "btn btn-success" })
+</div>
 
-
-</table>
-@Html.ActionLink("Crear", "Crear", "Carpetas", null, new { @class = "btn btn-success" })

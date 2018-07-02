@@ -123,7 +123,7 @@ namespace TaskManager.Models
                 UsuarioM = new UsuarioM { }.ModelarUsuario(usuario);
             }
 
-            if (tarea.IdCarpeta <= 0)   //  if (tarea.IdCarpeta != null)
+            if (tarea.IdCarpeta >= 0)   //  if (tarea.IdCarpeta != null)
             {
                 CarpetasRepository carpetasRepository = new CarpetasRepository();
                 CarpetaM carpetaModelo = new CarpetaM();
