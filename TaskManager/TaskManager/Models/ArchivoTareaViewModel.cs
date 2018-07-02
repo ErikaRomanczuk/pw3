@@ -8,6 +8,13 @@ namespace TaskManager.Models
 {
     public class ArchivoTareaViewModel
     {
+        public ArchivoTareaViewModel(ArchivoTarea archivoTarea)
+        {
+            IdArchivo = archivoTarea.IdArchivoTarea;
+            RutaArchivo = archivoTarea.RutaArchivo;
+            FechaCreacion = archivoTarea.FechaCreacion;
+        }
+
         public int IdArchivo { get; set; }
 
         [Display(Name = "Ruta")]
@@ -16,13 +23,5 @@ namespace TaskManager.Models
         public DateTime FechaCreacion { get; set; }
 
         public int IdTarea { get; set; }
-
-        public TareaViewModel Tarea { get; set; }
-
-        public ArchivoTareaViewModel Map(ArchivoTarea at)
-        {
-            ArchivoTareaViewModel a = new ArchivoTareaViewModel();
-            return a;
-        }
     }
 }

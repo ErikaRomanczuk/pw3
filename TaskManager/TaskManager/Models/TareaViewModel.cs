@@ -92,6 +92,8 @@ namespace TaskManager.Models
         public UsuarioM UsuarioM { get; set; }
 
         public CarpetaM CarpetaM { get; set; }
+
+        public IList<ArchivoTareaViewModel> ArchivoTarea { get; set; }
         #endregion
 
 
@@ -101,24 +103,24 @@ namespace TaskManager.Models
         /// </summary>
         /// <param name="tarea">Tarea obtenida de la BBDD</param>
         /// <returns>TareaViewModel</returns>
-        private TareaViewModel Map(Tarea tarea)
+        private void Map(Tarea tarea)
         {
-            TareaViewModel tareaM = new TareaViewModel();
-            tareaM.IdTarea = tarea.IdTarea;
-            tareaM.Nombre = tarea.Nombre;
-            tareaM.Descripcion = tarea.Descripcion;
-            tareaM.FechaCreacion = tarea.FechaCreacion;
+            
+            IdTarea = tarea.IdTarea;
+            Nombre = tarea.Nombre;
+            Descripcion = tarea.Descripcion;
+            FechaCreacion = tarea.FechaCreacion;
 
-            tareaM.FechaFin = tarea.FechaFin;
-            tareaM.EstimadoHoras = tarea.EstimadoHoras;
-            tareaM.Prioridad = tarea.Prioridad;
+            FechaFin = tarea.FechaFin;
+            EstimadoHoras = tarea.EstimadoHoras;
+            Prioridad = tarea.Prioridad;
 
             if (tarea.Usuario != null) // Siempre null por la DB.
             {
                 UsuarioRepository usuarioRepository = new UsuarioRepository();
                 int idUsuario = (int)tarea.IdUsuario;
                 Usuario usuario = usuarioRepository.BuscarUsuarioPorId(idUsuario);
-                tareaM.UsuarioM = new UsuarioM { }.ModelarUsuario(usuario);
+                UsuarioM = new UsuarioM { }.ModelarUsuario(usuario);
             }
 
             if (tarea.IdCarpeta <= 0)   //  if (tarea.IdCarpeta != null)
@@ -127,10 +129,10 @@ namespace TaskManager.Models
                 CarpetaM carpetaModelo = new CarpetaM();
                 Carpeta c = carpetasRepository.BuscarCarpetaPorId(tarea.IdCarpeta);
                 CarpetaM carpetaM = carpetaModelo.ModelarCarpeta(c);
-                tareaM.CarpetaM = carpetaM;
+                CarpetaM = carpetaM;
             }
 
-            return tareaM;
+            ArchivoTarea = tarea.ArchivoTarea.OrderByDescending(x => x.FechaCreacion).Select(x => new ArchivoTareaViewModel(x)).ToList();
         }
         #endregion
 

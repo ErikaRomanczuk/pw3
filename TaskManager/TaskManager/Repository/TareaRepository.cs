@@ -57,11 +57,10 @@ namespace TaskManager.Repository
 
         public Tarea buscarPorIdTarea(int id)
         {
-            List<Tarea> tareas = ctx.Tarea.ToList();
-            Tarea tarea = tareas.Where(x => x.IdTarea == id).FirstOrDefault();
+            Tarea tarea = ctx.Tarea.Include("ArchivoTarea").FirstOrDefault(x => x.IdTarea == id);
             if (tarea == null)
             {
-                throw new Exception("Id de carpeta inexistente");
+                throw new Exception("Id de tarea inexistente");
             }
             return tarea;
         }
@@ -142,6 +141,17 @@ namespace TaskManager.Repository
 
             List<Tarea> list = ctx.Tarea.Where(x => x.IdCarpeta == idCarpeta).ToList();
             return list;
+        }
+
+        internal void AgregarArchivo(int idTarea, string filePath)
+        {
+            Tarea tarea = buscarPorIdTarea(idTarea);
+            tarea.ArchivoTarea.Add(new ArchivoTarea()
+            {
+                RutaArchivo = filePath,
+                FechaCreacion = DateTime.Now
+            });
+            ctx.SaveChanges();
         }
     }
 }

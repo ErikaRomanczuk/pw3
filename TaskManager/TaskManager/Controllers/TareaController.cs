@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using TaskManager.Models;
 using TaskManager.Repository;
+using TaskManager.Utils;
 
 namespace TaskManager.Controllers
 {
@@ -193,6 +194,19 @@ namespace TaskManager.Controllers
                 tareaRepository.CompletarPorIdTarea(IdTarea);
             }
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public ActionResult SubirAdjunto(HttpPostedFileBase adjunto, int IdTarea)
+        {
+            Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            if (adjunto.ContentLength > 0)
+            {
+                var filePath = FileUtility.Guardar(adjunto, adjunto.FileName, $"/archivos/tareas/{IdTarea}/");
+                tareaRepository.AgregarArchivo(IdTarea, filePath);
+                
+            }
+            return RedirectToAction("Detalle", new { IdTarea = IdTarea });
         }
     }
 }
