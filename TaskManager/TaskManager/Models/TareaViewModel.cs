@@ -15,18 +15,16 @@ namespace TaskManager.Models
         [Display(Name = "Nombre")]
         public string Nombre { get; set; }
 
-        [RegularExpression(@"^([^<>]){1,200}$", ErrorMessage = "El campo {0} es obligatorio y tiene de maximo 50 caracters.")]
+        [RegularExpression(@"^([^<>]){1,200}$", ErrorMessage = "El campo {0} es obligatorio y tiene de maximo 200 caracters.")]
         [Display(Name = "Descripcion")]
         public string Descripcion { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Display(Name = "Fecha Finalizacion")]
         public DateTime? FechaFin { get; set; }
 
         [Display(Name = "Fecha Creacion")]
         public DateTime FechaCreacion { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         [Display(Name = "Prioridad")]
         public short Prioridad { get; set; }
 
@@ -57,11 +55,11 @@ namespace TaskManager.Models
 
             }
         }
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        
         [Display(Name = "Carpeta")]
         public string Carpeta { get; set; }
 
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        
         [Display(Name = "Carpeta")]
         public int IdCarpeta { get; set; }
 
@@ -85,6 +83,7 @@ namespace TaskManager.Models
         }
 
         [Display(Name = "Horas Estimadas")]
+        //[Range(0, 9999999999999999.99, ErrorMessage = "El campo {0} no puede tener más de 2 decimales.")]
         public decimal? EstimadoHoras { get; set; }
 
         public int IdTarea { get; set; }

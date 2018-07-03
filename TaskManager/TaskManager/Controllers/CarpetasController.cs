@@ -48,8 +48,12 @@ namespace TaskManager.Controllers
                 LoginRepository.SetRedirectTo("Carpetas", "Crear");
                 return RedirectToAction("Login", "Login");
             }
+            if (ModelState.IsValid)
+            {
+                CarpetasRepository.CrearCarpeta(carpetaM);
+                return RedirectToAction("Index");
+            }
 
-            CarpetasRepository.CrearCarpeta(carpetaM);
             return RedirectToAction("Index");
         }
 
@@ -80,15 +84,17 @@ namespace TaskManager.Controllers
                 LoginRepository.SetRedirectTo("Carpetas", "Index");
                 return RedirectToAction("Login", "Login");
             }
-
-            try
+            if (ModelState.IsValid)
             {
-                CarpetasRepository.ModificarCarpeta(carpetaM);
-            }
-            catch (Exception ex)
-            {
-                ViewBag.Mensaje = "Error al intentar guardar";
-                return View("Index", ViewBag);
+                try
+                {
+                    CarpetasRepository.ModificarCarpeta(carpetaM);
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Mensaje = "Error al intentar guardar";
+                    return View("Index", ViewBag);
+                }
             }
             return RedirectToAction("Index");
         }

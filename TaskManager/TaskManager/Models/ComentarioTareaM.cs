@@ -11,7 +11,8 @@ namespace TaskManager.Models
     {
         public int IdComentarioTarea { get; set; }
 
-        [Display(Name = "Comentario")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        [Display(Name = "Texto")]
         public string Texto { get; set; }
 
         [Display(Name = "Feccha de creacion")]

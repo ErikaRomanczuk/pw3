@@ -83,8 +83,11 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            string IdTarea = Request["IdTarea"];
-            detalleTareaRepository.Crear(comentarioTareaM, IdTarea);
+            if (ModelState.IsValid)
+            {
+                string IdTarea = Request["IdTarea"];
+                detalleTareaRepository.Crear(comentarioTareaM, IdTarea); 
+            }
             return RedirectToAction("Index");
         }
 
@@ -114,9 +117,15 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
+            if (ModelState.IsValid)
+            {
+                tareaRepository.Crear(TareaViewModel.ToTarea(tarea));
+                return Redirect("Index");
+            }
 
-            tareaRepository.Crear(TareaViewModel.ToTarea(tarea));
-            return Redirect("Index");
+            ViewBag.carpetas = carpetasRepository.listarOrdenadasCarpetasM();
+            return View(tarea);
+
         }
 
         public ActionResult Crear()
@@ -166,17 +175,20 @@ namespace TaskManager.Controllers
             }
 
             CarpetasRepository carpetasRepository = new CarpetasRepository();
-   
-            try
+            if (ModelState.IsValid)
             {
-                tareaRepository.Modificar(TareaViewModel.ToTarea(tarea));
+                try
+                {
+                    tareaRepository.Modificar(TareaViewModel.ToTarea(tarea));
+                }
+                catch (Exception ex)
+                {
+                    ViewBag.Mensaje = "Error al intentar guardar";
+                    return View("Index", ViewBag);
+                }
+                return RedirectToAction("Index");
             }
-            catch (Exception ex)
-            {
-                ViewBag.Mensaje = "Error al intentar guardar";
-                return View("Index", ViewBag);
-            }
-            return RedirectToAction("Index");
+            return View(tarea);
         }
 
         public ActionResult Completar(int IdTarea)
