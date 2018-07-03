@@ -83,8 +83,11 @@ namespace TaskManager.Controllers
                 return RedirectToAction("Login", "Login");
             }
 
-            string IdTarea = Request["IdTarea"];
-            detalleTareaRepository.Crear(comentarioTareaM, IdTarea);
+            if (ModelState.IsValid)
+            {
+                string IdTarea = Request["IdTarea"];
+                detalleTareaRepository.Crear(comentarioTareaM, IdTarea); 
+            }
             return RedirectToAction("Index");
         }
 
