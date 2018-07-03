@@ -57,12 +57,13 @@
 </div>
 
 <div class="form-group">
-    @Html.LabelFor(m => m.EstimadoHoras, new { @class = "col-md-2 control-label" })
+    @Html.LabelFor(m => m.EstimadoHoras, new { @class = "col-md-2 control-label", @type = "number", @step = "any" })
     <div class="col-md-12">
-        @Html.TextBoxFor(m => m.EstimadoHoras, new { @class = "form-control"})
+        <input class="form-control" type="text" name="EstimadoHoras" value="@Model.EstimadoHoras" />
         @Html.ValidationMessageFor(m => m.EstimadoHoras, "", new { @class = "text-danger" })
     </div>
 </div>
+
 
 <div class="form-group">
     @Html.LabelFor(m => m.Completada, new { @class = "col-md-2 control-label" })
