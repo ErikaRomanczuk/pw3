@@ -33,7 +33,8 @@ namespace TaskManager.Repository
         {
         
             int filtro = int.Parse(completado);
-            List<Tarea> tareas  = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario ==new UsuarioM { }.GetUser().IdUsuario)
+            int idUsuario = new UsuarioM { }.GetUser().IdUsuario;
+            List<Tarea> tareas  = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario == idUsuario)
                                            .OrderByDescending(x => x.FechaCreacion)
                                            .ToList();
 
