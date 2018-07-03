@@ -73,6 +73,12 @@ namespace TaskManager.Repository
 
         public void EliminarCarpeta (int idCarpeta)
         {
+            List<Tarea> listTareas = ctx.Tarea.Where(x => x.IdCarpeta == idCarpeta).ToList();
+            foreach(var t in listTareas)
+            {
+                ctx.Tarea.Remove(t);
+            }
+
             Carpeta carpeta = BuscarCarpetaPorId(idCarpeta);
             ctx.Carpeta.Remove(carpeta);
             ctx.SaveChanges();
