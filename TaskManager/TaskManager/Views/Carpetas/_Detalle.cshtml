@@ -1,9 +1,6 @@
 ﻿@model TaskManager.Models.CarpetaM
 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-
-@Html.HiddenFor(m => m.IdCarpeta)
-@Html.HiddenFor(m => m.FechaCreacion)
 <div class="form-group">
     @Html.LabelFor(m => m.Nombre, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
