@@ -33,8 +33,9 @@ namespace TaskManager.Repository
 
         public List<CarpetaM> listarOrdenadasCarpetasM()
         {
+            UsuarioM usuarioM = new UsuarioM().GetUser();
             List<Carpeta> listaCarpeta = new List<Carpeta>();
-            listaCarpeta = ctx.Carpeta
+            listaCarpeta = ctx.Carpeta.Where(x => x.IdUsuario == usuarioM.IdUsuario)
                                 .OrderBy(c => c.Nombre)
                                 .ToList();
             List<CarpetaM> listaCarpetaM = new List<CarpetaM>();

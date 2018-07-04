@@ -3,7 +3,13 @@
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@if (ViewBag.Mensaje != null)
+{
+    <div class="alert alert-danger alert-dismissable page-alert">
+        @ViewBag.Mensaje
+        <button type="button" class="close"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+    </div>
+}
 @if (Model != null)
 {
     @Html.Partial("_Admin", Model);

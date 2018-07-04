@@ -40,7 +40,7 @@
             <option @( Model.Prioridad == 2 ? "selected" : "") value="2">Media</option>
             <option @( Model.Prioridad == 3 ? "selected" : "") value="3">Alta</option>
             <option @( Model.Prioridad == 4 ? "selected" : "") value="4">Urgente</option>
-            <option value="">Sin prioridad</option>
+            <option value="7">Sin prioridad</option>
 
         </select>
         @Html.ValidationMessageFor(m => m.Prioridad, "", new { @class = "text-danger" })
@@ -50,7 +50,9 @@
 <div class="form-group">
     @Html.LabelFor(m => m.FechaFin, new { @class = "col-md-2 control-label" })
     <div class="col-md-12">
-        @Html.TextBoxFor(x => x.FechaFin, "dd/MM/yyyy",  new { @type = "datetime-local", @class = "col-md-12 form-control" })
+   
+        @*<input type="date" value="@Model.FechaFin.Value.ToString("yyyy-MM-dd")" />*@
+        @Html.TextBoxFor(x => x.FechaFin, "yyyy-MM-dd",  new { @type = "datetime-local", @class = "col-md-12 form-control" })
         @Html.ValidationMessageFor(m => m.FechaFin, "", new { @class = "text-danger" })
        
     </div>

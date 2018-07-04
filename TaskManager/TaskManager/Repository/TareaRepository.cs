@@ -22,7 +22,7 @@ namespace TaskManager.Repository
             {
                 return null;
             }
-            
+
             List<Tarea> tareas = ctx.Tarea.Where(x => x.IdUsuario == idUser)
                                           .OrderByDescending(x => x.FechaCreacion)
                                           .ToList();
@@ -31,10 +31,10 @@ namespace TaskManager.Repository
 
         public List<Tarea> ListarConFiltroCompletado(String completado)
         {
-        
+
             int filtro = int.Parse(completado);
             int idUsuario = new UsuarioM { }.GetUser().IdUsuario;
-            List<Tarea> tareas  = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario == idUsuario)
+            List<Tarea> tareas = ctx.Tarea.Where(x => x.Completada == filtro && x.IdUsuario == idUsuario)
                                            .OrderByDescending(x => x.FechaCreacion)
                                            .ToList();
 
@@ -49,8 +49,8 @@ namespace TaskManager.Repository
         public List<Tarea> TareasPriotarias(int usuarioID)
         {
             List<Tarea> tareas = ctx.Tarea.Where(x => x.Completada == 0 && x.IdUsuario == usuarioID)
-                                          .OrderByDescending(x => x.FechaFin)
                                           .OrderByDescending(x => x.Prioridad)
+                                          .OrderBy(x => x.FechaFin)
                                           .ToList();
             return tareas;
         }
@@ -104,7 +104,7 @@ namespace TaskManager.Repository
         {
             Tarea tarea = buscarPorIdTarea(id);
             tarea.Completada = 1;
-            ctx.SaveChanges();  
+            ctx.SaveChanges();
         }
 
         public Tarea Modificar(Tarea tareaM)
