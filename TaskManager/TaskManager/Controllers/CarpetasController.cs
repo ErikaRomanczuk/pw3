@@ -21,8 +21,8 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-              /*  LoginRepository.SetRedirectTo("Carpetas", "Index");
-                return RedirectToAction("Login", "Login");*/
+                LoginRepository.SetRedirectTo("Carpetas", "Index",null);
+                return RedirectToAction("Login", "Login");
             }
 
             return View(CarpetasRepository.listarCarpetasM());
@@ -32,7 +32,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Crear");
+                LoginRepository.SetRedirectTo("Carpetas", "Crear",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -45,7 +45,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Crear");
+                LoginRepository.SetRedirectTo("Carpetas", "Crear",null);
                 return RedirectToAction("Login", "Login");
             }
             if (ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                LoginRepository.SetRedirectTo("Carpetas", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -81,7 +81,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                LoginRepository.SetRedirectTo("Carpetas", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
             if (ModelState.IsValid)
@@ -103,7 +103,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                LoginRepository.SetRedirectTo("Carpetas", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -121,7 +121,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                LoginRepository.SetRedirectTo("Carpetas", "Index");
+                LoginRepository.SetRedirectTo("Carpetas", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
             List<TareaViewModel> tareaM = tareaRepository.ListarTareasDeCarpeta(IdCarpeta).Select(x => TareaViewModel.FromTarea(x)).ToList();

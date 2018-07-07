@@ -32,11 +32,12 @@ namespace TaskManager.Repository
         }
 
 
-        public void SetRedirectTo(string controller, string metodo)
+        public void SetRedirectTo(string controller, string metodo, string parametro)
         {
             HttpCookie cookie = new HttpCookie("redirect");
             cookie["controller"] = controller;
             cookie["metodo"] = metodo;
+            cookie["parametro"] = parametro;
             cookie.Expires = DateTime.Now.AddMinutes(2);
             System.Web.HttpContext.Current.Response.Cookies.Add(cookie);
             return;
@@ -49,11 +50,14 @@ namespace TaskManager.Repository
             {
                 var controller = Cookie["controller"];
                 var metodo = Cookie["metodo"];
+                var parametro = Cookie["parametro"];
                 if (controller != null && metodo != null)
                 {
                     var dictionary = new Dictionary<string, string>();
                     dictionary.Add("controller", controller);
                     dictionary.Add("metodo", metodo);
+                    dictionary.Add("parametro",parametro);
+
                     return dictionary;
                 }
             }

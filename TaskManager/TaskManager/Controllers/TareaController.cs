@@ -21,7 +21,7 @@ namespace TaskManager.Controllers
         public ActionResult Index()
         {
             if (new UsuarioM { }.GetUser() == null ) {
-                loginRepository.SetRedirectTo("Tarea","Index");
+                loginRepository.SetRedirectTo("Tarea","Index",null);
                 return RedirectToAction("Login","Login");
             }
 
@@ -37,21 +37,21 @@ namespace TaskManager.Controllers
 
         }
 
-        public ActionResult Detalle(int IdTarea)
+        public ActionResult Detalle(int? IdTarea)
         {
-            if (new UsuarioM { }.GetUser() == null)
+            if (new UsuarioM { }.GetUser() == null || IdTarea == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Detalle",IdTarea.ToString());
                 return RedirectToAction("Login", "Login");
             }
 
-            Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea);
+            Tarea tarea = tareaRepository.buscarPorIdTarea(IdTarea.Value);
             if(tarea.IdUsuario != new UsuarioM { }.GetUser().IdUsuario)
             {
                 return RedirectToAction("Index");
             }
             TareaViewModel tareaM = TareaViewModel.FromTarea(tarea);
-            ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea);
+            ViewBag.ListaComentarioTareaM = detalleTareaRepository.Listar(IdTarea.Value);
             return View(tareaM);
         }
 
@@ -60,7 +60,7 @@ namespace TaskManager.Controllers
 
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -79,7 +79,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -95,7 +95,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -113,7 +113,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -132,7 +132,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Crear");
+                loginRepository.SetRedirectTo("Tarea", "Crear",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -147,7 +147,7 @@ namespace TaskManager.Controllers
 
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -170,7 +170,7 @@ namespace TaskManager.Controllers
         {
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
 
@@ -196,7 +196,7 @@ namespace TaskManager.Controllers
 
             if (new UsuarioM { }.GetUser() == null)
             {
-                loginRepository.SetRedirectTo("Tarea", "Index");
+                loginRepository.SetRedirectTo("Tarea", "Index",null);
                 return RedirectToAction("Login", "Login");
             }
             Tarea tarea = new Tarea();

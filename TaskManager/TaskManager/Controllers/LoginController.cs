@@ -50,7 +50,17 @@ namespace TaskManager.Controllers
                 Dictionary<string, string> redirectTo = new LoginRepository().GetRedirectTo();
                 if (redirectTo != null)
                 {
-                    return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
+                    if (redirectTo["parametro"] == String.Empty) {
+                        return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], null);
+                    }
+
+                    if (redirectTo["controller"] == "Tarea") {
+                        return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], new { IdTarea= Int32.Parse(redirectTo["parametro"]) });
+                    }
+                    if (redirectTo["controller"] == "Carpetas")
+                    {
+                        return RedirectToAction(redirectTo["metodo"], redirectTo["controller"], new { idCarpeta = Int32.Parse(redirectTo["parametro"]) });
+                    }
                 }
 
                 return RedirectToAction("Index", "Home", null);
