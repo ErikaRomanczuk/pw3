@@ -18,7 +18,7 @@ namespace TaskManager.Models
         [Display(Name = "Nombre *")]
         public string Nombre { get; set; }
 
-        [RegularExpression(@"^([^<>]){1,200}$", ErrorMessage = "El campo {0} tiene de máximo 200 caracteres.")]
+        [RegularExpression(@"^([^<>]){0,200}$", ErrorMessage = "El campo {0} tiene de máximo 200 caracteres.")]
         [Display(Name = "Descripción")]
         public string Descripcion { get; set; }
 

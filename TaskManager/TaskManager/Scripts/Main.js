@@ -9,3 +9,11 @@ function ToggleMenu() {
         $("body").addClass("showmenu");
     }
 }
+
+
+ $(document).ready(function () {
+     $("#SubirAdjuntoAceptar").click(function () {
+         $("#SubirAdjuntoAceptar").addClass("disabled");
+         $("#SubirAdjuntoContainer form").submit();
+     });
+ });

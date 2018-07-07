@@ -106,6 +106,7 @@ namespace TaskManager.Controllers
                     }
                     else
                     {
+                        user.ActivarUsuario();
                         Usuario usuario = user.ConvertirModelo();
                         UsuarioRepository.CrearUsuario(usuario);
                         return Login(user);

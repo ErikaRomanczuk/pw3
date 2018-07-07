@@ -93,11 +93,14 @@ namespace TaskManager.Models
             usuario.FechaActivacion = (DateTime?)this.FechaActivacion;
             usuario.FechaRegistracion = this.FechaRegistracion;
             usuario.CodigoActivacion = this.CodigoActivacion;
-
-            foreach (CarpetaM carpetaModel in this.Carpetas)
+            if (this.Carpetas != null)
             {
-                usuario.Carpeta.Add(Carpetas.ConvertirModelo(carpetaModel));
+                foreach (CarpetaM carpetaModel in this.Carpetas)
+                {
+                    usuario.Carpeta.Add(Carpetas.ConvertirModelo(carpetaModel));
+                }
             }
+
             return usuario;
         }
 

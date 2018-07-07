@@ -83,7 +83,7 @@ namespace TaskManager.Models
         }
 
         [Display(Name = "Horas Estimadas")]
-        //[Range(0, 9999999999999999.99, ErrorMessage = "El campo {0} no puede tener más de 2 decimales.")]
+        [Range(0, 9999999999999999.99, ErrorMessage = "El campo {0} es obligatorio y tiene de maximo 50 caracters.")]
         public decimal? EstimadoHoras { get; set; }
 
         public int IdTarea { get; set; }
