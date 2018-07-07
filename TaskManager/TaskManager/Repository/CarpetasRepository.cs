@@ -65,7 +65,7 @@ namespace TaskManager.Repository
             carpeta = listaCarpetas.Where(x => x.IdCarpeta == IdCarpeta).FirstOrDefault();
             if(carpeta == null)
             { 
-                throw new Exception("Id de carpeta inexistente");
+  //              throw new Exception("Id de carpeta inexistente");
             }
             return carpeta;
         }
