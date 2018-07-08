@@ -23,7 +23,10 @@ namespace TaskManager.Controllers
             if (new UsuarioM { }.GetUser() != null)
             {
                 List<Tarea> tareas = TareaRepository.TareasPriotarias(new UsuarioM { }.GetUser().IdUsuario);
-                List<TareaViewModel> tareasView = tareas.Select(x => TareaViewModel.FromTarea(x)).ToList();
+                List<TareaViewModel> tareasView = tareas.Select(x => TareaViewModel.FromTarea(x))
+                                                        .OrderBy(x => x.FechaFin)
+                                                        .OrderByDescending(x=>x.Prioridad)
+                                                        .ToList();
                 return View(tareasView);
             }
 
